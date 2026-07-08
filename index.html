@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>תיקיית עבודה אישית בדיגיטל - סטודיו לתלמיד</title>
+    <style>
+        :root {
+            --bg-cream: #fbf9f4;
+            --card-bg: #ffffff;
+            --primary-accent: #2c3e50;
+            --secondary-accent: #d35400;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border-color: #e2dacb;
+            --success-color: #27ae60;
+            --bot-color: #8e44ad;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header-banner {
+            background-color: var(--primary-accent);
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .header-banner h1 { margin: 0; font-size: 28px; font-weight: 700; }
+        .header-banner p { margin: 10px 0 0 0; font-size: 16px; color: #ecf0f1; }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 1000px) {
+            .container {
+                grid-template-columns: 1.8fr 1.2fr;
+            }
+            .full-width { grid-column: span 2; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            height: fit-content;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            color: var(--primary-accent);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+        .form-group input {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: var(--bg-cream);
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary { background-color: var(--secondary-accent); color: white; }
+        .btn-primary:hover { background-color: #b34700; }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-success:hover { background-color: #1e8449; }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer;
+        }
+
+        .progress-box {
+            background-color: #fcfcfc;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .progress-container {
+            background-color: #e0e0e0; border-radius: 20px; height: 20px; width: 100%; margin: 15px 0; overflow: hidden;
+        }
+
+        .progress-bar { background-color: var(--success-color); height: 100%; width: 0%; transition: width 0.4s ease; }
+
+        .teacher-bubble {
+            background-color: #ebf5fb; border-right: 4px solid #3498db; padding: 15px; border-radius: 4px; margin-top: 15px; font-style: italic; text-align: right;
+        }
+
+        .software-badge {
+            display: inline-block; padding: 6px 12px; border-radius: 4px; font-size: 14px; font-weight: bold; color: white; margin-bottom: 15px;
+        }
+        .badge-photopea { background-color: #2ecc71; }
+        .badge-svg { background-color: #0052cc; }
+
+        .checklist-item {
+            display: flex; align-items: flex-start; gap: 12px; background: var(--bg-cream); padding: 12px; border-radius: 6px; margin-bottom: 10px; border-right: 3px solid var(--border-color);
+        }
+        .checklist-item input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; cursor: pointer; }
+        .checklist-item.checked { border-right-color: var(--success-color); background-color: #f4fbf7; }
+        .checklist-item.checked label { text-decoration: line-through; color: var(--text-muted); }
+
+        .tech-tips { background-color: #fff9e6; border-right: 4px solid #f1c40f; padding: 15px; border-radius: 4px; margin-top: 20px; margin-bottom: 20px; }
+        .tech-tips h4 { margin-top: 0; color: #b7950b; }
+
+        .workspace-frame-container {
+            margin-top: 20px;
+            border: 2px solid var(--primary-accent);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .workspace-frame-header {
+            background: var(--primary-accent);
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .workspace-iframe {
+            width: 100%;
+            height: 650px;
+            border: none;
+            background: #ffffff;
+        }
+
+        .bot-container {
+            border: 2px solid var(--bot-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            height: 750px;
+            position: sticky;
+            top: 20px;
+        }
+        .bot-header {
+            background: var(--bot-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 18px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .bot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #fdfbfd;
+        }
+        .msg {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        .msg.bot {
+            background: #f1e7f8;
+            color: #4a235a;
+            align-self: flex-start;
+            border-right: 4px solid var(--bot-color);
+        }
+        .msg.user {
+            background: #ebf5fb;
+            color: #1b4f72;
+            align-self: flex-end;
+            border-left: 4px solid #3498db;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 13px;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            margin-top: 5px;
+            white-space: pre-wrap;
+        }
+        .bot-input-area {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            background: #fff;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .bot-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .btn-bot-send { background: var(--bot-color); color: white; border: none; padding: 0 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-screenshot { background: #7f8c8d; color: white; border: none; padding: 0 10px; border-radius: 6px; cursor: pointer; font-size: 18px; }
+
+        .step-content { background: #fff; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-banner">
+        <h1>תיקיית עבודה אישית דיגיטלית - פרויקט מיתוג עיצובי</h1>
+        <p>קורס עיצוב גרפי דיגיטלי מתקדם • בהנחיית המורה סהר</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="card full-width">
+            <div class="card-title">פרטי התלמיד ושמירת התקדמות</div>
+            <div class="profile-grid">
+                <div class="form-group">
+                    <label for="studentName">שם התלמיד:</label>
+                    <input type="text" id="studentName" placeholder="הקלד את שמך כאן..." oninput="updateDashboard()">
+                </div>
+                <div class="form-group">
+                    <label for="brandName">שם המותג / החברה שבחרת:</label>
+                    <input type="text" id="brandName" placeholder="למשל: פיצה ברון, בגדי אופנה..." oninput="updateDashboard()">
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-primary" onclick="downloadProgress()">💾 שמור והורד קובץ התקדמות (לשמור בדרייב)</button>
+                <div class="file-input-wrapper">
+                    <button class="btn btn-success">📂 העלאת קובץ התקדמות והמשך עבודה</button>
+                    <input type="file" id="uploadFile" accept=".json" onchange="uploadProgress(event)">
+                </div>
+            </div>
+        </div>
+
+        <div class="card progress-box full-width">
+            <h3 style="margin-top: 0;">מצב התקדמות בפרויקט: <span id="dashBrandName">המותג שלי</span></h3>
+            <div>שלום <strong id="dashStudentName">תלמיד/ה</strong>! ביצעת עד כה <span id="completedCount">0</span> מתוך <span id="totalCount">45</span> תתי-משימות.</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div style="font-weight: bold; font-size: 18px;" id="progressPercent">0%</div>
+            
+            <div class="teacher-bubble" id="teacherMessage">
+                <strong>הודעה מהמורה סהר:</strong> ברוך הבא לפרויקט העיצוב האישי שלך! רשום את שמך ואת החברה שבחרת למעלה, ובוא נתחיל לבנות לוגו מנצח בשלב 1. בהצלחה!
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">משימות לפי שלבים וסביבת עבודה</div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="stepSelector" style="font-weight: bold; font-size: 16px; margin-left: 10px;">בחר שלב עבודה:</label>
+                <select id="stepSelector" onchange="openSelectedStep()" style="padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid var(--border-color); font-weight: bold; background: white; width: 100%;">
+                    </select>
+            </div>
+
+            <div id="stepsContainer" class="step-content"></div>
+
+            <div class="workspace-frame-container">
+                <div class="workspace-frame-header">
+                    <span id="frameTitle">💻 סביבת עבודה משולבת</span>
+                    <span style="font-size: 11px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">אינטגרציה חיונית</span>
+                </div>
+                <iframe id="softwareIframe" class="workspace-iframe" src=""></iframe>
+            </div>
+        </div>
+
+        <div class="bot-container">
+            <div class="bot-header">
+                <span>🤖 הבוט החבר והיועץ האישי שלך</span>
+                <span style="font-size: 12px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;">סמנטי ומדויק</span>
+            </div>
+            <div class="bot-messages" id="botMessages">
+                </div>
+            <div class="bot-input-area">
+                <button class="btn-screenshot" title="צרף צילום מסך מהתוכנה לעזרה" onclick="simulateScreenshot()">📸</button>
+                <input type="text" id="botInput" class="bot-input" placeholder="דבר איתי אחי, מה אתה צריך לעצב?" onkeydown="if(event.key === 'Enter') sendBotMessage()">
+                <button class="btn-bot-send" onclick="sendBotMessage()">שלח</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // === הגדרת ה-API הבלעדית שאתה צריך לספק אחי ===
+        const GOOGLE_API_KEY = "שים_כאן_את_ה-API_KEY_שלך";
+
+        const stepsData = [
+            { id: 1, title: '1. לוגו המותג', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת הלוגו הבסיסי של המותג בצורות וקווים וקטוריים.', tasks: ['פתח את תוכנת SVG-Edit והגדר משטח עבודה ריבועי מתאים.', 'צור עיגול בסיס שחור או צורה גיאומטרית מורכבת באמצעות כלי הצורות.', 'הוסף אלמנט גרפי מרכזי או אייקון וקטורי שמאפיין את המותג.', 'השתמש בכלי הטקסט ושלב את שם המותג בצבעים בולטים.'] },
+            { id: 2, title: '2. פלייר שיווקי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב פלייר פרסומי להפצה רחבה עם המוצר המרכזי.', tasks: ['פתח דף A4 חדש ב-Photopea דרך תפריט File -> New.', 'ייבא תמונה איכותית של המוצר שלכם דרך File -> Open and Place.', 'הוסף טקסט שיווקי בולט באמצעות כלי הטקסט (T) שבסרגל הכלים השמאלי.', 'הפעל אפקט צל לטקסט דרך Layer -> Layer Style -> Drop Shadow כדי להבליט אותו.'] },
+            { id: 3, title: '3. תפריט מנות ומוצרים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'יצירת קטלוג או תפריט מעוצב המפרט את היצע החברה ומחיריה.', tasks: ['בחר פלטת צבעים קבועה לשמירה על אחידות המותג.', 'חלק את התפריט לקטגוריות ברורות כמו מנות עיקריות, עסקיות, תוספות ושתייה.', 'רשום מחירים ברורים לצד כל פריט, והוסף אייקונים או חצים ליד מנות מומלצות.'] },
+            { id: 4, title: '4. באנר פרסומי רוחבי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'שלט רוחבי דיגיטלי לאתר האינטרנט או לרשתות החברתיות.', tasks: ['פתח קובץ במימדים רוחביים ארוכים למשל 1200 על 400 פיקסלים.', 'הוסף כיתוב שיווקי בולט ומניע לפעולה כגון הצטרפו למועדון החברים שלנו וקבלו הטבות.', 'שלב את לוגו החברה בפינת הבאנר ופרטי יצירת קשר או כתובת אתר.'] },
+            { id: 5, title: '5. הזמנה לאירוע', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב הזמנה רשמית לפתיחת העסק או להשקת מוצר חדש.', tasks: ['הגדר דף ריבועי או מלבני קטן המתאים לשליחה בנייד או הדפסה.', 'כתוב את פרטי האירוע: תאריך מדויק, שעה, ומיקום ברור.', 'עצב רקע חגיגי באמצעות כלי הגרדיאנט מעבר צבעים בתוכנה.'] },
+            { id: 6, title: '6. שער מגזין', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב דמה של שער מגזין נחשב המארח את המותג שלכם.', tasks: ['פתח דף אנכי איכותי, והוסף את כותרת המגזין המוכר בחלק העליון בשכבה נפרדת.', 'שים תמונת תקריב מרשימה של המוצר המוביל שלכם במרכז השער.', 'הוסף כותרות משנה קטנות ומסקרנות מסביב.', 'הקפד על יישור הטקסטים לימין או לשמאל כדי לשמור על מראה מגזין מקצועי.'] },
+            { id: 7, title: '7. שלט חוצות', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מודעה ענקית המיועדת להצגה בצידי הדרכים.', tasks: ['השתמש ברקע בעל צבע מותג חזק ודומיננטי שימשוך את העין מרחוק.', 'הצב את הלוגו בגודל משמעותי במרכז או בצד השלט.', 'הוסף שורת קריאה קצרה במיוחד ואיקונים של הרשתות החברתיות שלכם.'] },
+            { id: 8, title: '8. מוצר קדמ 1: מסכת פנים או כובע', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הטמעת המותג על גבי אביזר לבוש או הגנה יומיומי.', tasks: ['ייבא תמונת בסיס של מסכה חלקה או כובע.', 'השתמש בכלי שינוי הקנה מידה כדי להתאים את הלוגו שלכם למוצר.', 'שנה את צבע הבסיס של האביזר לצבעי המותג הרשמיים בעזרת כלי המילוי.'] },
+            { id: 9, title: '9. מוצר קדמ 2: חולצת עובדים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מדי עובדים רשמיים או חולצה שיווקית של החברה.', tasks: ['פתח תמונת חולצת טי שרט חלקה בשכבה נפרדת.', 'מקם את הלוגו במיקום הגיוני על החזה בצד שמאל או בגדול במרכז הגב.', 'ודא ששקיפות הלוגו מוגדרת נכון כך שישתלב בבד בצורה ריאליסטית.'] },
+            { id: 10, title: '10. מוצר קדמ 3: מחברת או יומן', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב כריכת יומן או מחברת משרדית ממותגת.', tasks: ['עצב כריכת מחברת מלבנית המשלבת גרפיקה עדינה ברקע.', 'הוסף את שנת הלימודים או השנה הנוכחית בפונט ברור ומרשים.', 'שלב את פרטי האתר או הלוגו בתחתית הכריכה האחורית או הקדמית.'] },
+            { id: 11, title: '11. מודל תלת ממד', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הדמיית מיתוג על גבי אובייקטים נפחיים כמו פחית או בקבוק.', tasks: ['פתח קובץ המכיל צורה תלת ממדית נקייה כמו פחית משקה או גליל.', 'השתמש בכלי העיוות כדי לעטוף את האובייקט בלוגו שלכם.', 'הוסף שכבת צל וברק מעל הגרפיקה כדי לתת תחושת עומק מציאותית.'] },
+            { id: 12, title: '12. נייר מכתבים ומעטפה', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב ניירת משרדית רשמית המשמשת להתכתבות העסק.', tasks: ['עצב כותרת עליונה קבועה לנייר המכתבים המכילה את הלוגו.', 'עצב תחתית עמוד עם כתובת העסק הרשמית, מייל וטלפון המיושרים במדויק.', 'העתק את האלמנטים ועצב מעטפת דואר תואמת באותה שפה חזותית.'] },
+            { id: 13, title: '13. כרטיס ביקור', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת כרטיס ביקור דו צדדי קומפקטי ומקצועי.', tasks: ['הגדר משטח עבודה בגודל סטנדרטי של כרטיס ביקור 9 על 5 סנטימטר.', 'בצד הקדמי שים את הלוגו במרכזו.', 'בצד האחורי סדר בצורה קריאה את שם נציג החברה והתפקיד שלו.'] },
+            { id: 14, title: '14. פולדר תיקיית מסמכים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב תיקייה נפתחת המשמשת להגשת מסמכים וחוזי החברה.', tasks: ['שרטט את פריסת הפולדר כולל הכנפיים הפנימיות שמחזיקות את הדפים.', 'מקם את הלוגו והצבע הראשי בחלק החיצוני הקדמי של התיקייה.', 'ודא שאין טקסטים קרובים מדי לקווי הקיפול או קווי החיתוך.'] },
+            { id: 15, title: '15. אריזה וקופסת משלוחים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'תכנון ופריסה הנדסית של קופסת קרטון עבור מוצרי החברה.', tasks: ['שרטט את פריסת הקופסה מלבנים וריבועים מחוברים כולל לשוניות ההדבקה.', 'הוסף את הלוגו ואלמנטים עיצוביים על פאות הקופסה.', 'בצע ייצוא סופי כקובץ תמונה איכותי וקובץ וקטורי פתוח להמשך עבודה.'] }
+        ];
+
+        // בנק ידע וקטורי מובנה בתוך הקוד שטוביה ישווה אליו סמנטית
+        const BOT_KNOWLEDGE = [
+            {
+                keywords: "איך לעשות רקע שקוף למחוק שכבת אטימות שקיפות פוטופיה photopea png",
+                text: "בשביל רקע שקוף ב-**Photopea**, תעבור לחלון השכבות (Layers) בצד ימין, תבחר את שכבת הבסיס ותוריד את ה-**Opacity** (אטימות) ל-0%. הכי חשוב אחי - תייצא את זה דרך File -> Export as -> **PNG**!",
+                code: ""
+            },
+            {
+                keywords: "איך לצייר עיגול לוגו צורה קוד svg edit מלבן קווים וקטור",
+                text: "רוצה להוסיף אלמנט קוד וקטורי מנצח ללוגו ב-**SVG-Edit**? כנס לכפתור ה-Source (קוד מקור) ותדביק את העיגול הממותג הזה:",
+                code: `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">\n  <circle cx="100" cy="100" r="80" fill="#2c3e50" stroke="#d35400" stroke-width="5"/>\n</svg>`
+            },
+            {
+                keywords: "פונט טקסט לוגו כתיבה לרשום שם מותג גודל פונטים",
+                text: "כדי לרשום את שם המותג ב-**SVG-Edit**, השתמש בכלי הטקסט (T). הנה דוגמה לקוד טקסט מיושר למרכז ומעוצב שאפשר להדביק ב-Source:",
+                code: `<text x="100" y="110" font-size="22" fill="#d35400" font-family="sans-serif" text-anchor="middle" font-weight="bold">MY BRAND</text>`
+            },
+            {
+                keywords: "איך להביא תמונה לשים קובץ לייבא תמונות רקע פוטופיה photopea",
+                text: "בשביל להביא תמונה מהמחשב לתוך משטח העבודה ב-**Photopea**, אל תעשה סתם פתיחה! כנס לתפריט העליון ל-**File -> Open and Place**, ותבחר את הקובץ. ככה הוא ייפתח כשכבה חדשה מעל הרקע שלך.",
+                code: ""
+            },
+            {
+                keywords: "איך לשנות גודל לסובב להקטין להגדיל חופשי פוטופיה transform free",
+                text: "נתקעת עם גודל התמונה ב-**Photopea**? בחר את השכבה שלה, וכנס לתפריט העליון: **Edit -> Free Transform** (או לחץ Ctrl+Alt+T). יופיעו לך ריבועים קטנים בפינות - תגרור אותם כדי להקטין או להגדיל חופשי!",
+                code: ""
+            },
+            {
+                keywords: "צבעים פלטת צבעים שילובים השראה לוגו עסק",
+                text: "צריך צבעים פגז למותג? הטיפ של המורה סהר הוא לבחור עד 3 צבעים קבועים. כנס לאתר **Coolors.co** בשביל השראה, ותעתיק את קודי ה-Hex (למשל #2c3e50) ישירות לכלי המילוי בתוכנה.",
+                code: ""
+            }
+        ];
+
+        // נשמור את הווקטורים של בנק המידע ברגע שהאפליקציה עולה כדי לחסוך קריאות API
+        let vectorizedKnowledge = [];
+
+        let studentState = { name: "", brand: "", checklist: {} };
+        let currentStepId = 1;
+
+        async function init() {
+            const selector = document.getElementById('stepSelector');
+            selector.innerHTML = '';
+            
+            stepsData.forEach((step) => {
+                const option = document.createElement('option');
+                option.value = step.id;
+                option.innerText = step.title;
+                selector.appendChild(option);
+            });
+            
+            switchStep(1);
+            
+            // יצירת הווקטורים לבנק המידע ברקע פעם אחת בלבד
+            if (GOOGLE_API_KEY && GOOGLE_API_KEY !== "שים_כאן_את_ה-API_KEY_שלך") {
+                precomputeKnowledgeVectors();
+            }
+        }
+
+        async function precomputeKnowledgeVectors() {
+            try {
+                for (let item of BOT_KNOWLEDGE) {
+                    const vector = await getEmbeddingFromGoogle(item.keywords);
+                    if (vector) {
+                        vectorizedKnowledge.push({ ...item, vector: vector });
+                    }
+                }
+                console.log("✅ כל בנק המידע עבר וקטוריזציה סמנטית בהצלחה!");
+            } catch (e) { console.error("שגיאה בחישוב וקטורי בנק הידע", e); }
+        }
+
+        function openSelectedStep() {
+            const selectedId = parseInt(document.getElementById('stepSelector').value);
+            switchStep(selectedId);
+        }
+
+        function switchStep(stepId) {
+            currentStepId = stepId;
+            const step = stepsData.find(s => s.id === stepId);
+            const container = document.getElementById('stepsContainer');
+            
+            let tasksHtml = '';
+            step.tasks.forEach((task, tIndex) => {
+                const taskId = `task_${step.id}_${tIndex}`;
+                const isChecked = studentState.checklist[taskId] ? 'checked' : '';
+                const checkedClass = studentState.checklist[taskId] ? 'checked' : '';
+                tasksHtml += `
+                    <div class="checklist-item ${checkedClass}" id="item_${taskId}">
+                        <input type="checkbox" id="${taskId}" ${isChecked} onchange="toggleTask('${taskId}')">
+                        <label for="${taskId}">${task}</label>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:15px;">
+                    <h3 style="margin:0; color:var(--primary-accent);">${step.title}</h3>
+                    <div>
+                        <span class="software-badge ${step.badge}">תוכנה: ${step.software}</span>
+                    </div>
+                </div>
+                <p style="color:var(--text-muted); margin-top:5px; font-style:italic;">${step.description}</p>
+                
+                <div class="checklist">
+                    <h4>משימות לביצוע בשלב זה:</h4>
+                    ${tasksHtml}
+                </div>
+
+                <div class="tech-tips">
+                    <h4>💡 טיפ מהמורה סהר לעבודה ב-${step.software}:</h4>
+                    <p>${step.software === 'Photopea' ? 
+                       'תמיד תעבוד בשכבות (Layers)! כשאתה מביא תמונה חדשה, תגרור אותה ישירות למשטח העבודה ותוודא שהיא בשכבה נפרדת כדי שתוכל להזיז ולשנות לה את הגודל בלי להרוס את הרקע.' : 
+                       'בתוכנה וקטורית, כל קו ועיגול הם עצמאיים. אם אתה רוצה לשנות קוד SVG ישירות, לחץ על כלי ה-Source (קוד המקור) בתוכנה והדבק את הקוד שהבוט החבר ייצר לך!'}</p>
+                </div>
+            `;
+            
+            const iframe = document.getElementById('softwareIframe');
+            const frameTitle = document.getElementById('frameTitle');
+            if (iframe.src !== step.url) {
+                iframe.src = step.url;
+            }
+            frameTitle.innerHTML = `💻 תוכנת עבודה מובנית: <strong>${step.software}</strong> בשילוב משימה ${step.id}`;
+
+            updateDashboard();
+            if(window.botWelcomeMessage) window.botWelcomeMessage(step);
+        }
+
+        function toggleTask(taskId) {
+            const cb = document.getElementById(taskId);
+            const item = document.getElementById(`item_${taskId}`);
+            
+            if (cb.checked) {
+                item.classList.add('checked');
+                studentState.checklist[taskId] = true;
+                addBotMessage("bot", "אש עליך אחי! סימנת משימה בהצלחה. ממשיכים קדימה בלי לעצור! 🔥");
+            } else {
+                item.classList.remove('checked');
+                studentState.checklist[taskId] = false;
+            }
+            
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            studentState.name = document.getElementById('studentName').value || "";
+            studentState.brand = document.getElementById('brandName').value || "";
+
+            document.getElementById('dashStudentName').innerText = studentState.name || "תלמיד/ה";
+            document.getElementById('dashBrandName').innerText = studentState.brand || "המותג שלי";
+
+            let total = 0, completed = 0;
+            stepsData.forEach(step => {
+                step.tasks.forEach((task, tIndex) => {
+                    total++;
+                    if (studentState.checklist[`task_${step.id}_${tIndex}`]) completed++;
+                });
+            });
+
+            document.getElementById('completedCount').innerText = completed;
+            document.getElementById('totalCount').innerText = total;
+
+            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressPercent').innerText = percent + '%';
+
+            const msgBox = document.getElementById('teacherMessage');
+            let txt = `<strong>הודעה מהמורה סהר:</strong> `;
+            if (percent === 0) txt += `אהלן ${studentState.name || 'תלמיד'}! רשום את השם והמותג שלך למעלה, והחבר הבוט מימין יעזור לך בכל שלב בתפריטים!`;
+            else if (percent < 50) txt += `יופי של קצב! התוכנה פתוחה למטה, תעזר בבוט כדי להוציא קודים מתאימים לעיצוב.`;
+            else if (percent === 100) txt += `פרויקט מדהים ומלא! גאה בך מאוד על ההשקעה! 🎉`;
+            else txt += `אתה כבר מעבר לחצי הדרך, העסק של ${studentState.brand || 'המותג'} הולך להראות מטורף!`;
+            msgBox.innerHTML = txt;
+        }
+
+        /* --- מערכת הבוט החבר המלווה והיועץ --- */
+        window.botWelcomeMessage = function(step) {
+            const messagesContainer = document.getElementById('botMessages');
+            messagesContainer.innerHTML = ''; 
+            
+            let welcomeTxt = `מה קורה אחי? אני כאן איתך צמוד! אנחנו כרגע ב**${step.title}**. <br>`;
+            if(step.software === 'Photopea') {
+                welcomeTxt += `הפעלתי לך את **Photopea** ממש כאן למטה בתוך הדף! תשאל אותי איך משנים גודל, איך מביאים תמונה או איך עושים רקע שקוף - ואני אשלח לך מדריך מדויק בשנייה אחת.`;
+            } else {
+                welcomeTxt += `הפעלתי לך את **SVG-Edit** פה למטה! דבר איתי, תשאל אותי על צורות, עיגולים או טקסטים ללוגו ואני אייצר לך קוד SVG מוכן שתוכל להטמיע ישר.`;
+            }
+            addBotMessage("bot", welcomeTxt);
+        }
+
+        function addBotMessage(sender, text, code = "") {
+            const container = document.getElementById('botMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg ${sender}`;
+            msgDiv.innerHTML = text;
+            
+            if(code) {
+                const codeDiv = document.createElement('div');
+                codeDiv.className = "code-block";
+                codeDiv.innerText = code;
+                msgDiv.appendChild(codeDiv);
+            }
+            
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // --- פונקציית הליבה: קריאת ה-Embedding הרשמית של גוגל ---
+        async function getEmbeddingFromGoogle(text) {
+            if (!GOOGLE_API_KEY || GOOGLE_API_KEY === "שים_כאן_את_ה-API_KEY_שלך") return null;
+            
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${GOOGLE_API_KEY}`;
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model: "models/text-embedding-004",
+                        content: { parts: [{ text: text }] }
+                    })
+                });
+                const data = await response.json();
+                return data.embedding.values;
+            } catch (e) {
+                console.error("שגיאה בפנייה לגוגל API", e);
+                return null;
+            }
+        }
+
+        // פונקציית הדמיון המתמטית (Cosine Similarity) שמחשבת דמיון בין מערכים
+        function cosineSimilarity(vecA, vecB) {
+            let dotProduct = 0.0;
+            let normA = 0.0;
+            let normB = 0.0;
+            for (let i = 0; i < vecA.length; i++) {
+                dotProduct += vecA[i] * vecB[i];
+                normA += vecA[i] * vecA[i];
+                normB += vecB[i] * vecB[i];
+            }
+            if (normA === 0 || normB === 0) return 0;
+            return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+        }
+
+        async function sendBotMessage() {
+            const input = document.getElementById('botInput');
+            const val = input.value.trim();
+            if(!val) return;
+
+            addBotMessage("user", val);
+            input.value = '';
+
+            // בדיקה אם המורה שכח להגדיר את ה-API KEY
+            if (!GOOGLE_API_KEY || GOOGLE_API_KEY === "AQ.Ab8RN6JokuquMrRpdFwe4LCkrhPc5eHlf-ultbrMXJhRF0uhSw") {
+                setTimeout(() => {
+                    addBotMessage("bot", "אחי, המורה סהר שכח להגדיר את ה-API Key בקוד ה-HTML! תגיד לו שישים מפתח כדי שאוכל לעזור לך סמנטית.");
+                }, 500);
+                return;
+            }
+
+            // יצירת וקטור למשפט שהתלמיד הקליד כרגע
+            const userVector = await getEmbeddingFromGoogle(val);
+            
+            if (!userVector) {
+                addBotMessage("bot", "אחי, הייתה לי תקלה קטנה ברשת או שהמפתח לא תקין. תנסה לשלוח שוב!");
+                return;
+            }
+
+            // חישוב התשובה הכי קרובה סמנטית מתוך בנק המידע
+            let bestMatch = null;
+            let highestScore = -1;
+
+            // אם בנק הווקטורים לא חושב מראש בטעינה, נחשב אותו בזמן אמת
+            if (vectorizedKnowledge.length === 0) {
+                await precomputeKnowledgeVectors();
+            }
+
+            vectorizedKnowledge.forEach(item => {
+                const score = cosineSimilarity(userVector, item.vector);
+                if (score > highestScore) {
+                    highestScore = score;
+                    bestMatch = item;
+                }
+            });
+
+            // אם הציון נמוך מדי (התלמיד דיבר על משהו מחוץ לחומר)
+            if (highestScore < 0.35) {
+                addBotMessage("bot", "אחי, אני לא בטוח שהבנתי למה התכוונת. נסה לשאול אותי שאלות כמו: 'איך עושים רקע שקוף?', 'איך משנים גודל תמונה?', או 'איך יוצרים עיגול ב-SVG'!");
+            } else {
+                addBotMessage("bot", bestMatch.text, bestMatch.code);
+            }
+        }
+
+        function simulateScreenshot() {
+            addBotMessage("user", "📸 <em>[העלה צילום מסך של התוכנה לקבלת עזרה]</em>");
+            setTimeout(() => {
+                addBotMessage("bot", "ראיתי את צילום המסך שלך אחי! שים לב לתוכנה למטה - בסרגל הכלים השמאלי יש לך את החץ (כלי הבחירה). לחץ עליו ותוכל להזיז את השכבה בדיוק לאמצע המשטח. פגז!");
+            }, 800);
+        }
+
+        /* --- ניהול קבצי התקדמות --- */
+        function downloadProgress() {
+            const sName = studentState.name.trim() || "תלמיד";
+            const bName = studentState.brand.trim() || "מותג";
+            const filename = `תיקיית_עבודה_${sName}_${bName}.json`;
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(studentState));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", filename);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function uploadProgress(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed && typeof parsed === 'object') {
+                        studentState = parsed;
+                        document.getElementById('studentName').value = studentState.name || "";
+                        document.getElementById('brandName').value = studentState.brand || "";
+                        switchStep(currentStepId);
+                        alert("הקובץ נטען בהצלחה אחי! המשך עבודה נעימה.");
+                    }
+                } catch (err) { alert("שגיאה בטעינת הקובץ."); }
+            };
+            reader.readAsText(file);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
