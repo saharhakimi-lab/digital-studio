@@ -224,9 +224,8 @@
 
             snippets: [
                 {
-                    keywords: ["עיגול צבע", "click color", "שינוי צבע בלחיצה"],
+                    keywords: ["עיגול צבע", "click color", "שינוי צבע בלחיצה", "עיגול"],
                     title: "עיגול שמשנה צבע בלחיצה (SVG + JS)",
-                    // המרה בטוחה של תגיות script על מנת למנוע SyntaxError
                     code: '<svg viewBox="0 0 100 100" width="200" height="200">\n  <circle id="c1" cx="50" cy="50" r="30" fill="steelblue" style="cursor:pointer;"/>\n</svg>\n\x3Cscript\x3E\n  const colors = ["steelblue", "tomato", "gold", "seagreen"];\n  let idx = 0;\n  const circle = document.getElementById("c1");\n  circle.addEventListener("click", () => {\n    idx = (idx + 1) % colors.length;\n    circle.setAttribute("fill", colors[idx]);\n  });\n\x3C/script\x3E',
                     explanation: "שימוש ב-addEventListener וב-setAttribute לשינוי תכונת ה-fill בלחיצה."
                 },
@@ -243,7 +242,7 @@
                     explanation: "חישוב זוויות המחוגים ושינוי ה-transform rotate של המחוגים מסביב למרכז השעון."
                 },
                 {
-                    keywords: ["גרירה חופשית", "drag logic", "גרירה viewBox", "הזזה"],
+                    keywords: ["גרירה חופשית", "drag logic", "גרירה viewBox", "הזזה", "גרירה"],
                     title: "גרירה חופשית (drag) עם תמיכה ב-viewBox",
                     code: '<svg id="canvas" viewBox="0 0 300 200" width="300" height="200" style="background:#f5f5f5">\n  <circle id="draggable" cx="150" cy="100" r="20" fill="orange" style="cursor:grab"/>\n</svg>\n\x3Cscript\x3E\n  const svg = document.getElementById("canvas");\n  const el = document.getElementById("draggable");\n  let dragging = false;\n\n  function getSVGPoint(evt) {\n    const pt = svg.createSVGPoint();\n    pt.x = evt.clientX;\n    pt.y = evt.clientY;\n    return pt.matrixTransform(svg.getScreenCTM().inverse());\n  }\n\n  el.addEventListener("mousedown", () => dragging = true);\n  document.addEventListener("mouseup", () => dragging = false);\n  document.addEventListener("mousemove", (e) => {\n    if (!dragging) return;\n    const p = getSVGPoint(e);\n    el.setAttribute("cx", p.x);\n    el.setAttribute("cy", p.y);\n  });\n\x3C/script\x3E',
                     explanation: "המרה של קואורדינטות מסך הדפדפן (clientX/Y) אל תוך מערכת הצירים של ה-viewBox."
@@ -313,6 +312,12 @@
                     title: "Slider מותאם אישית (SVG בלבד)",
                     code: '<svg viewBox="0 0 200 30" width="300" height="40">\n  <line x1="10" y1="15" x2="190" y2="15" stroke="#ccc" stroke-width="4"/>\n  <circle id="knob" cx="10" cy="15" r="8" fill="#2980b9" style="cursor:pointer"/>\n</svg>\n\x3Cscript\x3E\n  const svg = document.querySelector("svg");\n  const knob = document.getElementById("knob");\n  let dragging = false;\n  knob.addEventListener("mousedown", () => dragging = true);\n  document.addEventListener("mouseup", () => dragging = false);\n  document.addEventListener("mousemove", (e) => {\n    if (!dragging) return;\n    const pt = svg.createSVGPoint();\n    pt.x = e.clientX;\n    const x = pt.matrixTransform(svg.getScreenCTM().inverse()).x;\n    const clamped = Math.max(10, Math.min(190, x));\n    knob.setAttribute("cx", clamped);\n    const value = Math.round(((clamped - 10) / 180) * 100);\n    console.log("value:", value);\n  });\n\x3C/script\x3E',
                     explanation: "סליידר עצמאי מלא ללא שימוש בתגית input, פועל דרך חישוב קואורדינטות ו-Clamping."
+                },
+                {
+                    keywords: ["מלבן", "rect", "מרובע", "פינות", "קופסה"],
+                    title: "מלבן בסיסי עם פינות מעוגלות",
+                    code: '<svg viewBox="0 0 200 100" width="200" height="100">\n  <rect x="10" y="10" width="150" height="70" rx="8" ry="8" fill="#3498db" stroke="#2980b9" stroke-width="3"/>\n</svg>',
+                    explanation: "שימוש בתגית rect ליצירת מרובע מלוטש. תכונות ה-rx וה-ry מגדירות את עיגול הפינות."
                 }
             ]
         };
@@ -502,6 +507,116 @@
             container.scrollTop = container.scrollHeight;
         }
 
+        // ================================================================
+        // מנוע חיפוש סמנטי עברי מתקדם (NLP-Lite Hebrew Search)
+        // פותר את בעיות ההתאמה המוטעית והקדימויות
+        // ================================================================
+        function findBestSemanticMatch(userQuery) {
+            const query = userQuery.toLowerCase().trim();
+            const queryWords = query.split(/[\s,?.!]+/).filter(Boolean);
+
+            // מילות כוונה המראות שהמשתמש רוצה קוד, ציור, או סניפט (Intent Detection)
+            const codeIntentWords = ["צור", "קוד", "סניפט", "דוגמה", "תביא", "תכתוב", "רשום", "צייר", "ציור", "לצייר", "בנה", "לבנות", "עשה", "לעשות", "איך לעשות", "איך לכתוב", "show", "code", "make", "create"];
+            const hasCodeIntent = queryWords.some(qw => codeIntentWords.includes(qw)) || query.includes("איך לעשות") || query.includes("איך לכתוב");
+
+            let bestMatch = null;
+            let highestScore = 0;
+            let matchType = ""; // "glossary", "faq", או "snippet"
+
+            // פונקציית עזר לבדיקה חכמה של התאמת מילים כולל תחיליות עבריות
+            function isHebrewWordMatch(queryWord, keyword) {
+                const cleanKey = keyword.trim().toLowerCase();
+                const cleanWord = queryWord.trim().toLowerCase();
+                if (cleanWord === cleanKey) return true;
+
+                // חסימת התאמות שווא: למנוע מהמילה "מלבן" להיחשב כ"לבן"
+                if (cleanKey === "לבן" && cleanWord === "מלבן") return false;
+                if (cleanKey === "כתב" && cleanWord === "מכתב") return false;
+
+                // תחיליות עבריות נפוצות
+                const prefixes = ["ה", "ו", "ב", "ל", "כ", "מ", "ש", "וה", "וב", "ול", "שה", "שב", "של"];
+                for (let pref of prefixes) {
+                    if (cleanWord === pref + cleanKey) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // 1. הערכת מילון המונחים (Glossary)
+            for (const [key, value] of Object.entries(TuviaBrain.glossary)) {
+                let score = 0;
+                const keyWords = key.toLowerCase().split(/[\s,?.!]+/);
+                queryWords.forEach(qw => {
+                    keyWords.forEach(kw => {
+                        if (isHebrewWordMatch(qw, kw)) {
+                            score += 8; // ציון להתאמה במילון מונחים
+                        }
+                    });
+                });
+                if (score > highestScore) {
+                    highestScore = score;
+                    bestMatch = { key, value };
+                    matchType = "glossary";
+                }
+            }
+
+            // 2. הערכת שאלות נפוצות (FAQ)
+            TuviaBrain.faq.forEach(faq => {
+                let score = 0;
+                faq.keywords.forEach(keyword => {
+                    queryWords.forEach(qw => {
+                        if (isHebrewWordMatch(qw, keyword)) {
+                            score += 10; // ניקוד בסיסי להתאמת מילת מפתח
+                        }
+                    });
+                });
+                
+                // אם המשתמש מראה כוונת קוד ("צור", "קוד"), נוריד את קדימות ה-FAQ
+                if (hasCodeIntent && score > 0) {
+                    score -= 4;
+                }
+                
+                if (score > highestScore) {
+                    highestScore = score;
+                    bestMatch = faq;
+                    matchType = "faq";
+                }
+            });
+
+            // 3. הערכת סניפטים וקודים (Snippets)
+            TuviaBrain.snippets.forEach(snippet => {
+                let score = 0;
+                snippet.keywords.forEach(keyword => {
+                    queryWords.forEach(qw => {
+                        if (isHebrewWordMatch(qw, keyword)) {
+                            score += 10;
+                        }
+                    });
+                });
+
+                // בונוס משמעותי לסניפטים אם המשתמש ביקש במפורש "קוד" או "צור"
+                if (hasCodeIntent && score > 0) {
+                    score += 15;
+                }
+
+                if (score > highestScore) {
+                    highestScore = score;
+                    bestMatch = snippet;
+                    matchType = "snippet";
+                }
+            });
+
+            // החזרת התוצאה המובילה רק אם הניקוד מספיק משמעותי
+            if (highestScore >= 6) {
+                return { item: bestMatch, type: matchType };
+            }
+            return null;
+        }
+
+        // ================================================================
+        // פונקציית שליחת הודעות צ'אט מעודכנת
+        // ================================================================
         function sendBotMessage() {
             const input = document.getElementById('botInput');
             const query = input.value.trim();
@@ -513,48 +628,26 @@
             const step = stepsData.find(s => s.id === currentStepId);
             
             setTimeout(() => {
-                let lowerQuery = query.toLowerCase();
                 let botResponse = "";
                 let generatedCode = "";
-                let hasMatched = false;
 
-                // 1. חיפוש במילון מונחים (Glossary)
-                for (const [key, value] of Object.entries(TuviaBrain.glossary)) {
-                    if (lowerQuery.includes(key.toLowerCase())) {
-                        botResponse = `💡 <b>שומע אחי? הנה פירוש המונח "${key}":</b><br>${value}`;
-                        hasMatched = true;
-                        break;
-                    }
-                }
+                // הפעלת מנוע החיפוש הסמנטי החדש
+                const matchResult = findBestSemanticMatch(query);
 
-                // 2. חיפוש בשאלות נפוצות (FAQ)
-                if (!hasMatched) {
-                    let foundFaq = TuviaBrain.faq.find(item => 
-                        item.keywords.some(keyword => lowerQuery.includes(keyword))
-                    );
-                    if (foundFaq) {
-                        botResponse = `💡 <b>הנה פתרון פדגוגי בשבילך:</b><br>${foundFaq.answer.replace(/\n/g, '<br>')}`;
-                        hasMatched = true;
-                    }
-                }
-
-                // 3. חיפוש בקודים וסניפטים (Snippets)
-                if (!hasMatched) {
-                    let foundSnippet = TuviaBrain.snippets.find(item => 
-                        item.keywords.some(keyword => lowerQuery.includes(keyword))
-                    );
-                    if (foundSnippet) {
-                        botResponse = `🎨 <b>מצאתי קוד מתאים מתוך ספריית 15 הסניפטים שלי:</b><br>` +
-                                      `• כותרת התבנית: <i>${foundSnippet.title}</i><br>` +
-                                      `• <i>${foundSnippet.explanation}</i><br><br>` +
+                if (matchResult) {
+                    if (matchResult.type === "glossary") {
+                        botResponse = `💡 <b>שומע אחי? הנה פירוש המונח "${matchResult.item.key}":</b><br>${matchResult.item.value}`;
+                    } else if (matchResult.type === "faq") {
+                        botResponse = `💡 <b>הנה פתרון פדגוגי בשבילך:</b><br>${matchResult.item.answer.replace(/\n/g, '<br>')}`;
+                    } else if (matchResult.type === "snippet") {
+                        botResponse = `🎨 <b>מצאתי קוד מתאים מתוך ספריית הסניפטים שלי:</b><br>` +
+                                      `• כותרת התבנית: <i>${matchResult.item.title}</i><br>` +
+                                      `• <i>${matchResult.item.explanation}</i><br><br>` +
                                       `💻 <b>הקוד שלך מוכן להעתקה:</b>`;
-                        generatedCode = foundSnippet.code;
-                        hasMatched = true;
+                        generatedCode = matchResult.item.code;
                     }
-                }
-
-                // 4. תגובה מותאמת כללית במידה ולא נמצאה התאמה ישירה
-                if (!hasMatched) {
+                } else {
+                    // תגובת ברירת מחדל מותאמת כללית במידה ולא נמצאה התאמה מדויקת
                     if (step.software === 'SVG-Edit') {
                         generatedCode = `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">\n  <circle cx="100" cy="100" r="80" fill="#2c3e50" stroke="#d35400" stroke-width="5"/>\n  <text x="100" y="110" font-size="20" fill="white" font-family="sans-serif" text-anchor="middle">${studentState.brand || 'Logo'}</text>\n</svg>`;
                         botResponse = `איזה כיוון חזק אחי! לא מצאתי משהו ספציפי במאגר עבור "${query}", אבל הכנתי לך שבלונה וקטורית יפה עבור המותג שלך <b>${studentState.brand || 'המותג שלי'}</b>. רד ל-SVG-Edit למטה, לחץ על לחצן ה-<b>Source</b> ותדביק את זה:<br><br><i>שאלת אתגר: רוצה שנוסיף לזה צורת מלבן או שננפיש את השמש ברקע?</i>`;
