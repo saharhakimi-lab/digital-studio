@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>תיקיית עבודה אישית בדיגיטל - סטודיו לתלמיד</title>
+    <title>מגמת תקשוב | סטודיו פרויקטים אינטראקטיבי</title>
     <!-- פונט גוגל Assistant מעוצב בעברית -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,301 +11,331 @@
     
     <style>
         :root {
-            --bg-cream: #fbf9f4;
-            --card-bg: #ffffff;
+            --bg-cream: #FDF8F2;
             --primary-accent: #2c3e50;
-            --secondary-accent: #d35400;
-            --text-main: #2c3e50;
-            --text-muted: #7f8c8d;
-            --border-color: #e2dacb;
-            --success-color: #27ae60;
-            --bot-color: #8e44ad;
-            --shadow-light: 0 4px 15px rgba(0,0,0,0.05);
+            --primary-color: #B22222;
+            --primary-hover: #911B1B;
+            --secondary-color: #1A5C2A;
+            --secondary-hover: #12401D;
+            --text-dark: #2C3E50;
+            --text-muted: #7F8C8D;
+            --border-color: #E2D7CD;
+            --shadow-light: 0 4px 15px rgba(178, 34, 34, 0.05);
+            --chat-msg-user: #E2F0D9;
+            --chat-msg-bot: #F2F2F2;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Assistant', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Assistant', sans-serif;
         }
 
         body {
             background-color: var(--bg-cream);
-            color: var(--text-main);
+            color: var(--text-dark);
             line-height: 1.6;
             padding: 15px;
-        }
-
-        .header-banner {
-            background: linear-gradient(135deg, var(--primary-accent), #1a252f);
-            color: #ffffff;
-            padding: 25px 20px;
-            text-align: center;
-            border-radius: 12px;
-            border-bottom: 5px solid var(--secondary-accent);
-            box-shadow: var(--shadow-light);
-            margin-bottom: 20px;
-        }
-
-        .header-banner h1 { 
-            font-size: 26px; 
-            font-weight: 800; 
-            margin-bottom: 5px;
-        }
-        
-        .header-banner p { 
-            font-size: 15px; 
-            color: #ecf0f1; 
-            opacity: 0.9;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 1024px) {
-            .container {
-                grid-template-columns: 1.8fr 1.2fr;
-            }
-            .full-width { grid-column: span 2; }
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 22px;
-            box-shadow: var(--shadow-light);
-            height: fit-content;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 8px;
-            color: var(--primary-accent);
-        }
-
-        .profile-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 380px;
             gap: 15px;
-            margin-bottom: 15px;
         }
 
-        @media (max-width: 600px) {
-            .profile-grid {
+        @media (max-width: 1024px) {
+            .container {
                 grid-template-columns: 1fr;
             }
         }
 
-        .form-group { 
-            display: flex; 
-            flex-direction: column; 
+        header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--primary-color), #7A1414);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-text h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .header-text p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .btn-action:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        .workspace-panel {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-light);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 700px;
+        }
+
+        .tab-bar {
+            background-color: #F5EFE6;
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-left: 1px solid var(--border-color);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .tab-btn:hover {
+            background-color: rgba(255,255,255,0.5);
+        }
+
+        .tab-btn.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wizard-steps {
+            display: flex;
             gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            overflow-x: auto;
         }
-        
-        .form-group label { 
-            font-weight: 700; 
-            font-size: 0.95rem; 
+
+        .step-bubble {
+            padding: 8px 12px;
+            background-color: #EEE;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
         }
-        
+
+        .step-bubble.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .step-container {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .step-container.active {
+            display: block;
+        }
+
+        .step-header {
+            margin-bottom: 15px;
+            background-color: #FAF8F5;
+            padding: 15px;
+            border-right: 4px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .step-header h3 {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .step-header p {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
         .form-control {
+            width: 100%;
             padding: 10px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 15px;
-            background-color: #fafafa;
-            transition: all 0.3s;
+            font-size: 0.95rem;
+            background-color: #FAFAFA;
         }
 
         .form-control:focus {
-            border-color: var(--secondary-accent);
+            border-color: var(--primary-color);
             outline: none;
             background-color: white;
         }
 
-        .btn-container {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-            flex-wrap: wrap;
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            direction: ltr;
+            text-align: left;
         }
 
-        .btn {
-            padding: 10px 18px;
+        .sandbox-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            flex-grow: 1;
+            min-height: 450px;
+        }
+
+        @media (max-width: 768px) {
+            .sandbox-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .editor-side {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .preview-side {
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            background-color: #FAF8F5;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .preview-header {
+            background-color: #EEE;
+            padding: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .preview-body {
+            flex-grow: 1;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            overflow: auto;
+        }
+
+        .preview-iframe {
+            width: 100%;
+            height: 100%;
             border: none;
+            background: white;
+        }
+
+        .btn-run-code {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
             border-radius: 6px;
-            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
+            transition: background 0.2s;
         }
 
-        .btn-primary { background-color: var(--secondary-accent); color: white; }
-        .btn-primary:hover { background-color: #b34700; }
-        .btn-success { background-color: var(--success-color); color: white; }
-        .btn-success:hover { background-color: #1e8449; }
-        
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
-        .file-input-wrapper input[type=file] {
-            font-size: 100px;
-            position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer;
+        .btn-run-code:hover {
+            background-color: var(--secondary-hover);
         }
 
-        /* מחוון התקדמות */
-        .progress-box {
-            background-color: #fdfdfd;
-            border: 1px dashed var(--border-color);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .progress-container {
-            background-color: #e0e0e0; 
-            border-radius: 20px; 
-            height: 18px; 
-            width: 100%; 
-            margin: 10px 0; 
-            overflow: hidden;
-        }
-
-        .progress-bar { 
-            background-color: var(--success-color); 
-            height: 100%; 
-            width: 0%; 
-            transition: width 0.4s ease; 
-        }
-
-        .teacher-bubble {
-            background-color: #ebf5fb; 
-            border-right: 4px solid #3498db; 
-            padding: 12px; 
-            border-radius: 4px; 
-            margin-top: 10px; 
-            font-style: italic; 
-            text-align: right;
-            font-size: 0.95rem;
-        }
-
-        /* משימות ורכיבים */
-        .software-badge {
-            display: inline-block; 
-            padding: 4px 10px; 
-            border-radius: 4px; 
-            font-size: 13px; 
-            font-weight: bold; 
-            color: white; 
-            margin-bottom: 10px;
-        }
-        .badge-photopea { background-color: #2ecc71; }
-        .badge-svg { background-color: #0052cc; }
-
-        .checklist-item {
-            display: flex; 
-            align-items: flex-start; 
-            gap: 12px; 
-            background: var(--bg-cream); 
-            padding: 10px; 
-            border-radius: 6px; 
-            margin-bottom: 8px; 
-            border-right: 3px solid var(--border-color);
-            transition: all 0.2s;
-        }
-        
-        .checklist-item input[type="checkbox"] { 
-            width: 18px; 
-            height: 18px; 
-            margin-top: 2px; 
-            cursor: pointer; 
-        }
-        
-        .checklist-item.checked { 
-            border-right-color: var(--success-color); 
-            background-color: #f4fbf7; 
-        }
-        
-        .checklist-item.checked label { 
-            text-decoration: line-through; 
-            color: var(--text-muted); 
-        }
-
-        .tech-tips { 
-            background-color: #fff9e6; 
-            border-right: 4px solid #f1c40f; 
-            padding: 12px; 
-            border-radius: 4px; 
-            margin-top: 15px; 
-            font-size: 0.95rem;
-        }
-        
-        .tech-tips h4 { 
-            margin-top: 0; 
-            color: #b7950b; 
-            margin-bottom: 5px;
-        }
-
-        /* מסגרת העבודה של התוכנות המובנות */
-        .workspace-frame-container {
-            margin-top: 15px;
-            border: 2px solid var(--primary-accent);
-            border-radius: 8px;
-            overflow: hidden;
-            background: #333;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        
-        .workspace-frame-header {
-            background: var(--primary-accent);
-            color: white;
-            padding: 8px 15px;
-            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .workspace-iframe {
+        .iframe-embed-container {
             width: 100%;
             height: 600px;
-            border: none;
-            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* סיידבאר - טוביה הקודברוט */
+        .iframe-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .sidebar-bot {
             background: white;
-            border: 2px solid var(--bot-color);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             box-shadow: var(--shadow-light);
             display: flex;
             flex-direction: column;
-            height: 750px;
+            height: 700px;
             overflow: hidden;
-            position: sticky;
-            top: 15px;
         }
 
         .bot-header {
-            background-color: var(--bot-color);
+            background-color: var(--secondary-color);
             color: white;
             padding: 15px;
             font-weight: 700;
@@ -333,7 +363,7 @@
             flex-grow: 1;
             padding: 15px;
             overflow-y: auto;
-            background-color: #fdfbfd;
+            background-color: #FAF8F5;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -341,44 +371,25 @@
 
         .chat-msg {
             max-width: 85%;
-            padding: 10px 14px;
+            padding: 12px;
             border-radius: 8px;
             font-size: 0.95rem;
             word-wrap: break-word;
-            line-height: 1.4;
         }
 
         .chat-msg.user {
-            background-color: #ebf5fb;
-            color: #1b4f72;
+            background-color: var(--chat-msg-user);
             align-self: flex-start;
             border-bottom-left-radius: 2px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border-right: 4px solid #3498db;
         }
 
         .chat-msg.bot {
-            background-color: #f1e7f8;
-            color: #4a235a;
+            background-color: var(--chat-msg-bot);
             align-self: flex-end;
             border-bottom-right-radius: 2px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             width: 100%;
-            border-right: 4px solid var(--bot-color);
-        }
-
-        .code-block {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 12px;
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 13px;
-            direction: ltr;
-            text-align: left;
-            overflow-x: auto;
-            margin-top: 10px;
-            white-space: pre-wrap;
         }
 
         .chat-input-area {
@@ -398,10 +409,10 @@
         }
 
         .chat-send-btn {
-            background-color: var(--bot-color);
+            background-color: var(--secondary-color);
             color: white;
             border: none;
-            padding: 0 15px;
+            padding: 0 18px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 700;
@@ -409,21 +420,123 @@
         }
 
         .chat-send-btn:hover {
-            background-color: #702e8c;
+            background-color: var(--secondary-hover);
         }
 
-        .btn-screenshot {
-            background-color: #7f8c8d;
-            color: white;
-            border: none;
-            padding: 0 12px;
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
             border-radius: 6px;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .btn-copy-code {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 1.1rem;
+            margin-bottom: 5px;
             transition: background 0.2s;
         }
-        .btn-screenshot:hover {
-            background-color: #6c7a7b;
+
+        .btn-copy-code:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .wizard-nav-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-wizard {
+            background-color: var(--primary-accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-wizard:hover {
+            background-color: #34495e;
+        }
+
+        .btn-wizard.next {
+            background-color: var(--primary-color);
+        }
+
+        .btn-wizard.next:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .celebration-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .celebration-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .celebration-title {
+            color: var(--secondary-color);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .btn-close-celebration {
+            background-color: var(--primary-accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
         @keyframes pulse {
@@ -431,391 +544,575 @@
             50% { transform: scale(1.2); opacity: 0.7; }
             100% { transform: scale(1); opacity: 1; }
         }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="header-banner">
-        <h1>תיקיית עבודה אישית דיגיטלית - פרויקט מיתוג עיצובי</h1>
-        <p>קורס עיצוב גרפי דיגיטלי מתקדם • בהנחיית המורה סהר • סטודיו אינטראקטיבי</p>
-    </div>
+<div class="container">
+    <header>
+        <div class="header-text">
+            <h1>סטודיו המיני-פרויקטים וההגשות - מגמת תקשוב</h1>
+            <p>שלבי עבודה אינטראקטיביים, סטודיו קוד חי וטוביה הקודברוט הנתמך ב-GitHub Database</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn-action" onclick="downloadStudentProgress()">שמור התקדמות (JSON) 💾</button>
+            <button class="btn-action" onclick="document.getElementById('uploadFile').click()">טען קובץ משימה 📂</button>
+            <input type="file" id="uploadFile" style="display: none;" accept=".json" onchange="uploadStudentProgress(event)">
+        </div>
+    </header>
 
-    <div class="container">
-        
-        <div class="card full-width">
-            <div class="card-title">פרטי התלמיד ושמירת התקדמות</div>
-            <div class="profile-grid">
+    <!-- פאנל עבודה ראשי -->
+    <div class="workspace-panel">
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('tasks', this)">📋 שלבי המשימה והגשה</button>
+            <button class="tab-btn" onclick="switchTab('sandbox', this)">🎨 סטודיו קוד לייב (Preview)</button>
+            <button class="tab-btn" onclick="switchTab('photopea', this)">🖥️ פוטופיאה מובנית (Photopea)</button>
+        </div>
+
+        <!-- טאב א': משימות ושלבי עבודה -->
+        <div id="tab-tasks" class="tab-content active">
+            <div class="wizard-steps" id="wizard-steps">
+                <div class="step-bubble active" onclick="switchStep(1)">1. מותג ואסטרטגיה</div>
+                <div class="step-bubble" onclick="switchStep(2)">2. תכנון וציור SVG</div>
+                <div class="step-bubble" onclick="switchStep(3)">3. אינטראקטיביות ו-DOM</div>
+                <div class="step-bubble" onclick="switchStep(4)">4. אנימציות ותנועה</div>
+                <div class="step-bubble" onclick="switchStep(5)">5. רפלקציה והגשה</div>
+            </div>
+
+            <!-- שלב 1: מותג ואסטרטגיה -->
+            <div id="step-1" class="step-container active">
+                <div class="step-header">
+                    <h3>שלב 1: מחקר מותג, קהל יעד ואסטרטגיה ויזואלית</h3>
+                    <p>לפני שמתחילים לכתוב קוד, עלינו להבין מהו המוצר או המותג שאנו מעצבים, מי הקהל שלו ואילו רגשות או ערכים אנו רוצים להעביר באמצעות קו וצבע.</p>
+                </div>
                 <div class="form-group">
-                    <label for="studentName">שם התלמיד:</label>
-                    <input type="text" id="studentName" class="form-control" placeholder="הקלד את שמך כאן..." oninput="updateDashboard()">
+                    <label>שם התלמיד/ה:</label>
+                    <input type="text" id="studentName" class="form-control" placeholder="ישראל ישראלי" oninput="updateState('name', this.value)">
                 </div>
                 <div class="form-group">
-                    <label for="brandName">שם המותג / החברה שבחרת:</label>
-                    <input type="text" id="brandName" class="form-control" placeholder="למשל: פיצה ברון, בגדי אופנה..." oninput="updateDashboard()">
+                    <label>שם המותג/הפרויקט שנבחר:</label>
+                    <input type="text" id="brandName" class="form-control" placeholder="לדוגמה: CyberSafe, EcoPulse" oninput="updateState('brand', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>תיאור קצר של המותג ומה הוא מציע:</label>
+                    <textarea id="brandDesc" class="form-control" placeholder="כתוב כאן על מה הפרויקט שלך..." oninput="updateState('desc', this.value)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>קהל היעד המרכזי של הפרויקט:</label>
+                    <input type="text" id="brandAudience" class="form-control" placeholder="למשל: בני נוער חובבי גיימינג, מנהלי רשתות" oninput="updateState('audience', this.value)">
                 </div>
             </div>
 
-            <div class="btn-container">
-                <button class="btn btn-primary" onclick="downloadProgress()">💾 שמור והורד קובץ התקדמות (לשמור בדרייב)</button>
-                <div class="file-input-wrapper">
-                    <button class="btn btn-success">📂 העלאת קובץ התקדמות והמשך עבודה</button>
-                    <input type="file" id="uploadFile" accept=".json" onchange="uploadProgress(event)">
+            <!-- שלב 2: תכנון וציור ה-SVG -->
+            <div id="step-2" class="step-container">
+                <div class="step-header">
+                    <h3>שלב 2: תכנון וציור ה-SVG הראשי</h3>
+                    <p>בשלב זה נבנה את הבסיס הוקטורי של הפרויקט. ה-SVG צריך לכלול לפחות 3 סוגי אלמנטים גיאומטריים שונים (rect, circle, path, וכו') עם viewBox מוגדר היטב.</p>
+                </div>
+                <div class="form-group">
+                    <label>קוד ה-SVG הראשי שלך:</label>
+                    <textarea id="svgCode" class="form-control" placeholder="<svg viewBox='0 0 400 300'>...</svg>" oninput="updateState('svg', this.value)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>הסבר קצר על מבנה ה-SVG שלך (אילו צורות בחרת ומדוע?):</label>
+                    <textarea id="svgDesc" class="form-control" placeholder="הסבר על הבחירות העיצוביות..." oninput="updateState('svg_desc', this.value)"></textarea>
                 </div>
             </div>
-        </div>
 
-        <div class="card progress-box full-width">
-            <h3 style="margin-top: 0;">מצב התקדמות בפרויקט: <span id="dashBrandName" style="color: var(--secondary-accent);">המותג שלי</span></h3>
-            <div style="margin-top: 5px;">שלום <strong id="dashStudentName">תלמיד/ה</strong>! ביצעת עד כה <span id="completedCount" style="font-weight: 700; color: var(--success-color);">0</span> מתוך <span id="totalCount" style="font-weight: 700;">47</span> תתי-משימות.</div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <div style="font-weight: 800; font-size: 20px; color: var(--success-color);" id="progressPercent">0%</div>
-            
-            <div class="teacher-bubble" id="teacherMessage">
-                <strong>הודעה מהמורה סהר:</strong> ברוך הבא לפרויקט העיצוב האישי שלך! רשום את שמך ואת החברה שבחרת למעלה, ובוא נתחיל לבנות לוגו מנצח בשלב 1. בהצלחה!
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">משימות לפי שלבים וסביבת עבודה</div>
-            
-            <div style="margin-bottom: 20px;">
-                <label for="stepSelector" style="font-weight: bold; font-size: 16px; margin-left: 10px; display: block; margin-bottom: 8px;">בחר שלב עבודה:</label>
-                <select id="stepSelector" onchange="openSelectedStep()" class="form-control" style="font-weight: bold; background: white; cursor: pointer;">
-                </select>
-            </div>
-
-            <div id="stepsContainer"></div>
-
-            <div class="workspace-frame-container">
-                <div class="workspace-frame-header">
-                    <span id="frameTitle">💻 סביבת עבודה משולבת</span>
-                    <span style="font-size: 11px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">אינטגרציה חיונית</span>
+            <!-- שלב 3: אינטראקטיביות ו-DOM -->
+            <div id="step-3" class="step-container">
+                <div class="step-header">
+                    <h3>שלב 3: חיבור דינמי ל-DOM באמצעות JavaScript</h3>
+                    <p>כעת נהפוך את ה-SVG לאינטראקטיבי. נשתמש ב-JavaScript כדי להאזין לאירועים (click, mouseover) ולשנות מאפיינים בזמן אמת. זכור להשתמש ב-createElementNS אם אתה מייצר אלמנטים דינמית!</p>
                 </div>
-                <iframe id="softwareIframe" class="workspace-iframe" src=""></iframe>
-            </div>
-        </div>
-
-        <div class="sidebar-bot">
-            <div class="bot-header">
-                <div class="bot-header-title">
-                    <span class="status-dot"></span>
-                    <span>🤖 טוביה הקודברוט (היועץ האישי שלך)</span>
+                <div class="form-group">
+                    <label>קוד ה-JavaScript לאינטראקטיביות:</label>
+                    <textarea id="jsCode" class="form-control" placeholder="// קוד JS לשינוי attributes או האזנה לאירועים..." oninput="updateState('js', this.value)"></textarea>
                 </div>
-                <span style="font-size: 12px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;">מחובר תמיד</span>
-            </div>
-            <div class="chat-messages" id="botMessages"></div>
-            <div class="chat-input-area">
-                <button class="btn-screenshot" title="צרף צילום מסך מהתוכנה לעזרה" onclick="simulateScreenshot()">📸</button>
-                <input type="text" id="botInput" class="chat-input" placeholder="דבר איתי אחי, מה אתה צריך לעצב?" onkeydown="if(event.key === 'Enter') sendBotMessage()">
-                <button class="chat-send-btn" onclick="sendBotMessage()">שלח</button>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // כל 15 שלבי המשימה המפורטים מהקובץ המקורי של המורה סהר
-        const stepsData = [
-            { id: 1, title: '1. לוגו המותג', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת הלוגו הבסיסי של המותג בצורות וקווים וקטוריים.', tasks: ['פתח את תוכנת SVG-Edit והגדר משטח עבודה ריבועי מתאים.', 'צור עיגול בסיס שחור או צורה גיאומטרית מורכבת באמצעות כלי הצורות.', 'הוסף אלמנט גרפי מרכזי או אייקון וקטורי שמאפיין את המותג.', 'השתמש בכלי הטקסט ושלב את שם המותג בצבעים בולטים.'] },
-            { id: 2, title: '2. פלייר שיווקי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב פלייר פרסומי להפצה רחבה עם המוצר המרכזי.', tasks: ['פתח דף A4 חדש ב-Photopea דרך תפריט File -> New.', 'ייבא תמונה איכותית של המוצר שלכם דרך File -> Open and Place.', 'הוסף טקסט שיווקי בולט באמצעות כלי הטקסט (T) שבסרגל הכלים השמאלי.', 'הפעל אפקט צל לטקסט דרך Layer -> Layer Style -> Drop Shadow כדי להבליט אותו.'] },
-            { id: 3, title: '3. תפריט מנות ומוצרים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'יצירת קטלוג או תפריט מעוצב המפרט את היצע החברה ומחיריה.', tasks: ['בחר פלטת צבעים קבועה לשמירה על אחידות המותג.', 'חלק את התפריט לקטגוריות ברורות כמו מנות עיקריות, עסקיות, תתוספות ושתייה.', 'רשום מחירים ברורים לצד כל פריט, והוסף אייקונים או חצים ליד מנות מומלצות.'] },
-            { id: 4, title: '4. באנר פרסומי רוחבי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'שלט רוחבי דיגיטלי לאתר האינטרנט או לרשתות החברתיות.', tasks: ['פתח קובץ במימדים רוחביים ארוכים למשל 1200 על 400 פיקסלים.', 'הוסף כיתוב שיווקי בולט ומניע לפעולה כגון "הצטרפו למועדון החברים שלנו וקבלו הטבות".', 'שלב את לוגו החברה בפינת הבאנר ופרטי יצירת קשר או כתובת אתר.'] },
-            { id: 5, title: '5. הזמנה לאירוע', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב הזמנה רשמית לפתיחת העסק או להשקת מוצר חדש.', tasks: ['הגדר דף ריבועי או מלבני קטן המתאים לשליחה בנייד או הדפסה.', 'כתוב את פרטי האירוע: תאריך מדויק, שעה, ומיקום ברור.', 'עצב רקע חגיגי באמצעות כלי הגרדיאנט מעבר צבעים בתוכנה.'] },
-            { id: 6, title: '6. שער מגזין', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב דמה של שער מגזין נחשב המארח את המותג שלכם.', tasks: ['פתח דף אנכי איכותי, והוסף את כותרת המגזין המוכר בחלק העליון בשכבה נפרדת.', 'שים תמונת תקריב מרשימה של המוצר המוביל שלכם במרכז השער.', 'הוסף כותרות משנה קטנות ומסקרנות מסביב.', 'הקפד על יישור הטקסטים לימין או לשמאל כדי לשמור על מראה מגזין מקצועי.'] },
-            { id: 7, title: '7. שלט חוצות', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מודעה ענקית המיועדת להצגה בצידי הדרכים.', tasks: ['השתמש ברקע בעל צבע מותג חזק ודומיננטי שימשוך את העין מרחוק.', 'הצב את הלוגו בגודל משמעותי במרכז או בצד השלט.', 'הוסף שורת קריאה קצרה במיוחד ואיקונים של הרשתות החברתיות שלכם.'] },
-            { id: 8, title: '8. מוצר קדמ 1: מסכת פנים או כובע', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הטמעת המותג על גבי אביזר לבוש או הגנה יומיומי.', tasks: ['ייבא תמונת בסיס של מסכה חלקה או כובע.', 'השתמש בכלי שינוי הקנה מידה כדי להתאים את הלוגו שלכם למוצר.', 'שנה את צבע הבסיס של האביזר לצבעי המותג הרשמיים בעזרת כלי המילוי.'] },
-            { id: 9, title: '9. מוצר קדמ 2: חולצת עובדים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מדי עובדים רשמיים או חולצה שיווקית של החברה.', tasks: ['פתח תמונת חולצת טי שרט חלקה בשכבה נפרדת.', 'מקם את הלוגו במיקום הגיוני על החזה בצד שמאל או בגדול במרכז הגב.', 'ודא ששקיפות הלוגו מוגדרת נכון כך שישתלב בבד בצורה ריאליסטית.'] },
-            { id: 10, title: '10. מוצר קדמ 3: מחברת או יומן', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב כריכת יומן או מחברת משרדית ממותגת.', tasks: ['עצב כריכת מחברת מלבנית המשלבת גרפיקה עדינה ברקע.', 'הוסף את שנת הלימודים או השנה הנוכחית בפונט ברור ומרשים.', 'שלב את פרטי האתר או הלוגו בתחתית הכריכה האחורית או הקדמית.'] },
-            { id: 11, title: '11. מודל תלת ממד', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הדמיית מיתוג על גבי אובייקטים נפחיים כמו פחית או בקבוק.', tasks: ['פתח קובץ המכיל צורה תלת ממדית נקייה כמו פחית משקה או גליל.', 'השתמש בכלי העיוות כדי לעטוף את האובייקט בלוגו שלכם.', 'הוסף שכבת צל וברק מעל הגרפיקה כדי לתת תחושת עומק מציאותית.'] },
-            { id: 12, title: '12. נייר מכתבים ומעטפה', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב ניירת משרדית רשמית המשמשת להתכתבות העסק.', tasks: ['עצב כותרת עליונה קבועה לנייר המכתבים המכילה את הלוגו.', 'עצב תחתית עמוד עם כתובת העסק הרשמית, מייל וטלפון המיושרים במדויק.', 'העתק את האלמנטים ועצב מעטפת דואר תואמת באותה שפה חזותית.'] },
-            { id: 13, title: '13. כרטיס ביקור', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת כרטיס ביקור דו צדדי קומפקטי ומקצועי.', tasks: ['הגדר משטח עבודה בגודל סטנדרטי של כרטיס ביקור 9 על 5 סנטימטר.', 'בצד הקדמי שים את הלוגו במרכזו.', 'בצד האחורי סדר בצורה קריאה את שם נציג החברה והתפקיד שלו.'] },
-            { id: 14, title: '14. פולדר תיקיית מסמכים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב תיקייה נפתחת המשמשת להגשת מסמכים וחוזי החברה.', tasks: ['שרטט את פריסת הפולדר כולל הכנפיים הפנימיות שמחזיקות את הדפים.', 'מקם את הלוגו והצבע הראשי בחלק החיצוני הקדמי של התיקייה.', 'ודא שאין טקסטים קרובים מדי לקווי הקיפול או קווי החיתוך.'] },
-            { id: 15, title: '15. אריזה וקופסת משלוחים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'תכנון ופריסה הנדסית של קופסת קרטון עבור מוצרי החברה.', tasks: ['שרטט את פריסת הקופסה מלבנים וריבועים מחוברים כולל לשוניות ההדבקה.', 'הוסף את הלוגו ואלמנטים עיצוביים על פאות הקופסה.', 'בצע ייצוא סופי כקובץ תמונה איכותי וקובץ וקטורי פתוח להמשך עבודה.'] }
-        ];
-
-        // מוחו של טוביה הקודברוט (FAQ וסניפטים)
-        const TuviaBrain = {
-            botName: "טוביה הקודברוט",
-            intro: "מה קורה אחי? אני כאן איתך צמוד! שאל אותי כל דבר על גרפיקה דיגיטלית, קוד, פוטופיאה או איך להזיז צורות!",
-            faq: [
-                {
-                    keywords: ["לא מופיע", "נעלם", "לא רואה", "לא מציג", "שחור", "לבן", "איפה הצורה"],
-                    answer: "הסיבות הנפוצות שצורה לא מופיעה ב-SVG:\n1. שכחת להגדיר viewBox או רוחב/גובה על ה-svg הראשי.\n2. הקואורדינטות מחוץ לתחום ה-viewBox.\n3. הגדרת בטעות fill='none' ואין stroke.\n4. ב-JS השתמשת ב-createElement במקום ב-createElementNS."
-                },
-                {
-                    keywords: ["createelement", "לא עובד בjs", "js לא מגיב", "namespace", "לא מציג בjs"],
-                    answer: "כשיוצרים אלמנט SVG ב-JS, חובה להשתמש ב-createElementNS ולא ב-createElement הרגיל!\n\nהנה הדרך הנכונה:\nconst svgNS = 'http://www.w3.org/2000/svg';\nconst circle = document.createElementNS(svgNS, 'circle');\ncircle.setAttribute('cx', 50);\ncircle.setAttribute('cy', 50);\ncircle.setAttribute('r', 20);\ncircle.setAttribute('fill', 'tomato');\nsvg.appendChild(circle);"
-                },
-                {
-                    keywords: ["גרירה", "drag", "קופץ", "עכבר", "להזיז", "תפיסה"],
-                    answer: "הגרירה קופצת? זה קורה בגלל שלא שמרת את ה-offset (המרחק) בין נקודת הלחיצה של העכבר למרכז הצורה ב-mousedown. יש לחשב offsetX/Y ב-mousedown ולהפחית אותם במהלך ה-mousemove."
-                },
-                {
-                    keywords: ["חלק", "אנימציה", "requestanimationframe", "לזוז", "תנועה", "מהירות"],
-                    answer: "לתנועה חלקה השתמש ב-requestAnimationFrame במקום ב-setInterval:\n\nlet x = 0;\nfunction animate() {\n  x += 2;\n  circle.setAttribute('cx', x);\n  if (x < 300) requestAnimationFrame(animate);\n}\nrequestAnimationFrame(animate);"
-                }
-            ],
-            snippets: [
-                {
-                    keywords: ["עיגול", "circle", "לחיצה", "צבע", "עגול"],
-                    title: "עיגול שמשנה צבע בלחיצה (SVG + JS)",
-                    code: `<svg viewBox="0 0 100 100" width="200" height="200">\n  <circle id="c1" cx="50" cy="50" r="30" fill="steelblue"/>\n</svg>\n<script>\n  const colors = ["steelblue", "tomato", "gold", "seagreen"];\n  let idx = 0;\n  const circle = document.getElementById("c1");\n  circle.addEventListener("click", () => {\n    idx = (idx + 1) % colors.length;\n    circle.setAttribute("fill", colors[idx]);\n  });\n<\/script>`
-                },
-                {
-                    keywords: ["progress", "מד התקדמות", "בר", "טעינה", "פס"],
-                    title: "מד התקדמות (Progress Bar) מעוצב",
-                    code: `<svg viewBox="0 0 220 30" width="300" height="40">\n  <rect x="0" y="0" width="200" height="20" rx="10" fill="#eee" stroke="#ccc"/>\n  <rect id="bar" x="0" y="0" width="0" height="20" rx="10" fill="#4caf50"/>\n</svg>\n<script>\n  function setProgress(percent) {\n    const bar = document.getElementById("bar");\n    bar.setAttribute("width", percent * 2);\n  }\n  setProgress(65);\n<\/script>`
-                }
-            ]
-        };
-
-        let studentState = {
-            name: "",
-            brand: "",
-            checklist: {}
-        };
-
-        let currentStepId = 1;
-
-        function init() {
-            const selector = document.getElementById('stepSelector');
-            selector.innerHTML = '';
-            
-            stepsData.forEach((step) => {
-                const option = document.createElement('option');
-                option.value = step.id;
-                option.innerText = step.title;
-                selector.appendChild(option);
-            });
-            
-            switchStep(1);
-            initBot();
-        }
-
-        function openSelectedStep() {
-            const selectedId = parseInt(document.getElementById('stepSelector').value);
-            switchStep(selectedId);
-        }
-
-        function switchStep(stepId) {
-            currentStepId = stepId;
-            const step = stepsData.find(s => s.id === stepId);
-            const container = document.getElementById('stepsContainer');
-            
-            let tasksHtml = '';
-            step.tasks.forEach((task, tIndex) => {
-                const taskId = `task_${step.id}_${tIndex}`;
-                const isChecked = studentState.checklist[taskId] ? 'checked' : '';
-                const checkedClass = studentState.checklist[taskId] ? 'checked' : '';
-                tasksHtml += `
-                    <div class="checklist-item ${checkedClass}" id="item_${taskId}">
-                        <input type="checkbox" id="${taskId}" ${isChecked} onchange="toggleTask('${taskId}')">
-                        <label for="${taskId}">${task}</label>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:10px;">
-                    <h3 style="margin:0; color:var(--primary-accent); font-weight: 800;">${step.title}</h3>
-                    <div>
-                        <span class="software-badge ${step.badge}">תוכנה: ${step.software}</span>
-                    </div>
+                <div class="form-group">
+                    <label>תאר מה קורה בפרויקט כאשר המשתמש לוחץ או מרחף מעל הצורות:</label>
+                    <textarea id="jsDesc" class="form-control" placeholder="הסבר על הלוגיקה והאינטראקטיביות..." oninput="updateState('js_desc', this.value)"></textarea>
                 </div>
-                <p style="color:var(--text-muted); margin-top:3px; font-style:italic; margin-bottom: 15px;">${step.description}</p>
+            </div>
+
+            <!-- שלב 4: אנימציות ותנועה חלקה -->
+            <div id="step-4" class="step-container">
+                <div class="step-header">
+                    <h3>שלב 4: הוספת אנימציה ותנועה חלקה</h3>
+                    <p>כדי לתת חיים לפרויקט, נוסיף אנימציות. מומלץ להשתמש ב-requestAnimationFrame בתוך לולאת ה-JS לקבלת תנועה חלקה ומסונכרנת, או לשלב תגיות animate מובנות ב-SVG.</p>
+                </div>
+                <div class="form-group">
+                    <label>קוד האנימציה (אם נכתב בנפרד):</label>
+                    <textarea id="animCode" class="form-control" placeholder="// קוד אנימציה מבוסס requestAnimationFrame או CSS..." oninput="updateState('animation', this.value)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>מה זז בפרויקט וכיצד מומשה האנימציה?</label>
+                    <textarea id="animDesc" class="form-control" placeholder="הסבר על לולאת האנימציה והתנועה..." oninput="updateState('anim_desc', this.value)"></textarea>
+                </div>
+            </div>
+
+            <!-- שלב 5: סיכום, רפלקציה והגשה -->
+            <div id="step-5" class="step-container">
+                <div class="step-header">
+                    <h3>שלב 5: סיכום, רפלקציה עצמית והגשה סופית</h3>
+                    <p>הגעת לשלב האחרון! ערוך סיכום קצר של תהליך הלמידה שלך, סמן את המטלות שהשלמת בהצלחה ושגר את הפרויקט החגיגי שלך לשרת.</p>
+                </div>
+                <div class="form-group">
+                    <label>רפלקציה עצמית - מה היה החלק המאתגר ביותר ומה למדת ממנו?</label>
+                    <textarea id="reflection" class="form-control" placeholder="כתוב כאן מספר משפטים על התהליך..." oninput="updateState('reflection', this.value)"></textarea>
+                </div>
                 
-                <div class="checklist">
-                    <h4 style="margin-bottom: 10px; font-weight: 700;">משימות לביצוע בשלב זה:</h4>
-                    ${tasksHtml}
+                <h4 style="margin: 15px 0 10px 0; font-weight: 700; color: var(--primary-color);">צ'קליסט סופי לבדיקה עצמית:</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px; background: #FAF8F5; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 400;">
+                        <input type="checkbox" id="check-svg" style="width: 18px; height: 18px;" onchange="updateChecklist('check_svg', this.checked)"> ה-SVG שלי תקין, מכיל לפחות 3 סוגי אלמנטים ו-viewBox רספונסיבי.
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 400;">
+                        <input type="checkbox" id="check-js" style="width: 18px; height: 18px;" onchange="updateChecklist('check_js', this.checked)"> חיברתי קוד JavaScript שמבצע מניפולציות DOM ל-SVG (שימוש ב-setAttribute).
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 400;">
+                        <input type="checkbox" id="check-anim" style="width: 18px; height: 18px;" onchange="updateChecklist('check_anim', this.checked)"> הוספתי אנימציה חלקה (CSS / requestAnimationFrame / SVG Animate).
+                    </label>
                 </div>
 
-                <div class="tech-tips">
-                    <h4>💡 טיפ מהמורה סהר לעבודה ב-${step.software}:</h4>
-                    <p>${step.software === 'Photopea' ? 
-                       'תמיד תעבוד בשכבות (Layers)! כשאתה מביא תמונה חדשה, תגרור אותה ישירות למשטח העבודה ותוודא שהיא בשכבה נפרדת כדי שתוכל להזיז ולשנות לה את הגודל בלי להרוס את הרקע.' : 
-                       'בתוכנה וקטורית, כל קו ועיגול הם עצמאיים. אם אתה רוצה לשנות קוד SVG ישירות, לחץ על כלי ה-Source (קוד המקור) בתוכנה והדבק את הקוד שהבוט החבר ייצר לך!'}</p>
+                <button class="btn-run-code" style="width: 100%; padding: 15px; font-size: 1.1rem;" onclick="submitProject()">שגר פרויקט לשרת המעבדה 🚀</button>
+            </div>
+
+            <!-- כפתורי ניווט של האשף -->
+            <div class="wizard-nav-btns">
+                <button id="btn-prev" class="btn-wizard" onclick="navigateStep(-1)" style="visibility: hidden;">⬅️ שלב הקודם</button>
+                <button id="btn-next" class="btn-wizard next" onclick="navigateStep(1)">שלב הבא ➡️</button>
+            </div>
+        </div>
+
+        <!-- טאב ב': סטודיו קוד לייב (Sandbox) -->
+        <div id="tab-sandbox" class="tab-content">
+            <div style="margin-bottom: 15px;">
+                <h3 style="color: var(--primary-color);">סטודיו קוד חי - Live Sandbox</h3>
+                <p style="font-size: 0.95rem;">כאן תוכל לכתוב, לערוך ולבדוק את קוד ה-SVG וה-JavaScript שלך בזמן אמת. לחץ על <b>הרץ קוד ⚡</b> כדי לראות את התוצאה!</p>
+            </div>
+            <div class="sandbox-container">
+                <div class="editor-side">
+                    <label style="font-weight: 700; font-size: 0.9rem;">עורך קוד (הזן כאן SVG + Script):</label>
+                    <textarea id="sandboxCode" class="form-control" style="flex-grow: 1; font-family: monospace; min-height: 400px; text-align: left; direction: ltr;" placeholder="<!-- כתוב כאן את קוד ה-SVG שלך -->&#10;<svg viewBox='0 0 200 200' width='100%' height='100%'>&#10;  <circle id='ball' cx='100' cy='100' r='40' fill='tomato' />&#10;</svg>&#10;&#10;<script>&#10;  const ball = document.getElementById('ball');&#10;  ball.addEventListener('click', () => {&#10;    ball.setAttribute('fill', 'gold');&#10;  });&#10;<\/script>"></textarea>
+                    <button class="btn-run-code" onclick="runSandboxCode()">הרץ קוד ⚡</button>
+                </div>
+                <div class="preview-side">
+                    <div class="preview-header">תוצאה והרצה בלייב 💻</div>
+                    <div class="preview-body">
+                        <iframe id="sandboxIframe" class="preview-iframe"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- טאב ג': פוטופיאה מובנית -->
+        <div id="tab-photopea" class="tab-content">
+            <div style="margin-bottom: 15px;">
+                <h3 style="color: var(--secondary-color);">פוטופיאה מובנית - Photopea Inside</h3>
+                <p style="font-size: 0.95rem;">צריך להכין קומפוזיציות רקע או לערוך שכבות? עבוד ישירות בתוך פוטופיאה המובנית כאן, בלי לצאת מהאתר!</p>
+            </div>
+            <div class="iframe-embed-container">
+                <iframe src="https://www.photopea.com" class="iframe-embed" allow="clipboard-write"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- פאנל צ'אט: טוביה הקודברוט -->
+    <div class="sidebar-bot">
+        <div class="bot-header">
+            <div class="bot-header-title">
+                <span class="status-dot"></span>
+                <span>טוביה הקודברוט (גרסת המעבדה) 🤖</span>
+            </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-msg bot">
+                אח שלי יקר! המערכת מנסה להתחבר כעת למאגר המוח המבוזר שלי ב-GitHub... 🧠
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="שאל את טוביה משהו... (למשל: איך לעשות עיגול)" onkeydown="if(event.key === 'Enter') sendChatMessage()">
+            <button class="chat-send-btn" onclick="sendChatMessage()">שלח</button>
+        </div>
+    </div>
+</div>
+
+<!-- מסך סיום חגיגי -->
+<div class="celebration-screen" id="celebration-screen">
+    <div class="celebration-card">
+        <div class="celebration-title">🎉 הפרויקט שוגר בהצלחה!</div>
+        <div class="celebration-text" id="celebration-summary" style="text-align: right; margin-top: 15px; max-height: 350px; overflow-y: auto;"></div>
+        <button class="btn-close-celebration" onclick="closeCelebration()">חזור לעבודה</button>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ================================================================
+// בסיס הנתונים הלוקאלי (Fallback) למקרה שאין אינטרנט או שהקבצים טרם עלו
+// ================================================================
+let TuviaBrain = {
+    faq: [],
+    snippets: []
+};
+
+// טעינה אסינכרונית של המוח מ-GitHub Database
+async function loadBrainFromGitHub() {
+    const chatMessages = document.getElementById('chat-messages');
+    try {
+        // מנסה לטעון את קבצי ה-JSON באופן יחסי מהשרת המבוזר שלך ב-GitHub Pages
+        const faqResponse = await fetch('./database/faq.json');
+        const snippetsResponse = await fetch('./database/snippets.json');
+        
+        if (faqResponse.ok && snippetsResponse.ok) {
+            TuviaBrain.faq = await faqResponse.json();
+            TuviaBrain.snippets = await snippetsResponse.json();
+            console.log("Database Loaded successfully from GitHub!");
+            chatMessages.innerHTML = `
+                <div class="chat-msg bot">
+                    <b>טוביה:</b> אח שלי יקר! התחברתי בהצלחה לבסיס הנתונים המבוזר שלי ב-GitHub! 🧠<br>
+                    כל המוח והסניפטים שלי מעודכנים ורצים בלייב. שאל אותי מה שאתה צריך לעצב! 🔥
                 </div>
             `;
-            
-            // עדכון ה-iFrame המובנה ישירות בתוך העמוד בהתאם לתוכנה של השלב
-            const iframe = document.getElementById('softwareIframe');
-            const frameTitle = document.getElementById('frameTitle');
-            if (iframe.src !== step.url) {
-                iframe.src = step.url;
-            }
-            frameTitle.innerHTML = `💻 תוכנת עבודה מובנית: <strong>${step.software}</strong> בשילוב משימה ${step.id}`;
-
-            // נעדכן את הבורר אם שינינו את השלב דרך הקוד
-            const selector = document.getElementById('stepSelector');
-            if (selector.value !== String(stepId)) {
-                selector.value = stepId;
-            }
-
-            updateDashboard();
-            if (window.botWelcomeMessage) window.botWelcomeMessage(step);
+        } else {
+            throw new Error("HTTP Status Error");
         }
+    } catch (err) {
+        console.warn("Failed to load DB. Using fallback local brain.");
+        // שחזור מקומי מהיר למקרה שהסרבר לא זמין ברגע הראשון
+        TuviaBrain.faq = [
+            { keywords: ["לא מופיע", "נעלם", "לא רואה"], answer: "הגדרת viewBox? בדוק שהקואורדינטות מתאימות לגבולות ה-viewBox." },
+            { keywords: ["createelement", "js"], answer: "ב-SVG חובה להשתמש ב-document.createElementNS('http://www.w3.org/2000/svg', tag)!" }
+        ];
+        TuviaBrain.snippets = [
+            { keywords: ["עיגול", "circle"], title: "עיגול פשוט", code: "<circle cx='50' cy='50' r='40' fill='tomato'/>" }
+        ];
+        chatMessages.innerHTML = `
+            <div class="chat-msg bot">
+                <b>טוביה:</b> שומע אחי? לא הצלחתי למצוא את קבצי ה-Database בשרת (עדיין לא העלית את תיקיית database?), אז עליתי במצב בטוח (Local Fallback). אני עדיין איתך! 💪
+            </div>
+        `;
+    }
+}
 
-        function toggleTask(taskId) {
-            const cb = document.getElementById(taskId);
-            const item = document.getElementById(`item_${taskId}`);
-            
-            if (cb.checked) {
-                item.classList.add('checked');
-                studentState.checklist[taskId] = true;
-                addBotMessage("bot", "אש עליך אחי! סימנת משימה בהצלחה. ממשיכים קדימה בלי לעצור! 🔥");
-            } else {
-                item.classList.remove('checked');
-                studentState.checklist[taskId] = false;
-            }
-            
-            updateDashboard();
-        }
+// ================================================================
+// מנוע חיפוש חכם "AI-Lite Semantic Matcher" בעברית
+// ================================================================
+function findBestMatch(userQuery) {
+    const query = userQuery.toLowerCase().trim();
+    
+    // 1. פירוק השאלה למילים בודדות (Tokenization)
+    const words = query.split(/[\s,?.!]+/);
+    
+    // 2. סינון מילים לא מועילות (Stop-Words) בעברית ובאנגלית
+    const stopWords = new Set([
+        "איך", "לעשות", "על", "את", "של", "אני", "רוצה", "ליצור", "בתוך", "עם", "למה", "מה", "זה", 
+        "הוא", "היא", "הם", "שלי", "שלנו", "כדי", "כמו", "כי", "אם", "או", "how", "to", "do", "the", "a"
+    ]);
+    const keywords = words.filter(word => word.length > 1 && !stopWords.has(word));
 
-        function updateDashboard() {
-            studentState.name = document.getElementById('studentName').value || "";
-            studentState.brand = document.getElementById('brandName').value || "";
+    let bestMatch = null;
+    let highestScore = 0;
+    let matchType = null; // 'faq' or 'snippet'
 
-            document.getElementById('dashStudentName').innerText = studentState.name || "תלמיד/ה";
-            document.getElementById('dashBrandName').innerText = studentState.brand || "המותג שלי";
+    // אם לא נשארו מילים לחיפוש, נחזיר null
+    if (keywords.length === 0) return null;
 
-            let total = 0, completed = 0;
-            stepsData.forEach(step => {
-                step.tasks.forEach((task, tIndex) => {
-                    total++;
-                    if (studentState.checklist[`task_${step.id}_${tIndex}`]) completed++;
-                });
-            });
-
-            document.getElementById('completedCount').innerText = completed;
-            document.getElementById('totalCount').innerText = total;
-
-            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
-            document.getElementById('progressBar').style.width = percent + '%';
-            document.getElementById('progressPercent').innerText = percent + '%';
-
-            const msgBox = document.getElementById('teacherMessage');
-            let txt = `<strong>הודעה מהמורה סהר:</strong> `;
-            if (percent === 0) txt += `אהלן ${studentState.name || 'תלמיד'}! רשום את השם והמותג שלך למעלה, והחבר הבוט מימין יעזור לך בכל שלב בתפריטים!`;
-            else if (percent < 50) txt += `יופי של קצב! התוכנה פתוחה למטה, תעזר בבוט כדי להוציא קודים מתאימים לעיצוב.`;
-            else if (percent === 100) txt += `פרויקט מדהים ומלא! גאה בך מאוד על ההשקעה! 🎉`;
-            else txt += `אתה כבר מעבר לחצי הדרך, העסק של ${studentState.brand || 'המותג'} הולך להראות מטורף!`;
-            msgBox.innerHTML = txt;
-        }
-
-        function initBot() {
-            const step = stepsData.find(s => s.id === currentStepId);
-            window.botWelcomeMessage(step);
-        }
-
-        window.botWelcomeMessage = function(step) {
-            const messagesContainer = document.getElementById('botMessages');
-            messagesContainer.innerHTML = ''; // מנקה את השיח במעבר שלב
-            
-            let welcomeTxt = `מה קורה אחי? אני כאן איתך צמוד! אנחנו כרגע ב**${step.title}**. <br>`;
-            if(step.software === 'Photopea') {
-                welcomeTxt += `הפעלתי לך את **Photopea** ממש כאן למטה בתוך הדף! בשביל להתחיל, כנס לתפריט העליון בתוכנה ל- **File -> New**, תבחר גודל פלייר, ותגיד לי מה הרעיון שלך כדי שנעשה את זה ביחד ונוציא גם קוד JS לאוטומציה מהירה.`;
-            } else {
-                welcomeTxt += `הפעלתי לך את **SVG-Edit** פה למטה בתוך הדף! דבר איתי, ספר לי איזה אלמנטים או צורות בא לך להוסיף ללוגו ואני אייצר לך קוד SVG מוכן שתוכל להטמיע ישר בלחיצה על כפתור ה-Source!`;
-            }
-            addBotMessage("bot", welcomeTxt);
-        }
-
-        function addBotMessage(sender, text, code = "") {
-            const container = document.getElementById('botMessages');
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `chat-msg ${sender}`;
-            msgDiv.innerHTML = text;
-            
-            if(code) {
-                const codeDiv = document.createElement('div');
-                codeDiv.className = "code-block";
-                codeDiv.innerText = code;
-                msgDiv.appendChild(codeDiv);
-            }
-            
-            container.appendChild(msgDiv);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function sendBotMessage() {
-            const input = document.getElementById('botInput');
-            const query = input.value.trim();
-            if(!query) return;
-
-            addBotMessage("user", query);
-            input.value = '';
-
-            const step = stepsData.find(s => s.id === currentStepId);
-            
-            setTimeout(() => {
-                let lowerQuery = query.toLowerCase();
-                let foundFaq = TuviaBrain.faq.find(item => 
-                    item.keywords.some(keyword => lowerQuery.includes(keyword))
-                );
-
-                let foundSnippet = TuviaBrain.snippets.find(item => 
-                    item.keywords.some(keyword => lowerQuery.includes(keyword))
-                );
-
-                if (foundFaq) {
-                    addBotMessage("bot", `💡 <b>הנה מה שאתה צריך לעשות אחי:</b><br>${foundFaq.answer.replace(/\n/g, '<br>')}`);
-                } else if (foundSnippet) {
-                    addBotMessage("bot", `🎨 <b>מצאתי קוד מתאים בבנק המקומי עבור "${query}":</b><br>הנה הקוד שלך להעתקה. כנס לתוכנה למטה והדבק אותו!`, foundSnippet.code);
-                } else {
-                    // תגובת ברירת מחדל בהתאם לתוכנה הנוכחית של השלב
-                    if(step.software === 'SVG-Edit') {
-                        let svgCode = `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">\n  <circle cx="100" cy="100" r="80" fill="#2c3e50" stroke="#d35400" stroke-width="5"/>\n  <text x="100" y="110" font-size="20" fill="white" font-family="sans-serif" text-anchor="middle">${studentState.brand || 'Logo'}</text>\n</svg>`;
-                        addBotMessage("bot", `איזה רעיון חזק אחי! יצרתי לך שבלונה וקטורית יפה עבור המותג שלך <b>${studentState.brand || 'המותג שלי'}</b>. רד ל-SVG-Edit למטה, לחץ על לחצן ה-<strong style="color:var(--secondary-accent);">Source</strong> (קוד מקור בסרגל) ותדביק את זה:`, svgCode);
-                    } else {
-                        let jsCode = `// סקריפט אוטומציה ל-Photopea\napp.activeDocument.activeLayer.opacity = 85;\nalert("השכבה שונתה ל-85% שקיפות בהצלחה ע"י הבוט החבר!");`;
-                        addBotMessage("bot", `קלטתי אותך לגמרי! בוא נבצע ב-**Photopea** שמתחתנו:<br>1. כנס ל-**File -> Open and Place** ותבחר תמונה מהמחשב.<br>2. בשביל לשנות גודל או לסובב, כנס ל-**Edit -> Free Transform**.<br>3. הנה קוד ה-JavaScript המיוחד שהכנתי לך, כנס ל-**File -> Script** בתוכנה, תדביק ותראה את הקסם:`, jsCode);
-                    }
+    // סריקת ה-FAQ
+    TuviaBrain.faq.forEach(item => {
+        let score = 0;
+        keywords.forEach(word => {
+            // התאמה ישירה למילות מפתח מוגדרות
+            item.keywords.forEach(key => {
+                if (key.includes(word) || word.includes(key)) {
+                    score += 3; // ציון גבוה על התאמה ישירה
                 }
-            }, 600);
+            });
+            // התאמה עקיפה לתוך גוף התשובה
+            if (item.answer.toLowerCase().includes(word)) {
+                score += 1;
+            }
+        });
+        if (score > highestScore) {
+            highestScore = score;
+            bestMatch = item;
+            matchType = 'faq';
+        }
+    });
+
+    // סריקת הסניפטים
+    TuviaBrain.snippets.forEach(item => {
+        let score = 0;
+        keywords.forEach(word => {
+            // התאמה ישירה למילות מפתח
+            item.keywords.forEach(key => {
+                if (key.includes(word) || word.includes(key)) {
+                    score += 4; // משקל גדול יותר לסניפטים (כי תלמידים בד"כ רוצים קוד)
+                }
+            });
+            // התאמה לכותרת
+            if (item.title.toLowerCase().includes(word)) {
+                score += 2;
+            }
+        });
+        if (score > highestScore) {
+            highestScore = score;
+            bestMatch = item;
+            matchType = 'snippet';
+        }
+    });
+
+    // רק אם יש לנו ציון משמעותי נחזיר את התוצאה
+    return highestScore >= 2 ? { data: bestMatch, type: matchType } : null;
+}
+
+// ================================================================
+// שליחת הודעה בצ'אט
+// ================================================================
+function sendChatMessage() {
+    const chatMessages = document.getElementById('chat-messages');
+    const inputEl = document.getElementById('chat-input');
+    const query = inputEl.value.trim();
+    if(!query) return;
+
+    chatMessages.innerHTML += `<div class="chat-msg user">${query}</div>`;
+    inputEl.value = "";
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    const loadingId = "load-" + Date.now();
+    chatMessages.innerHTML += `<div class="chat-msg bot" id="${loadingId}">טוביה חושב... ⚡</div>`;
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    setTimeout(() => {
+        let botResponse = "";
+        let generatedCode = "";
+        
+        // הרצת מנוע ה-AI הלוקאלי שלנו מול השרת המבוזר
+        const result = findBestMatch(query);
+
+        if (result) {
+            if (result.type === 'faq') {
+                botResponse = `💡 <b>הנה מה שאתה צריך לעשות אחי:</b><br>${result.data.answer.replace(/\n/g, '<br>')}`;
+            } else if (result.type === 'snippet') {
+                botResponse = `🎨 <b>מצאתי קוד מתאים עבור "${query}":</b><br>` +
+                              `• כותרת התבנית: <i>${result.data.title}</i><br>` +
+                              `• ${result.data.explanation || ""}<br><br>` +
+                              `💻 <b>הקוד שלך להעתקה:</b>`;
+                generatedCode = result.data.code;
+            }
+        } else {
+            botResponse = `👋 <b>שומע אחי?</b> שאלת לגבי "${query}". המילים האלה עדיין לא מופו ב-Database שלי ב-GitHub.<br><br>` +
+                          `נסה לשאול אותי משהו כמו: <i>"איך ליצור עיגול"</i>, <i>"למה הקוד לא מופיע"</i>, <i>"קוד למד התקדמות"</i>, או <i>"איך עושים גרירה"</i>.<br><br>` +
+                          `<i>"תוכל תמיד להוסיף לי עוד ידע דרך ה-GitHub!"</i>`;
         }
 
-        function simulateScreenshot() {
-            addBotMessage("user", "📸 <em>[העלה צילום מסך של התוכנה לקבלת עזרה]</em>");
-            setTimeout(() => {
-                addBotMessage("bot", "ראיתי את צילום המסך שלך אחי! שים לב לתוכנה למטה - בסרגל הכלים השמאלי יש לך את החץ (כלי הבחירה). לחץ עליו ותוכל להזיז את השכבה בדיוק לאמצע המשטח. פגז!");
-            }, 800);
+        let finalHtml = `<b>טוביה:</b><br>${botResponse}`;
+        
+        if (generatedCode) {
+            const uniqueCodeId = `code-block-${Date.now()}`;
+            const escapedCode = generatedCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            
+            finalHtml += `
+                <div style="position:relative; margin-top: 10px;">
+                    <button class="btn-copy-code" onclick="copyToClipboard('${uniqueCodeId}', this)">העתק קוד</button>
+                    <pre id="${uniqueCodeId}">${escapedCode}</pre>
+                </div>
+                <br>
+                🚀 <b>הנחיות להמשך עבודה בכיתה:</b><br>
+                • העתק את הקוד, כנס ללשונית ה-<b>Sandbox (סטודיו קוד לייב)</b> כאן למעלה, הדבק אותו והרץ בלייב!`;
         }
 
-        function downloadProgress() {
-            const sName = studentState.name.trim() || "תלמיד";
-            const bName = studentState.brand.trim() || "מותג";
-            const filename = `תיקיית_עבודה_${sName}_${bName}.json`;
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(studentState));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", filename);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
+        const loadEl = document.getElementById(loadingId);
+        if (loadEl) {
+            loadEl.innerHTML = finalHtml;
         }
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 400);
+}
 
-        function uploadProgress(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const parsed = JSON.parse(e.target.result);
-                    if (parsed && typeof parsed === 'object') {
-                        studentState = parsed;
-                        document.getElementById('studentName').value = studentState.name || "";
-                        document.getElementById('brandName').value = studentState.brand || "";
-                        switchStep(currentStepId);
-                        alert("הקובץ נטען בהצלחה אחי! המשך עבודה נעימה.");
-                    }
-                } catch (err) { alert("שגיאה בטעינת הקובץ."); }
-            };
-            reader.readAsText(file);
+// ================================================================
+// שמירת התקדמות ומעבר שלבים (מבוסס JSON)
+// ================================================================
+let studentState = {
+    name: "", brand: "", desc: "", audience: "", svg: "", svg_desc: "",
+    js: "", js_desc: "", animation: "", anim_desc: "", reflection: "",
+    check_svg: false, check_js: false, check_anim: false
+};
+
+let currentStepId = 1;
+
+function updateState(key, value) { studentState[key] = value; }
+function updateChecklist(key, isChecked) { studentState[key] = isChecked; }
+
+function switchStep(stepId) {
+    const bubbles = document.querySelectorAll('.step-bubble');
+    bubbles.forEach((b, idx) => {
+        b.classList.remove('active');
+        if (idx + 1 === stepId) b.classList.add('active');
+    });
+
+    const containers = document.querySelectorAll('.step-container');
+    containers.forEach((c, idx) => {
+        c.classList.remove('active');
+        if (idx + 1 === stepId) c.classList.add('active');
+    });
+
+    currentStepId = stepId;
+    document.getElementById('btn-prev').style.visibility = (stepId === 1) ? 'hidden' : 'visible';
+    const nextBtn = document.getElementById('btn-next');
+    if (stepId === 5) {
+        nextBtn.textContent = 'הגש פרויקט סופי 🏁';
+        nextBtn.onclick = submitProject;
+    } else {
+        nextBtn.textContent = 'שלב הבא ➡️';
+        nextBtn.onclick = () => navigateStep(1);
+    }
+}
+
+function navigateStep(direction) {
+    let target = currentStepId + direction;
+    if (target >= 1 && target <= 5) switchStep(target);
+}
+
+function switchTab(tabName, btnEl) {
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    btnEl.classList.add('active');
+
+    const contents = document.querySelectorAll('.tab-content');
+    contents.forEach(c => c.classList.remove('active'));
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+
+    if (tabName === 'sandbox') {
+        const sandboxArea = document.getElementById('sandboxCode');
+        if (!sandboxArea.value && studentState.svg) {
+            sandboxArea.value = studentState.svg + "\n\n<script>\n" + studentState.js + "\n<\/script>";
         }
+    }
+}
 
-        window.onload = init;
-    </script>
+function runSandboxCode() {
+    const code = document.getElementById('sandboxCode').value;
+    const iframe = document.getElementById('sandboxIframe');
+    const iframeContent = `
+        <!DOCTYPE html>
+        <html lang="he" dir="rtl">
+        <head>
+            <meta charset="UTF-8">
+            <style>
+                body { margin: 0; padding: 10px; display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: #ffffff; }
+                svg { max-width: 100%; max-height: 90vh; }
+            </style>
+        </head>
+        <body>${code}</body>
+        </html>
+    `;
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    doc.open(); doc.write(iframeContent); doc.close();
+}
+
+function downloadStudentProgress() {
+    const sName = studentState.name.trim() || "תלמיד";
+    const bName = studentState.brand.trim() || "מותג";
+    const filename = `פרויקט_תקשוב_${sName}_${bName}.json`;
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(studentState, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", filename);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click(); downloadAnchor.remove();
+    showToast("ההתקדמות שלך נשמרה בקובץ JSON! שמור אותו בתיקיית העבודות שלך 💾");
+}
+
+function uploadStudentProgress(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const parsed = JSON.parse(e.target.result);
+            if (parsed && typeof parsed === 'object') {
+                studentState = { ...studentState, ...parsed };
+                document.getElementById('studentName').value = studentState.name || "";
+                document.getElementById('brandName').value = studentState.brand || "";
+                document.getElementById('brandDesc').value = studentState.desc || "";
+                document.getElementById('brandAudience').value = studentState.audience || "";
+                document.getElementById('svgCode').value = studentState.svg || "";
+                document.getElementById('svgDesc').value = studentState.svg_desc || "";
+                document.getElementById('jsCode').value = studentState.js || "";
+                document.getElementById('jsDesc').value = studentState.js_desc || "";
+                document.getElementById('animCode').value = studentState.animation || "";
+                document.getElementById('animDesc').value = studentState.anim_desc || "";
+                document.getElementById('reflection').value = studentState.reflection || "";
+                document.getElementById('check-svg').checked = studentState.check_svg || false;
+                document.getElementById('check-js').checked = studentState.check_js || false;
+                document.getElementById('check-anim').checked = studentState.check_anim || false;
+                switchStep(1);
+                showToast("קובץ המשימה נטען בהצלחה! כל הנתונים עודכנו 🎉");
+            }
+        } catch (err) { alert("שגיאה בטעינת הקובץ."); }
+    };
+    reader.readAsText(file);
+}
+
+function submitProject() {
+    if (!studentState.name.trim() || !studentState.brand.trim()) {
+        showToast("אחי, מלא קודם שם מלא ונושא מותג בשלב 1!");
+        switchStep(1);
+        return;
+    }
+    const checklistHtml = `
+        <p><strong>שם התלמיד/ה:</strong> ${studentState.name}</p>
+        <p><strong>המותג שנבחר:</strong> ${studentState.brand}</p>
+        <p><strong>קהל יעד:</strong> ${studentState.audience || "טרם הוגדר"}</p>
+        <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-color);">
+        <p><strong>סטטוס משימות לבדיקה עצמית:</strong></p>
+        <ul style="list-style: none; padding-right: 15px; margin-top: 5px;">
+            <li>${studentState.check_svg ? '✅' : '❌'} רכיב SVG ראשי תקין</li>
+            <li>${studentState.check_js ? '✅' : '❌'} חיבור דינמי ל-DOM עם JS</li>
+            <li>${studentState.check_anim ? '✅' : '❌'} הוספת תנועה ואנימציה חלקה</li>
+        </ul>
+    `;
+    document.getElementById('celebration-summary').innerHTML = checklistHtml;
+    document.getElementById('celebration-screen').style.display = 'flex';
+}
+
+function closeCelebration() { document.getElementById('celebration-screen').style.display = 'none'; }
+function showToast(text) {
+    const t = document.getElementById('toast');
+    t.textContent = text; t.style.opacity = '1';
+    setTimeout(() => { t.style.opacity = '0'; }, 4000);
+}
+
+function copyToClipboard(elementId, btn) {
+    const pre = document.getElementById(elementId);
+    if (!pre) return;
+    const textarea = document.createElement('textarea');
+    textarea.value = pre.textContent;
+    document.body.appendChild(textarea);
+    textarea.select(); document.execCommand('copy');
+    document.body.removeChild(textarea);
+    const originalText = btn.textContent;
+    btn.textContent = "הועתק! ✓";
+    btn.style.backgroundColor = "var(--secondary-color)";
+    setTimeout(() => { btn.textContent = originalText; btn.style.backgroundColor = ""; }, 2000);
+}
+
+window.onload = () => {
+    loadBrainFromGitHub();
+};
+</script>
 </body>
 </html>

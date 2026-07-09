@@ -1,0 +1,38 @@
+[
+{
+"keywords": ["עיגול", "circle", "לחיצה", "צבע", "עגול", "קליק"],
+"title": "עיגול שמשנה צבע בלחיצה (SVG + JS)",
+"code": "<svg viewBox="0 0 100 100" width="200" height="200">\n  <circle id="c1" cx="50" cy="50" r="30" fill="steelblue" style="cursor:pointer;"/>\n\n\n  const colors = ["steelblue", "tomato", "gold", "seagreen"];\n  let idx = 0;\n  const circle = document.getElementById("c1");\n  circle.addEventListener("click", () => {\n    idx = (idx + 1) % colors.length;\n    circle.setAttribute("fill", colors[idx]);\n  });\n",
+"explanation": "קוד בסיסי המאזין לאירוע click ומעדכן דינמית את תכונת ה-fill באמצעות setAttribute."
+},
+{
+"keywords": ["progress", "מד התקדמות", "בר", "טעינה", "פס", "אחוזים"],
+"title": "מד התקדמות (Progress Bar) מעוצב",
+"code": "<svg viewBox="0 0 220 30" width="300" height="40">\n  <rect x="0" y="0" width="200" height="20" rx="10" fill="#eee" stroke="#ccc"/>\n  <rect id="bar" x="0" y="0" width="0" height="20" rx="10" fill="#4caf50"/>\n\n\n  function setProgress(percent) {\n    const bar = document.getElementById("bar");\n    bar.setAttribute("width", percent * 2);\n  }\n  setProgress(65); // עדכון ידני ל-65 אחוז\n",
+"explanation": "שימוש במלבן רקע ובמלבן עליון שהרוחב שלו משתנה דינמית ב-JS לפי אחוזי הטעינה."
+},
+{
+"keywords": ["מלבן", "rect", "פינות", "קופסה", "מרובע"],
+"title": "מלבן בסיסי עם פינות מעוגלות",
+"code": "<svg viewBox="0 0 200 100" width="200" height="100">\n  <rect x="10" y="10" width="150" height="70" rx="8" ry="8" fill="#3498db" stroke="#2980b9" stroke-width="3"/>\n",
+"explanation": "שימוש בתגית rect. המאפיינים rx ו-ry קובעים את רדיוס עיגול הפינות של המלבן."
+},
+{
+"keywords": ["נתיב", "path", "משולש", "חץ", "צורות מורכבות", "פאת'"],
+"title": "יצירת משולש באמצעות Path",
+"code": "<svg viewBox="0 0 100 100" width="150" height="150">\n  <path d="M 50 15 L 85 80 L 15 80 Z" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>\n",
+"explanation": "שימוש ב-path: האות M מציינת Move to (התחלה), האות L מציינת Line to (קו) והאות Z סוגרת את הנתיב."
+},
+{
+"keywords": ["טקסט", "text", "כפתור", "מרכז", "כתב", "מילים"],
+"title": "טקסט ממורכז בתוך SVG",
+"code": "<svg viewBox="0 0 200 60" width="200" height="60">\n  <rect width="200" height="60" rx="5" fill="#2ecc71"/>\n  <text x="100" y="35" text-anchor="middle" fill="white" font-family="sans-serif" font-size="16">לחץ כאן\n",
+"explanation": "מירכוז טקסט ב-SVG מבוצע באמצעות text-anchor='middle' והצבת קואורדינטת ה-x בדיוק במרכז האופקי."
+},
+{
+"keywords": ["שמש", "ירח", "כוכב", "לב", "מגן", "ציור", "אייקון", "לוגו", "סמל"],
+"title": "אייקון מגן מקומי מהמאגר",
+"code": "<svg width="200" height="200" viewBox="0 0 200 200">\n  <path d="M 100,20 Q 160,20 170,80 Q 170,140 100,190 Q 30,140 30,80 Q 40,20 100,20 Z" fill="#B22222" stroke="#1A5C2A" stroke-width="4"/>\n",
+"explanation": "קוד נתיב מורכב ורספונסיבי ליצירת מגן יוקרתי, מוכן לשימוש ישיר במחשבי המעבדה."
+}
+]

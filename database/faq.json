@@ -1,0 +1,22 @@
+[
+{
+"keywords": ["לא מופיע", "נעלם", "לא רואה", "לא מציג", "שחור", "לבן", "איפה הצורה", "לא עובד"],
+"answer": "הסיבות הנפוצות שצורה לא מופיעה ב-SVG:\n1. שכחת להגדיר viewBox או רוחב/גובה על ה-svg הראשי.\n2. הקואורדינטות מחוץ לתחום ה-viewBox.\n3. הגדרת בטעות fill='none' ואין stroke.\n4. ב-JS השתמשת ב-createElement במקום ב-createElementNS."
+},
+{
+"keywords": ["createelement", "לא עובד בjs", "js לא מגיב", "namespace", "נספח", "לא מציג בjs", "ns"],
+"answer": "כשיוצרים אלמנט SVG ב-JS, חובה להשתמש ב-createElementNS ולא ב-createElement הרגיל!\n\nהנה הדרך הנכונה:\nconst svgNS = 'http://www.w3.org/2000/svg';\nconst circle = document.createElementNS(svgNS, 'circle');\ncircle.setAttribute('cx', 50);\ncircle.setAttribute('cy', 50);\ncircle.setAttribute('r', 20);\ncircle.setAttribute('fill', 'tomato');\nsvg.appendChild(circle);"
+},
+{
+"keywords": ["גרירה", "drag", "קופץ", "עכבר", "להזיז", "תפיסה", "הזזה"],
+"answer": "הגרירה קופצת? זה קורה בגלל שלא שמרת את ה-offset (המרחק) בין נקודת הלחיצה של העכבר למרכז הצורה ב-mousedown. יש לחשב offsetX/Y ב-mousedown ולהפחית אותם במהלך ה-mousemove."
+},
+{
+"keywords": ["חלק", "אנימציה", "requestanimationframe", "לזוז", "תנועה", "מהירות", "מציאותי"],
+"answer": "לתנועה חלקה השתמש ב-requestAnimationFrame במקום ב-setInterval:\n\nlet x = 0;\nfunction animate() {\n  x += 2;\n  circle.setAttribute('cx', x);\n  if (x < 300) requestAnimationFrame(animate);\n}\nrequestAnimationFrame(animate);"
+},
+{
+"keywords": ["viewbox", "ויוקבוקס", "גודל", "רשת", "מימדים", "קואורדינטות"],
+"answer": "בוא נעשה סדר: viewBox זה 'מה אני רואה ובאיזו רזולוציה פנימית של קואורדינטות' (למשל viewBox='0 0 100 100' אומר שיש לך רשת של 100 על 100 יחידות).\nלעומת זאת, width ו-height קובעים כמה מקום פיזי ה-SVG יתפוס בפועל על המסך."
+}
+]
