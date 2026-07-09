@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מגמת תקשוב | יישומים גרפיים - מיני פרויקט 30%</title>
+    <title>תיקיית עבודה אישית בדיגיטל - סטודיו לתלמיד</title>
     <!-- פונט גוגל Assistant מעוצב בעברית -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,1900 +11,811 @@
     
     <style>
         :root {
-            --bg-color: #FDF8F2; /* שמנת/לבן חם */
-            --primary-color: #B22222; /* אדום עמוק מוסדי */
-            --primary-hover: #911B1B;
-            --secondary-color: #1A5C2A; /* ירוק כהה */
-            --secondary-hover: #12401D;
-            --text-dark: #2C3E50;
-            --text-muted: #7F8C8D;
-            --border-color: #E2D7CD;
-            --shadow-light: 0 4px 15px rgba(178, 34, 34, 0.05);
-            --shadow-bold: 0 8px 25px rgba(0, 0, 0, 0.08);
-            --transition-speed: 0.35s;
+            --bg-cream: #fbf9f4;
+            --card-bg: #ffffff;
+            --primary-accent: #2c3e50;
+            --secondary-accent: #d35400;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border-color: #e2dacb;
+            --success-color: #27ae60;
+            --bot-color: #8e44ad;
+            --shadow-light: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        /* הגדרות עיצוב כלליות */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Assistant', sans-serif;
+            font-family: 'Assistant', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
+            background-color: var(--bg-cream);
+            color: var(--text-main);
             line-height: 1.6;
-            padding: 20px 10px;
-            min-height: 100vh;
-            position: relative;
+            padding: 15px;
         }
 
-        /* חלוקת המסך עם הבוט המלווה */
-        .layout-wrapper {
-            display: flex;
-            max-width: 1250px;
-            margin: 0 auto;
-            gap: 20px;
-            align-items: flex-start;
+        .header-banner {
+            background: linear-gradient(135deg, var(--primary-accent), #1a252f);
+            color: #ffffff;
+            padding: 25px 20px;
+            text-align: center;
+            border-radius: 12px;
+            border-bottom: 5px solid var(--secondary-accent);
+            box-shadow: var(--shadow-light);
+            margin-bottom: 20px;
         }
 
-        .main-content {
-            flex: 1;
-            min-width: 0; /* מונע פריצה של גריד או רוחב */
+        .header-banner h1 { 
+            font-size: 26px; 
+            font-weight: 800; 
+            margin-bottom: 5px;
+        }
+        
+        .header-banner p { 
+            font-size: 15px; 
+            color: #ecf0f1; 
+            opacity: 0.9;
         }
 
         .container {
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: var(--shadow-bold);
-            overflow: hidden;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                grid-template-columns: 1.8fr 1.2fr;
+            }
+            .full-width { grid-column: span 2; }
+        }
+
+        .card {
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
-        }
-
-        /* כותרת הדף והלוגו */
-        header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #801616 100%);
-            color: #ffffff;
-            padding: 30px 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .logo-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        /* סרגל שמירה וטעינה מהירה למניעת מחיקות במחשבי כיתה */
-        .school-save-bar {
-            background-color: #FFF2F2;
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .save-bar-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .save-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-mini {
-            padding: 6px 12px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1px solid transparent;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-mini-save {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-mini-save:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-mini-load {
-            background-color: white;
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .btn-mini-load:hover {
-            background-color: #FFF2F2;
-        }
-
-        .btn-mini-print {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        .btn-mini-print:hover {
-            background-color: var(--secondary-hover);
-        }
-
-        #file-input {
-            display: none;
-        }
-
-        /* מד התקדמות (Progress Bar) */
-        .progress-container {
-            background: #F0E6DF;
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: var(--primary-color);
-        }
-
-        .progress-bar-bg {
-            background: #E5D5C8;
-            height: 12px;
-            border-radius: 6px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar-fill {
-            background: linear-gradient(90deg, var(--secondary-color), #2ECC71);
-            width: 0%;
-            height: 100%;
-            border-radius: 6px;
-            transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* רשימת השלבים */
-        .steps-wrapper {
-            padding: 25px;
-        }
-
-        /* מבנה כרטיסיית שלב */
-        .step-card {
-            background: #ffffff;
-            border: 2px solid var(--border-color);
             border-radius: 12px;
-            margin-bottom: 25px;
-            transition: all var(--transition-speed) ease;
-            position: relative;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* שלב פעיל */
-        .step-card.active {
-            opacity: 1;
-            pointer-events: auto;
-            border-color: var(--primary-color);
+            padding: 22px;
             box-shadow: var(--shadow-light);
+            height: fit-content;
         }
 
-        /* שלב שהושלם */
-        .step-card.completed {
-            opacity: 0.9;
-            pointer-events: auto;
-            border-color: var(--secondary-color);
-        }
-
-        /* שלב נעול */
-        .step-card.locked {
-            background-color: #FAFAFA;
-        }
-
-        .step-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 18px 20px;
-            cursor: pointer;
-            user-select: none;
-            border-bottom: 1px solid transparent;
-        }
-
-        .step-card.active .step-header {
-            border-bottom: 1px solid var(--border-color);
-            background-color: rgba(178, 34, 34, 0.02);
-        }
-
-        .step-card.completed .step-header {
-            background-color: rgba(26, 92, 42, 0.02);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .step-title-block {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .step-number {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--text-muted);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: background-color var(--transition-speed) ease;
-        }
-
-        .step-card.active .step-number {
-            background-color: var(--primary-color);
-        }
-
-        .step-card.completed .step-number {
-            background-color: var(--secondary-color);
-        }
-
-        .step-title {
+        .card-title {
             font-size: 1.25rem;
             font-weight: 700;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            color: var(--primary-accent);
         }
 
-        .step-status-icon {
-            font-size: 1.3rem;
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
-        /* תוכן השלב */
-        .step-content {
-            padding: 25px 20px;
-            display: none;
+        @media (max-width: 600px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .step-card.active .step-content {
-            display: block;
-            animation: fadeIn 0.4s ease-out;
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 5px;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        .form-group label { 
+            font-weight: 700; 
+            font-size: 0.95rem; 
         }
-
-        .instruction-box {
-            background-color: #FFF9F3;
-            border-right: 4px solid var(--primary-color);
-            padding: 12px 16px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-            color: #5D4037;
-        }
-
-        /* אלמנטים של טפסים */
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.25s ease;
-            outline: none;
-            background-color: #FAFAFA;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--primary-color);
-            background-color: #FFFFFF;
-        }
-
-        /* עיצוב שדות של קישורים באוויר */
-        .input-link-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-link-icon {
-            position: absolute;
-            right: 12px;
-            font-size: 1.1rem;
-            color: var(--secondary-color);
-            pointer-events: none;
-        }
-
-        input.input-with-link-icon {
-            padding-right: 40px;
-            border-color: #C3D9C9;
-        }
-
-        input.input-with-link-icon:focus {
-            border-color: var(--secondary-color);
-        }
-
-        /* כפתורי קישור מהיר לתוכנות */
-        .software-quick-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background-color: #EAF2EC;
-            color: var(--secondary-color);
-            text-decoration: none;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            border: 1px solid #C3D9C9;
-            transition: all 0.2s;
-            margin-top: 5px;
-        }
-
-        .software-quick-link:hover {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        /* רשת תיבות סימון (Checkboxes) בעיצוב אישי */
-        .checkbox-custom-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            background: #F9F9F9;
-            padding: 14px;
-            border-radius: 8px;
+        
+        .form-control {
+            padding: 10px;
             border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #fafafa;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-accent);
+            outline: none;
+            background-color: white;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
         }
 
-        .checkbox-custom-container:hover {
-            background: #F5F0EA;
+        .btn-primary { background-color: var(--secondary-accent); color: white; }
+        .btn-primary:hover { background-color: #b34700; }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-success:hover { background-color: #1e8449; }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer;
         }
 
-        .checkbox-custom-container input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--secondary-color);
-            cursor: pointer;
-            margin-top: 2px;
-        }
-
-        .checkbox-text {
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        /* רשת הכלים (שלב 3) */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .tool-card {
-            border: 2px solid var(--border-color);
+        /* מחוון התקדמות */
+        .progress-box {
+            background-color: #fdfdfd;
+            border: 1px dashed var(--border-color);
             border-radius: 10px;
             padding: 15px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            position: relative;
-        }
-
-        .tool-card:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(178, 34, 34, 0.01);
-        }
-
-        .tool-card input[type="checkbox"] {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 18px;
-            height: 18px;
-            accent-color: var(--secondary-color);
-        }
-
-        .tool-icon {
-            font-size: 2rem;
-        }
-
-        .tool-name {
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .tool-card.selected {
-            border-color: var(--secondary-color);
-            background-color: rgba(26, 92, 42, 0.04);
-        }
-
-        /* כרטיסיות מורכבות של תוצרים דינמיים (שלב 2) */
-        .products-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
             margin-bottom: 15px;
         }
 
-        .product-item-box {
-            background: #FAFAFA;
-            border: 1px solid var(--border-color);
-            border-right: 4px solid var(--primary-color);
-            border-radius: 8px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: all 0.2s ease;
+        .progress-container {
+            background-color: #e0e0e0; 
+            border-radius: 20px; 
+            height: 18px; 
+            width: 100%; 
+            margin: 10px 0; 
+            overflow: hidden;
         }
 
-        .product-item-box:hover {
-            background: #FFFDFC;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        .progress-bar { 
+            background-color: var(--success-color); 
+            height: 100%; 
+            width: 0%; 
+            transition: width 0.4s ease; 
         }
 
-        .product-title-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .product-label {
-            font-weight: 700;
-            white-space: nowrap;
-            min-width: 70px;
-            color: var(--primary-color);
-        }
-
-        .btn-add-product {
-            background-color: #f1f1f1;
-            color: #333;
-            border: 1px dashed var(--text-muted);
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            margin-bottom: 15px;
-        }
-
-        .btn-add-product:hover {
-            background-color: #E2D7CD;
-            border-style: solid;
-        }
-
-        /* רשימת הנחיות ההגשה (שלב 4) */
-        .checklist-group {
-            margin-bottom: 25px;
-        }
-
-        .checklist-group-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 12px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 4px;
-        }
-
-        .checklist-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 10px 14px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.2s ease;
-        }
-
-        .checklist-item:hover {
-            background-color: #FAFAFA;
-        }
-
-        .checklist-item input[type="checkbox"] {
-            margin-top: 4px;
-            width: 18px;
-            height: 18px;
-            accent-color: var(--secondary-color);
-        }
-
-        .checklist-text {
-            font-size: 0.95rem;
-        }
-
-        .checklist-badge {
-            display: inline-block;
-            background-color: #FFF3CD;
-            color: #856404;
-            font-size: 0.8rem;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-weight: 700;
-            margin-right: 8px;
-        }
-
-        /* טבלה מעוצבת למחוון (שלב 5) */
-        .rubric-table-wrapper {
-            overflow-x: auto;
-            margin: 20px 0;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .teacher-bubble {
+            background-color: #ebf5fb; 
+            border-right: 4px solid #3498db; 
+            padding: 12px; 
+            border-radius: 4px; 
+            margin-top: 10px; 
+            font-style: italic; 
             text-align: right;
             font-size: 0.95rem;
         }
 
-        th {
-            background-color: var(--primary-color);
-            color: #ffffff;
-            padding: 12px 15px;
-            font-weight: 700;
+        /* משימות ורכיבים */
+        .software-badge {
+            display: inline-block; 
+            padding: 4px 10px; 
+            border-radius: 4px; 
+            font-size: 13px; 
+            font-weight: bold; 
+            color: white; 
+            margin-bottom: 10px;
+        }
+        .badge-photopea { background-color: #2ecc71; }
+        .badge-svg { background-color: #0052cc; }
+
+        .checklist-item {
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+            background: var(--bg-cream); 
+            padding: 10px; 
+            border-radius: 6px; 
+            margin-bottom: 8px; 
+            border-right: 3px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        
+        .checklist-item input[type="checkbox"] { 
+            width: 18px; 
+            height: 18px; 
+            margin-top: 2px; 
+            cursor: pointer; 
+        }
+        
+        .checklist-item.checked { 
+            border-right-color: var(--success-color); 
+            background-color: #f4fbf7; 
+        }
+        
+        .checklist-item.checked label { 
+            text-decoration: line-through; 
+            color: var(--text-muted); 
         }
 
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--border-color);
+        .tech-tips { 
+            background-color: #fff9e6; 
+            border-right: 4px solid #f1c40f; 
+            padding: 12px; 
+            border-radius: 4px; 
+            margin-top: 15px; 
+            font-size: 0.95rem;
+        }
+        
+        .tech-tips h4 { 
+            margin-top: 0; 
+            color: #b7950b; 
+            margin-bottom: 5px;
         }
 
-        tr:nth-child(even) {
-            background-color: #FDFBF7;
-        }
-
-        tr.total-row {
-            background-color: #F5EFEB !important;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        tr.bonus-row {
-            background-color: #EAF2EC !important;
-            font-weight: 700;
-            color: var(--secondary-color);
-        }
-
-        /* כפתורי פעולה וניווט */
-        .actions-bar {
-            margin-top: 25px;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border: none;
+        /* מסגרת העבודה של התוכנות המובנות */
+        .workspace-frame-container {
+            margin-top: 15px;
+            border: 2px solid var(--primary-accent);
             border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
+            overflow: hidden;
+            background: #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-
-        .btn-next {
-            background-color: var(--secondary-color);
-            color: #ffffff;
-        }
-
-        .btn-next:hover {
-            background-color: var(--secondary-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn-disabled {
-            background-color: #BDC3C7;
-            color: #FFFFFF;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .btn-big-submit {
-            background-color: var(--secondary-color);
+        
+        .workspace-frame-header {
+            background: var(--primary-accent);
             color: white;
-            padding: 18px 40px;
-            font-size: 1.3rem;
-            border-radius: 12px;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .workspace-iframe {
             width: 100%;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(26, 92, 42, 0.3);
-            margin-top: 25px;
+            height: 600px;
+            border: none;
+            background: #ffffff;
         }
 
-        .btn-big-submit:hover {
-            background-color: var(--secondary-hover);
-            transform: scale(1.02);
-        }
-
-        /* ---------------------------------------------------------------- */
-        /* עיצוב מערכת הצ'אטבוט הסימולטיבית המקומית - טוביה */
-        /* ---------------------------------------------------------------- */
-        .chat-companion-panel {
-            width: 380px;
-            background: #11121A; /* רקע כהה חלל למעצבים */
-            border-radius: 16px;
-            box-shadow: var(--shadow-bold);
-            border: 1px solid #2A2C3D;
+        /* סיידבאר - טוביה הקודברוט */
+        .sidebar-bot {
+            background: white;
+            border: 2px solid var(--bot-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
             display: flex;
             flex-direction: column;
-            height: 650px;
-            position: sticky;
-            top: 20px;
+            height: 750px;
             overflow: hidden;
-            z-index: 100;
+            position: sticky;
+            top: 15px;
         }
 
-        .chat-header {
-            background: linear-gradient(135deg, #d81b60 0%, #880e4f 100%);
+        .bot-header {
+            background-color: var(--bot-color);
             color: white;
             padding: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .bot-header-title {
             display: flex;
             align-items: center;
             gap: 10px;
-            border-bottom: 1px solid #2A2C3D;
         }
 
-        .chat-avatar {
-            font-size: 2.2rem;
-            background: rgba(255, 255, 255, 0.15);
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #2ecc71;
             border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chat-header-info {
-            flex: 1;
-        }
-
-        .chat-header-title {
-            font-weight: 900;
-            font-size: 1.1rem;
-            letter-spacing: 0.3px;
-        }
-
-        .chat-header-status {
-            font-size: 0.8rem;
-            color: #00ff88;
-            font-family: monospace;
-            font-weight: bold;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
         }
 
         .chat-messages {
-            flex: 1;
+            flex-grow: 1;
             padding: 15px;
             overflow-y: auto;
-            background-color: #0c0d14;
+            background-color: #fdfbfd;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
         .chat-msg {
-            max-width: 88%;
-            padding: 12px 14px;
-            border-radius: 12px;
-            font-size: 0.92rem;
-            line-height: 1.5;
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.95rem;
             word-wrap: break-word;
-        }
-
-        .chat-msg.bot {
-            background-color: #1a1b26;
-            color: #e0e0e6;
-            align-self: flex-start;
-            border-top-left-radius: 2px;
-            border: 1px solid #2b2d42;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .chat-msg.bot b {
-            color: #00ff88;
+            line-height: 1.4;
         }
 
         .chat-msg.user {
-            background-color: #d81b60;
-            color: #ffffff;
-            align-self: flex-end;
-            border-top-right-radius: 2px;
+            background-color: #ebf5fb;
+            color: #1b4f72;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-right: 4px solid #3498db;
         }
 
-        /* בלוק קוד SVG שחור ומקצועי בפלט של טוביה */
-        pre {
-            background: #050608;
-            color: #ffca28;
+        .chat-msg.bot {
+            background-color: #f1e7f8;
+            color: #4a235a;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            width: 100%;
+            border-right: 4px solid var(--bot-color);
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-family: monospace;
-            font-size: 0.82rem;
-            overflow-x: auto;
-            margin: 10px 0;
-            border: 1px solid #222;
+            font-size: 13px;
             direction: ltr;
             text-align: left;
-            position: relative;
-        }
-
-        .btn-copy-code {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(255,255,255,0.15);
-            color: #fff;
-            border: none;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            font-family: sans-serif;
-        }
-        .btn-copy-code:hover {
-            background: rgba(255,255,255,0.3);
+            overflow-x: auto;
+            margin-top: 10px;
+            white-space: pre-wrap;
         }
 
         .chat-input-area {
             padding: 12px;
-            border-top: 1px solid #2A2C3D;
-            background: #161722;
+            border-top: 1px solid var(--border-color);
+            background: white;
             display: flex;
-            flex-direction: column;
             gap: 8px;
         }
 
-        .chat-input-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .chat-textarea {
-            flex: 1;
-            border: 1px solid #33364f;
-            background: #202236;
-            color: white;
-            border-radius: 8px;
+        .chat-input {
+            flex-grow: 1;
             padding: 10px;
-            font-size: 0.9rem;
-            resize: none;
-            height: 42px;
-            outline: none;
-        }
-
-        .chat-textarea:focus {
-            border-color: #d81b60;
-        }
-
-        .btn-chat-send {
-            background-color: #d81b60;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            width: 42px;
-            height: 42px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background var(--transition-speed);
-        }
-
-        .btn-chat-send:hover {
-            background-color: #b0134b;
-        }
-
-        /* פאנל סיום חגיגי */
-        .celebration-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .celebration-card {
-            background: #ffffff;
-            border-radius: 20px;
-            max-width: 600px;
-            width: 100%;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            position: relative;
-            animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 4px solid var(--secondary-color);
-        }
-
-        @keyframes scaleUp {
-            from { transform: scale(0.85); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .celebration-icon {
-            font-size: 4.5rem;
-            margin-bottom: 15px;
-        }
-
-        .celebration-title {
-            color: var(--secondary-color);
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .celebration-details {
-            background-color: var(--bg-color);
-            padding: 20px;
-            border-radius: 12px;
             border: 1px solid var(--border-color);
-            margin: 20px 0;
-            text-align: right;
-            font-size: 1.1rem;
-            max-height: 250px;
-            overflow-y: auto;
+            border-radius: 6px;
+            font-size: 0.95rem;
         }
 
-        .btn-close-celebration {
-            background-color: var(--primary-color);
+        .chat-send-btn {
+            background-color: var(--bot-color);
             color: white;
-            padding: 10px 25px;
-            border-radius: 8px;
             border: none;
-            font-weight: 700;
-            font-size: 1rem;
+            padding: 0 15px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            font-weight: 700;
+            transition: background 0.2s;
         }
 
-        .btn-close-celebration:hover {
-            background-color: var(--primary-hover);
+        .chat-send-btn:hover {
+            background-color: #702e8c;
         }
 
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #333;
+        .btn-screenshot {
+            background-color: #7f8c8d;
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            z-index: 1001;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            display: none;
-            animation: slideInUp 0.3s ease;
+            border: none;
+            padding: 0 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+        }
+        .btn-screenshot:hover {
+            background-color: #6c7a7b;
         }
 
-        @media print {
-            body { background-color: #ffffff !important; color: #000000 !important; padding: 0 !important; font-size: 12pt; }
-            .layout-wrapper { display: block !important; }
-            .chat-companion-panel { display: none !important; }
-            .container { box-shadow: none !important; border: none !important; max-width: 100% !important; }
-            header { background: none !important; color: #000000 !important; border-bottom: 2px solid #000 !important; padding: 10px 0 !important; }
-            .school-save-bar, .progress-container, .actions-bar, .btn-add-product, .celebration-overlay, .toast, .step-header { display: none !important; }
-            .step-card { border: none !important; opacity: 1 !important; pointer-events: auto !important; margin-bottom: 30px !important; page-break-inside: avoid; }
-            .step-content { display: block !important; padding: 10px 0 !important; }
-            input[type="text"] { border: none !important; border-bottom: 1px dashed #000 !important; border-radius: 0 !important; padding: 2px !important; background: transparent !important; font-weight: bold; }
-        }
-
-        @media (max-width: 1000px) {
-            .layout-wrapper { flex-direction: column; align-items: stretch; }
-            .chat-companion-panel { width: 100%; height: 450px; position: static; }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-<div class="layout-wrapper">
-    <!-- תוכן ראשי: מדריך ושלבי הפרויקט -->
-    <div class="main-content">
-        <div class="container">
-            <!-- לוגו וכותרת ראשית -->
-            <header>
-                <div class="logo-tag">
-                    <span>🎨</span>
-                    <span>מגמת תקשוב | יישומים גרפיים</span>
-                </div>
-                <h1>מדריך מטלת הביצוע — מיני פרויקט</h1>
-                <div class="subtitle">השלבים האישיים שלך לבניית תיק פרויקט (30% מהציון הכולל)</div>
-            </header>
+    <div class="header-banner">
+        <h1>תיקיית עבודה אישית דיגיטלית - פרויקט מיתוג עיצובי</h1>
+        <p>קורס עיצוב גרפי דיגיטלי מתקדם • בהנחיית המורה סהר • סטודיו אינטראקטיבי</p>
+    </div>
 
-            <!-- סרגל שמירה וטעינה מהירה למניעת מחיקות במחשבי כיתה -->
-            <div class="school-save-bar">
-                <div class="save-bar-title">
-                    <span>🏫</span>
-                    <span><strong>מחשב בית ספר?</strong> שמרו גיבוי כדי לא לאבד את התכנון והקישורים שלכם!</span>
+    <div class="container">
+        
+        <div class="card full-width">
+            <div class="card-title">פרטי התלמיד ושמירת התקדמות</div>
+            <div class="profile-grid">
+                <div class="form-group">
+                    <label for="studentName">שם התלמיד:</label>
+                    <input type="text" id="studentName" class="form-control" placeholder="הקלד את שמך כאן..." oninput="updateDashboard()">
                 </div>
-                <div class="save-buttons">
-                    <button class="btn-mini btn-mini-save" onclick="exportToFile()" title="שמירת קובץ קטן עם כל הנתונים שלכם">
-                        💾 שמירת קובץ גיבוי
-                    </button>
-                    <button class="btn-mini btn-mini-load" onclick="triggerFileInput()" title="טעינת קובץ ששמרתם בעבר">
-                        📂 טעינת קובץ גיבוי
-                    </button>
-                    <button class="btn-mini btn-mini-print" onclick="window.print()" title="הדפסת הדף או שמירה כ-PDF להגשה">
-                        🖨️ הדפסה / שמירה כ-PDF
-                    </button>
-                    <input type="file" id="file-input" accept=".json" onchange="importFromFile(event)">
+                <div class="form-group">
+                    <label for="brandName">שם המותג / החברה שבחרת:</label>
+                    <input type="text" id="brandName" class="form-control" placeholder="למשל: פיצה ברון, בגדי אופנה..." oninput="updateDashboard()">
                 </div>
             </div>
 
-            <!-- מד התקדמות (Progress Bar) -->
+            <div class="btn-container">
+                <button class="btn btn-primary" onclick="downloadProgress()">💾 שמור והורד קובץ התקדמות (לשמור בדרייב)</button>
+                <div class="file-input-wrapper">
+                    <button class="btn btn-success">📂 העלאת קובץ התקדמות והמשך עבודה</button>
+                    <input type="file" id="uploadFile" accept=".json" onchange="uploadProgress(event)">
+                </div>
+            </div>
+        </div>
+
+        <div class="card progress-box full-width">
+            <h3 style="margin-top: 0;">מצב התקדמות בפרויקט: <span id="dashBrandName" style="color: var(--secondary-accent);">המותג שלי</span></h3>
+            <div style="margin-top: 5px;">שלום <strong id="dashStudentName">תלמיד/ה</strong>! ביצעת עד כה <span id="completedCount" style="font-weight: 700; color: var(--success-color);">0</span> מתוך <span id="totalCount" style="font-weight: 700;">47</span> תתי-משימות.</div>
             <div class="progress-container">
-                <div class="progress-label">
-                    <span>ההתקדמות שלך בתהליך התכנון:</span>
-                    <span id="progress-percentage">0%</span>
-                </div>
-                <div class="progress-bar-bg">
-                    <div id="progress-bar" class="progress-bar-fill"></div>
-                </div>
+                <div class="progress-bar" id="progressBar"></div>
             </div>
-
-            <!-- רשימת השלבים -->
-            <div class="steps-wrapper">
-                <!-- שלב 1: בחירת נושא -->
-                <div id="step1" class="step-card active" data-title="שלב 1 — בחירת נושא 🎯">
-                    <div class="step-header" onclick="toggleStep(1)">
-                        <div class="step-title-block">
-                            <span class="step-number">1</span>
-                            <span class="step-title">שלב 1 — בחירת נושא 🎯</span>
-                        </div>
-                        <span id="status-icon-1" class="step-status-icon">📝</span>
-                    </div>
-                    <div class="step-content">
-                        <div class="instruction-box">
-                            <strong>איך בוחרים?</strong> בחר נושא שמעניין אותך באמת — אנימה, ספורט, מוזיקה, סוציאל, טבע או כל דבר אחר שמלהיב אותך. זכור: המורה צריך לאשר את הנושא באופן רשמי לפני שתתחיל לעצב!
-                        </div>
-                        <div class="form-group">
-                            <label for="student-name">שם התלמיד/ה:</label>
-                            <input type="text" id="student-name" placeholder="הקלד/י את שמך המלא" oninput="saveData(); checkStep1Ready(); updateBotWelcome();">
-                        </div>
-                        <div class="form-group">
-                            <label for="project-theme">מה נושא המיני-פרויקט שלך?</label>
-                            <input type="text" id="project-theme" placeholder="לדוגמה: תרבות פופ, הגנה על בעלי חיים, היפ הופ..." oninput="saveData(); checkStep1Ready(); updateBotWelcome();">
-                        </div>
-                        <div class="form-group">
-                            <label for="step1-board-link">🔗 קישור ללוח השראה דיגיטלי (למשל Pinterest, Padlet או Google Drive - אופציונלי):</label>
-                            <div class="input-link-wrapper" id="print-step1-link">
-                                <span class="input-link-icon">🔗</span>
-                                <input type="text" id="step1-board-link" class="input-with-link-icon" placeholder="הדבק קישור ללוח ההשראה שלך" oninput="saveData(); syncPrintAttribute(this, 'print-step1-link');">
-                            </div>
-                        </div>
-                        <label class="checkbox-custom-container">
-                            <input type="checkbox" id="teacher-approval-checkbox" onchange="saveData(); checkStep1Ready();">
-                            <span class="checkbox-text">✅ קיבלתי אישור רשמי מהמורה לנושא שבחרתי</span>
-                        </label>
-                        <div class="actions-bar">
-                            <button id="btn-next-1" class="btn btn-next btn-disabled" onclick="goToStep(2)">
-                                <span>המשך לשלב הבא</span>
-                                <span>←</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- שלב 2: תכנון התוצרים -->
-                <div id="step2" class="step-card locked" data-title="שלב 2 — תכנון התוצרים 📐">
-                    <div class="step-header" onclick="toggleStep(2)">
-                        <div class="step-title-block">
-                            <span class="step-number">2</span>
-                            <span class="step-title">שלב 2 — תכנון התוצרים וקישורים 📐</span>
-                        </div>
-                        <span id="status-icon-2" class="step-status-icon">🔒</span>
-                    </div>
-                    <div class="step-content">
-                        <div class="instruction-box">
-                            <strong>חשוב מאוד:</strong> עליך לתכנן לפחות <strong>5 תוצרים גרפיים משמעותיים</strong> סביב הנושא. כעת, לכל תוצר שתתכנן, תוכל להדביק גם קישור ישיר לעבודה החיה שלך (באוויר) לאחר שתייצר אותה!
-                        </div>
-                        <label>פרט/י את התוצרים ואת הקישורים שלהם באוויר:</label>
-                        <div id="products-dynamic-container" class="products-list">
-                            <!-- השורות נוצרות דינמית ב-JS -->
-                        </div>
-                        <button class="btn-add-product" onclick="addNewProductRow()">
-                            <span>➕ הוסף תוצר נוסף (אופציונלי)</span>
-                        </button>
-                        <label class="checkbox-custom-container">
-                            <input type="checkbox" id="products-checkbox" onchange="saveData(); checkStep2Ready();">
-                            <span class="checkbox-text">✅ תכננתי לפחות 5 תוצרים שונים, מגוונים ומשמעותיים</span>
-                        </label>
-                        <div class="actions-bar">
-                            <button id="btn-next-2" class="btn btn-next btn-disabled" onclick="goToStep(3)">
-                                <span>המשך לשלב הבא</span>
-                                <span>←</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- שלב 3: בחירת כלים -->
-                <div id="step3" class="step-card locked" data-title="שלב 3 — בחירת כלים 🛠️">
-                    <div class="step-header" onclick="toggleStep(3)">
-                        <div class="step-title-block">
-                            <span class="step-number">3</span>
-                            <span class="step-title">שלב 3 — בחירת כלים 🛠️</span>
-                        </div>
-                        <span id="status-icon-3" class="step-status-icon">🔒</span>
-                    </div>
-                    <div class="step-content">
-                        <div class="instruction-box">
-                            <strong>חופש בחירה וכלים מקצועיים:</strong> למשימות מגמה זו, אנו נמליץ ונעשה שימוש בתוכנות אונליין נגישות ועוצמתוות: **Photopea** כאלטרנטיבה לפוטושופ, ו-**SVG-Edit** כאלטרנטיבה וקטורית מצוינת.
-                        </div>
-                        <label>בחר/י את הכלים בהם תשתמש/י (ניתן לבחור יותר מאחד):</label>
-                        <div class="tools-grid">
-                            <div class="tool-card" id="card-photoshop" onclick="toggleTool('photoshop')">
-                                <input type="checkbox" id="tool-photoshop" onchange="saveData(); checkStep3Ready();" onclick="event.stopPropagation()">
-                                <span class="tool-icon">📸</span>
-                                <span class="tool-name">פוטופיאה (Photopea)</span>
-                                <a href="https://www.photopea.com/" target="_blank" class="software-quick-link" onclick="event.stopPropagation()">🔗 פתח Photopea</a>
-                            </div>
-                            <div class="tool-card" id="card-illustrator" onclick="toggleTool('illustrator')">
-                                <input type="checkbox" id="tool-illustrator" onchange="saveData(); checkStep3Ready();" onclick="event.stopPropagation()">
-                                <span class="tool-icon">✏️</span>
-                                <span class="tool-name">אס.וי.ג'י אדיט (SVG-Edit)</span>
-                                <a href="https://svgedit.netlify.app/" target="_blank" class="software-quick-link" onclick="event.stopPropagation()">🔗 פתח SVG-Edit</a>
-                            </div>
-                            <div class="tool-card" id="card-canva" onclick="toggleTool('canva')">
-                                <input type="checkbox" id="tool-canva" onchange="saveData(); checkStep3Ready();" onclick="event.stopPropagation()">
-                                <span class="tool-icon">🎨</span>
-                                <span class="tool-name">קנבה (Canva)</span>
-                            </div>
-                            <div class="tool-card" id="card-ai" onclick="toggleTool('ai')">
-                                <input type="checkbox" id="tool-ai" onchange="saveData(); checkStep3Ready();" onclick="event.stopPropagation()">
-                                <span class="tool-icon">🤖</span>
-                                <span class="tool-name">כלי בינה מלאכותית (AI)</span>
-                            </div>
-                        </div>
-                        <div class="form-group" style="margin-top: 15px;">
-                            <label for="other-tool">כלי דיגיטלי אחר או תוכנה נוספת:</label>
-                            <input type="text" id="other-tool" placeholder="לדוגמה: פוטופיאה, פרוקריאייט, פיינט שופ..." oninput="saveData(); checkStep3Ready();">
-                        </div>
-                        <div class="actions-bar">
-                            <button id="btn-next-3" class="btn btn-next btn-disabled" onclick="goToStep(4)">
-                                <span>המשך לשלב הבא</span>
-                                <span>←</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- שלב 4: הנחיות הגשה -->
-                <div id="step4" class="step-card locked" data-title="שלב 4 — צ'קליסט הגשה 📋">
-                    <div class="step-header" onclick="toggleStep(4)">
-                        <div class="step-title-block">
-                            <span class="step-number">4</span>
-                            <span class="step-title">שלב 4 — צ'קליסט ובדיקת מוכנות להגשה 📋</span>
-                        </div>
-                        <span id="status-icon-4" class="step-status-icon">🔒</span>
-                    </div>
-                    <div class="step-content">
-                        <div class="instruction-box">
-                            <strong>רגע לפני סיום:</strong> עבור על הסעיפים הבאים וסמן בוי רק את מה שבאמת ביצעת והכנת לפרויקט שלך.
-                        </div>
-                        <div class="checklist-group">
-                            <div class="checklist-group-title">סעיפי חובה להגשה (80 נקודות)</div>
-                            <label class="checklist-item">
-                                <input type="checkbox" id="check-req-1" onchange="saveData(); checkStep4Ready();">
-                                <span class="checklist-text">כל 5 התוצרים הגרפיים שלי מוכנים ומקושרים ישירות משלב 2</span>
-                            </label>
-                            <label class="checklist-item">
-                                <input type="checkbox" id="check-req-2" onchange="saveData(); checkStep4Ready();">
-                                <span class="checklist-text">התוצרים שומרים על אחידות ויזואלית, שפה עיצובית וצבעוניות התואמת לנושא</span>
-                            </label>
-                            <label class="checklist-item">
-                                <input type="checkbox" id="check-req-3" onchange="saveData(); checkStep4Ready();">
-                                <span class="checklist-text">העבודות הועלו בפורמט דיגיטלי תקין ופתוחות לצפייה עבור המורה</span>
-                            </label>
-                        </div>
-                        <div class="checklist-group">
-                            <div class="checklist-group-title">סעיפי רשות ובונוס (עד 20 נקודות בונוס!)</div>
-                            <label class="checklist-item">
-                                <input type="checkbox" id="portfolio-bonus" onchange="saveData();">
-                                <span class="checklist-text"><span class="checklist-badge">בונוס 20%</span> הגשת תיק עבודות שנתי מלא ומאורגן הכולל את כל תרגילי השנה</span>
-                            </label>
-                        </div>
-                        <div class="actions-bar">
-                            <button id="btn-next-4" class="btn btn-next btn-disabled" onclick="goToStep(5)">
-                                <span>המשך לשלב הבא</span>
-                                <span>←</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- שלב 5: מחוון הציון -->
-                <div id="step5" class="step-card locked" data-title="שלב 5 — מחוון הציון 🏆">
-                    <div class="step-header" onclick="toggleStep(5)">
-                        <div class="step-title-block">
-                            <span class="step-number">5</span>
-                            <span class="step-title">שלב 5 — מחוון הציון הרשמי 🏆</span>
-                        </div>
-                        <span id="status-icon-5" class="step-status-icon">🔒</span>
-                    </div>
-                    <div class="step-content">
-                        <div class="instruction-box">
-                            <strong>שקופיות והערכה:</strong> הציון שלך מורכב ישירות מאיכות הביצוע, המגוון, והשמירה על כללי העיצוב.
-                        </div>
-                        <div class="rubric-table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>קריטריון להערכה</th>
-                                        <th>פירוט הדרישה</th>
-                                        <th>ניקוד</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>אישור נושא ותכנון</strong></td>
-                                        <td>בחירת נושא מוגדר, מילוי כל פרטי השלבים וקבלת אישור מורה בזמן.</td>
-                                        <td>15 נק'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>מגוון ואיכות התוצרים</strong></td>
-                                        <td>הכנת 5 תוצרים גרפיים ברמה מקצועית, שימוש נכון בשכבות, מסכות, אפקטים וקומפוזיציה.</td>
-                                        <td>45 נק'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>שפה עיצובית אחידה</strong></td>
-                                        <td>קשר ויזואלי ברור בין כל חלקי הפרויקט (פונטים קבועים, פלטת צבעים מוגדרת).</td>
-                                        <td>20'</td>
-                                    </tr>
-                                    <tr class="total-row">
-                                        <td>סה"כ ציון חובה</td>
-                                        <td>עמידה בכל דרישות המיני-פרויקט הבסיסיות.</td>
-                                        <td>80 נק'</td>
-                                    </tr>
-                                    <tr class="bonus-row">
-                                        <td>🌟 בונוס הגשת פורטפוליו</td>
-                                        <td>הגשת תיק עבודות שנתי מאורגן המציג את כל תהליך הלמידה השנתי.</td>
-                                        <td>+20 נק'</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <button class="btn btn-big-submit" onclick="finishAndCelebrate()">
-                            🎉 סיימתי את התכנון - הצג סיכום פרויקט חגיגי!
-                        </button>
-                    </div>
-                </div>
-            </div> <!-- CLOSE steps-wrapper -->
-        </div> <!-- CLOSE container -->
-    </div> <!-- CLOSE main-content -->
-
-    <div class="chat-companion-panel">
-        <div class="chat-header">
-            <div class="chat-avatar">🎨</div>
-            <div class="chat-header-info">
-                <div class="chat-header-title">טוביה הצעיר // Visual AI</div>
-                <div class="chat-header-status">⚡ LOCAL_SIMULATOR // ONLINE</div>
+            <div style="font-weight: 800; font-size: 20px; color: var(--success-color);" id="progressPercent">0%</div>
+            
+            <div class="teacher-bubble" id="teacherMessage">
+                <strong>הודעה מהמורה סהר:</strong> ברוך הבא לפרויקט העיצוב האישי שלך! רשום את שמך ואת החברה שבחרת למעלה, ובוא נתחיל לבנות לוגו מנצח בשלב 1. בהצלחה!
             </div>
         </div>
-        <div class="chat-messages" id="chat-messages">
-            <div class="chat-msg bot" id="bot-welcome-msg">
-                <b>טוביה האומן הדיגיטלי מוכן במצב מקומי.</b><br>
-                שלום לכל מעצבי העתיד! אני כאן כדי לעזור לכם לג'נרט קודים מטורפים של צורות ואלמנטים ב-SVG, וללמד אתכם איך לשלב אותם ב-Photopea ליצירת גרפיקה מטורפת. <br><br>
-                💡 <b>מה תוכל לבקש ממני?</b><br>
-                • <b>קוד SVG:</b> רשום למשל "קוד SVG של מגן" או "סמל לוגו".<br>
-                • <b>סקריפט ל-Photopea:</b> רשום "קוד JS לכותרת" או "סקריפט לרקע".
+
+        <div class="card">
+            <div class="card-title">משימות לפי שלבים וסביבת עבודה</div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="stepSelector" style="font-weight: bold; font-size: 16px; margin-left: 10px; display: block; margin-bottom: 8px;">בחר שלב עבודה:</label>
+                <select id="stepSelector" onchange="openSelectedStep()" class="form-control" style="font-weight: bold; background: white; cursor: pointer;">
+                </select>
+            </div>
+
+            <div id="stepsContainer"></div>
+
+            <div class="workspace-frame-container">
+                <div class="workspace-frame-header">
+                    <span id="frameTitle">💻 סביבת עבודה משולבת</span>
+                    <span style="font-size: 11px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">אינטגרציה חיונית</span>
+                </div>
+                <iframe id="softwareIframe" class="workspace-iframe" src=""></iframe>
             </div>
         </div>
-        <div class="chat-input-area">
-            <div class="chat-input-row">
-                <textarea class="chat-textarea" id="chat-input" placeholder="טוביה, תבנה לי קוד של מגן ניאון זוהר..." onkeypress="if(event.key==='Enter'){ event.preventDefault(); sendChatMessage(); }"></textarea>
-                <button class="btn-chat-send" onclick="sendChatMessage()">🚀</button>
+
+        <div class="sidebar-bot">
+            <div class="bot-header">
+                <div class="bot-header-title">
+                    <span class="status-dot"></span>
+                    <span>🤖 טוביה הקודברוט (היועץ האישי שלך)</span>
+                </div>
+                <span style="font-size: 12px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;">מחובר תמיד</span>
+            </div>
+            <div class="chat-messages" id="botMessages"></div>
+            <div class="chat-input-area">
+                <button class="btn-screenshot" title="צרף צילום מסך מהתוכנה לעזרה" onclick="simulateScreenshot()">📸</button>
+                <input type="text" id="botInput" class="chat-input" placeholder="דבר איתי אחי, מה אתה צריך לעצב?" onkeydown="if(event.key === 'Enter') sendBotMessage()">
+                <button class="chat-send-btn" onclick="sendBotMessage()">שלח</button>
             </div>
         </div>
+
     </div>
-</div> <!-- CLOSE layout-wrapper -->
 
-<!-- פאנל סיום חגיגי -->
-<div id="celebration-screen" class="celebration-overlay">
-    <div class="celebration-card">
-        <div class="celebration-icon">🏆</div>
-        <h2 class="celebration-title">כל הכבוד! תכנון הפרויקט הושלם!</h2>
-        <p>רשמת ותכננת את המיני פרויקט שלך בהצלחה. להלן סיכום הנתונים שנקלטו במערכת:</p>
-        <div id="celebration-summary" class="celebration-details"></div>
-        <p style="margin-bottom: 20px; font-size: 0.95rem; color: var(--text-muted);">
-            💡 מומלץ ללחוץ על <strong>"הדפסה / שמירה כ-PDF"</strong> בראש העמוד כדי לשמור עותק רשמי מודפס או קובץ PDF חתום להגשה למורה!
-        </p>
-        <button class="btn-close-celebration" onclick="closeCelebration()">סגור חלונית</button>
-    </div>
-</div>
+    <script>
+        // כל 15 שלבי המשימה המפורטים מהקובץ המקורי של המורה סהר
+        const stepsData = [
+            { id: 1, title: '1. לוגו המותג', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת הלוגו הבסיסי של המותג בצורות וקווים וקטוריים.', tasks: ['פתח את תוכנת SVG-Edit והגדר משטח עבודה ריבועי מתאים.', 'צור עיגול בסיס שחור או צורה גיאומטרית מורכבת באמצעות כלי הצורות.', 'הוסף אלמנט גרפי מרכזי או אייקון וקטורי שמאפיין את המותג.', 'השתמש בכלי הטקסט ושלב את שם המותג בצבעים בולטים.'] },
+            { id: 2, title: '2. פלייר שיווקי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב פלייר פרסומי להפצה רחבה עם המוצר המרכזי.', tasks: ['פתח דף A4 חדש ב-Photopea דרך תפריט File -> New.', 'ייבא תמונה איכותית של המוצר שלכם דרך File -> Open and Place.', 'הוסף טקסט שיווקי בולט באמצעות כלי הטקסט (T) שבסרגל הכלים השמאלי.', 'הפעל אפקט צל לטקסט דרך Layer -> Layer Style -> Drop Shadow כדי להבליט אותו.'] },
+            { id: 3, title: '3. תפריט מנות ומוצרים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'יצירת קטלוג או תפריט מעוצב המפרט את היצע החברה ומחיריה.', tasks: ['בחר פלטת צבעים קבועה לשמירה על אחידות המותג.', 'חלק את התפריט לקטגוריות ברורות כמו מנות עיקריות, עסקיות, תתוספות ושתייה.', 'רשום מחירים ברורים לצד כל פריט, והוסף אייקונים או חצים ליד מנות מומלצות.'] },
+            { id: 4, title: '4. באנר פרסומי רוחבי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'שלט רוחבי דיגיטלי לאתר האינטרנט או לרשתות החברתיות.', tasks: ['פתח קובץ במימדים רוחביים ארוכים למשל 1200 על 400 פיקסלים.', 'הוסף כיתוב שיווקי בולט ומניע לפעולה כגון "הצטרפו למועדון החברים שלנו וקבלו הטבות".', 'שלב את לוגו החברה בפינת הבאנר ופרטי יצירת קשר או כתובת אתר.'] },
+            { id: 5, title: '5. הזמנה לאירוע', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב הזמנה רשמית לפתיחת העסק או להשקת מוצר חדש.', tasks: ['הגדר דף ריבועי או מלבני קטן המתאים לשליחה בנייד או הדפסה.', 'כתוב את פרטי האירוע: תאריך מדויק, שעה, ומיקום ברור.', 'עצב רקע חגיגי באמצעות כלי הגרדיאנט מעבר צבעים בתוכנה.'] },
+            { id: 6, title: '6. שער מגזין', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב דמה של שער מגזין נחשב המארח את המותג שלכם.', tasks: ['פתח דף אנכי איכותי, והוסף את כותרת המגזין המוכר בחלק העליון בשכבה נפרדת.', 'שים תמונת תקריב מרשימה של המוצר המוביל שלכם במרכז השער.', 'הוסף כותרות משנה קטנות ומסקרנות מסביב.', 'הקפד על יישור הטקסטים לימין או לשמאל כדי לשמור על מראה מגזין מקצועי.'] },
+            { id: 7, title: '7. שלט חוצות', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מודעה ענקית המיועדת להצגה בצידי הדרכים.', tasks: ['השתמש ברקע בעל צבע מותג חזק ודומיננטי שימשוך את העין מרחוק.', 'הצב את הלוגו בגודל משמעותי במרכז או בצד השלט.', 'הוסף שורת קריאה קצרה במיוחד ואיקונים של הרשתות החברתיות שלכם.'] },
+            { id: 8, title: '8. מוצר קדמ 1: מסכת פנים או כובע', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הטמעת המותג על גבי אביזר לבוש או הגנה יומיומי.', tasks: ['ייבא תמונת בסיס של מסכה חלקה או כובע.', 'השתמש בכלי שינוי הקנה מידה כדי להתאים את הלוגו שלכם למוצר.', 'שנה את צבע הבסיס של האביזר לצבעי המותג הרשמיים בעזרת כלי המילוי.'] },
+            { id: 9, title: '9. מוצר קדמ 2: חולצת עובדים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מדי עובדים רשמיים או חולצה שיווקית של החברה.', tasks: ['פתח תמונת חולצת טי שרט חלקה בשכבה נפרדת.', 'מקם את הלוגו במיקום הגיוני על החזה בצד שמאל או בגדול במרכז הגב.', 'ודא ששקיפות הלוגו מוגדרת נכון כך שישתלב בבד בצורה ריאליסטית.'] },
+            { id: 10, title: '10. מוצר קדמ 3: מחברת או יומן', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב כריכת יומן או מחברת משרדית ממותגת.', tasks: ['עצב כריכת מחברת מלבנית המשלבת גרפיקה עדינה ברקע.', 'הוסף את שנת הלימודים או השנה הנוכחית בפונט ברור ומרשים.', 'שלב את פרטי האתר או הלוגו בתחתית הכריכה האחורית או הקדמית.'] },
+            { id: 11, title: '11. מודל תלת ממד', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הדמיית מיתוג על גבי אובייקטים נפחיים כמו פחית או בקבוק.', tasks: ['פתח קובץ המכיל צורה תלת ממדית נקייה כמו פחית משקה או גליל.', 'השתמש בכלי העיוות כדי לעטוף את האובייקט בלוגו שלכם.', 'הוסף שכבת צל וברק מעל הגרפיקה כדי לתת תחושת עומק מציאותית.'] },
+            { id: 12, title: '12. נייר מכתבים ומעטפה', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב ניירת משרדית רשמית המשמשת להתכתבות העסק.', tasks: ['עצב כותרת עליונה קבועה לנייר המכתבים המכילה את הלוגו.', 'עצב תחתית עמוד עם כתובת העסק הרשמית, מייל וטלפון המיושרים במדויק.', 'העתק את האלמנטים ועצב מעטפת דואר תואמת באותה שפה חזותית.'] },
+            { id: 13, title: '13. כרטיס ביקור', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת כרטיס ביקור דו צדדי קומפקטי ומקצועי.', tasks: ['הגדר משטח עבודה בגודל סטנדרטי של כרטיס ביקור 9 על 5 סנטימטר.', 'בצד הקדמי שים את הלוגו במרכזו.', 'בצד האחורי סדר בצורה קריאה את שם נציג החברה והתפקיד שלו.'] },
+            { id: 14, title: '14. פולדר תיקיית מסמכים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב תיקייה נפתחת המשמשת להגשת מסמכים וחוזי החברה.', tasks: ['שרטט את פריסת הפולדר כולל הכנפיים הפנימיות שמחזיקות את הדפים.', 'מקם את הלוגו והצבע הראשי בחלק החיצוני הקדמי של התיקייה.', 'ודא שאין טקסטים קרובים מדי לקווי הקיפול או קווי החיתוך.'] },
+            { id: 15, title: '15. אריזה וקופסת משלוחים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'תכנון ופריסה הנדסית של קופסת קרטון עבור מוצרי החברה.', tasks: ['שרטט את פריסת הקופסה מלבנים וריבועים מחוברים כולל לשוניות ההדבקה.', 'הוסף את הלוגו ואלמנטים עיצוביים על פאות הקופסה.', 'בצע ייצוא סופי כקובץ תמונה איכותי וקובץ וקטורי פתוח להמשך עבודה.'] }
+        ];
 
-<!-- רכיב התראה (Toast) צף -->
-<div id="toast" class="toast">הנתונים נשמרו אוטומטית במחשב זה!</div>
-
-<script>
-    // משתנה גלובלי למספר התוצרים הדינמיים הנדרש
-    let totalProductsCount = 5;
-
-    // אתחול דף וטעינת נתונים ראשונית
-    window.addEventListener('DOMContentLoaded', () => {
-        buildDynamicProductRows();
-        loadSavedData();
-        updateProgress();
-    });
-
-    // בניית שורות התוצרים הדינמיות (ברירת מחדל לפחות 5)
-    function buildDynamicProductRows() {
-        const container = document.getElementById('products-dynamic-container');
-        if(!container) return;
-        container.innerHTML = '';
-        for (let i = 1; i <= totalProductsCount; i++) {
-            container.appendChild(createProductRowElement(i));
-        }
-    }
-
-    function createProductRowElement(index) {
-        const box = document.createElement('div');
-        box.className = 'product-item-box';
-        box.id = `product-box-${index}`;
-        
-        box.innerHTML = `
-            <div class="product-title-row">
-                <span class="product-label">תוצר ${index}:</span>
-                <input type="text" id="product-name-${index}" placeholder="שם התוצר (לדוגמה: לוגו וקטורי, כרזת פרסום, עטיפת אלבום...)" oninput="saveData(); checkStep2Ready();">
-            </div>
-            <div class="input-link-wrapper" id="print-product-link-${index}">
-                <span class="input-link-icon">🔗</span>
-                <input type="text" id="product-link-${index}" class="input-with-link-icon" placeholder="הדבק קישור לעבודה שלך באוויר (Canva, Google Drive, SVG Viewer...)" oninput="saveData(); checkStep2Ready(); syncPrintAttribute(this, 'print-product-link-${index}');">
-            </div>
-        `;
-        return box;
-    }
-
-    // הוספת שורה חדשה באופן דינמי
-    function addNewProductRow() {
-        totalProductsCount++;
-        const container = document.getElementById('products-dynamic-container');
-        container.appendChild(createProductRowElement(totalProductsCount));
-        saveData();
-        checkStep2Ready();
-        showToast("נוספה שורת תוצר חדשה!");
-    }
-
-    // פונקציה לסנכרון ערך הקישור עבור תצוגת הדפסה
-    function syncPrintAttribute(inputEl, wrapperId) {
-        const wrapper = document.getElementById(wrapperId);
-        if (wrapper) {
-            wrapper.setAttribute('data-printed-value', inputEl.value || 'לא הוזן קישור');
-        }
-    }
-
-// ----------------------------------------------------------------
-// מנוע טוביה המקוון: חיבור למאגרי המידע הגלובליים (Iconify & Scripts)
-// ----------------------------------------------------------------
-async function sendChatMessage() {
-    const chatMessages = document.getElementById('chat-messages');
-    const inputEl = document.getElementById('chat-input');
-    const query = inputEl.value.trim();
-    if(!query) return;
-
-    // 1. הצגת הודעת המשתמש בצ'אט
-    chatMessages.innerHTML += `<div class="chat-msg user">${query}</div>`;
-    inputEl.value = "";
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    // 2. יצירת הודעת טעינה זמנית
-    const loadingId = "load-" + Date.now();
-    chatMessages.innerHTML += `<div class="chat-msg bot" id="${loadingId}">טוביה מתחבר למאגרי המידע המקוונים... ⚡</div>`;
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    let botResponse = "";
-    let generatedCode = "";
-    let codeType = "svg"; 
-    const lowerQuery = query.toLowerCase();
-
-    // מילון תרגום מובנה להזרקה חכמה מול ה-API העולמי (עברית -> אנגלית)
-    const dictionary = {
-        'מגן': 'shield', 'לב': 'heart', 'כוכב': 'star', 'משתמש': 'user', 'בית': 'home', 
-        'טלפון': 'phone', 'מחשב': 'computer', 'מסך': 'monitor', 'אש': 'fire', 'להבה': 'flame',
-        'חתול': 'cat', 'כלב': 'dog', 'משחק': 'gamepad', 'גיימינג': 'game', 'מפתח': 'key',
-        'מנעול': 'lock', 'אוטו': 'car', 'רכב': 'car', 'נשק': 'sword', 'חרב': 'sword', 
-        'ספר': 'book', 'מוזיקה': 'music', 'תו': 'music-note', 'כתר': 'crown', 'יהלום': 'diamond',
-        'שמש': 'sun', 'ירח': 'moon', 'ענן': 'cloud', 'עץ': 'tree', 'פרח': 'flower',
-        'רובוט': 'robot', 'טיל': 'rocket', 'חלל': 'space', 'פלאש': 'flash', 'ברק': 'lightning'
-    };
-
-    try {
-        // --- נתיב א': המשתמש מבקש קוד SVG או אלמנט וקטורי ---
-        if (lowerQuery.includes('svg') || lowerQuery.includes('מגן') || lowerQuery.includes('לוגו') || lowerQuery.includes('סמל') || lowerQuery.includes('צורה') || lowerQuery.includes('וקטור') || lowerQuery.includes('אייקון') || lowerQuery.includes('ציור')) {
-            codeType = "svg";
-            
-            // ניקוי מילות קישור בעברית כדי לבודד את מילת החיפוש
-            let searchKeyword = query.replace(/טוביה|תביא|לי|קוד|של|אייקון|צורה|וקטור|ציור|תייצר|תבנה/g, '').trim();
-            
-            // בדיקה ותרגום מול המילון
-            if (dictionary[searchKeyword]) {
-                searchKeyword = dictionary[searchKeyword];
-            } else if (!searchKeyword) {
-                searchKeyword = "star"; // ברירת מחדל אם התלמיד שלח פקודה ריקה
-            }
-
-            // פנייה בזמן אמת ל-API של Iconify
-            let searchResponse = await fetch(`https://api.iconify.design/search?query=${encodeURIComponent(searchKeyword)}`);
-            let searchData = await searchResponse.json();
-
-            if (searchData.icons && searchData.icons.length > 0) {
-                // לוקחים את התוצאה הראשונה והמדויקת ביותר
-                let bestIcon = searchData.icons[0]; 
-                
-                // משיכת קוד ה-SVG הגולמי (Raw) של האלמנט
-                let svgResponse = await fetch(`https://api.iconify.design/${bestIcon}.svg`);
-                generatedCode = await svgResponse.text();
-                
-                botResponse = `🎨 <b>הזרקת קוד SVG הצליחה! שלפתי אלמנט ממאגר הווקטורים העולמי:</b><br>` +
-                              `• מזהה ויזואלי ברשת: <code>${bestIcon}</code>.<br>` +
-                              `• הקוד רספונסיבי, נקי ומוכן לעבודה ב-<b>SVG-Edit</b>.<br><br>` +
-                              `💻 <b>קוד ה-SVG שלך להעתקה:</b>`;
-            } else {
-                // גיבוי (Fallback) במקרה שהמילה לא נמצאה ב-API
-                botResponse = `🔍 חיפשתי במאגר הגלובלי ולא מצאתי אלמנט מדויק עבור "${searchKeyword}". יצרתי עבורך צורת מגן בסיסית חלופית:`;
-                generatedCode = `<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">\n  <path d="M 100,20 Q 160,20 170,80 Q 170,140 100,190 Q 30,140 30,80 Q 40,20 100,20 Z" fill="#B22222" stroke="#1A5C2A" stroke-width="4"/>\n</svg>`;
-            }
-        } 
-        
-        // --- נתיב ב': המשתמש מבקש קוד JavaScript או סקריפט אוטומציה ל-Photopea ---
-        else if (lowerQuery.includes('js') || lowerQuery.includes('סקריפט') || lowerQuery.includes('קוד') || lowerQuery.includes('טקסט') || lowerQuery.includes('כותרת') || lowerQuery.includes('רקע') || lowerQuery.includes('שכבה') || lowerQuery.includes('פוטו')) {
-            codeType = "javascript";
-            
-            // בקרב הנוכחי: אנו מזריקים מאגר סקריפטים דינמי חכם מבוסס תנאים
-            botResponse = `🚀 <b>מנוע האוטומציה של טוביה יצר סקריפט JavaScript מותאם ל-Photopea API:</b><br>` +
-                          `• הסקריפט מוכן להרצה מיידית בתוך תוכנת Photopea דרך תפריט Scripts.<br><br>` +
-                          `💻 <b>קוד ה-JS שלך להעתקה:</b>`;
-
-            if (lowerQuery.includes('טקסט') || lowerQuery.includes('כותרת')) {
-                generatedCode = `// סקריפט כותרת אוטומטי - מגמת תקשוב\nvar doc = app.activeDocument || app.documents.add(1000, 1000, 72, "פרויקט גרפי");\nvar textLayer = doc.artLayers.add();\ntextLayer.type = LayerType.TEXT;\nvar textItem = textLayer.textItem;\ntextItem.contents = "עיצוב ויזואלי אינטראקטיבי";\ntextItem.size = 65;\ textItem.position = [150, 500];\nalert("הכותרת התווספה לשכבה חדשה ב-Photopea!");`;
-            } else if (lowerQuery.includes('רקע') || lowerQuery.includes('צבע')) {
-                generatedCode = `// סקריפט קומפוזיציית רקע - מגמת תקשוב\nvar doc = app.activeDocument || app.documents.add(1920, 1080, 72, "רקע פרויקט");\nvar bgLayer = doc.artLayers.add();\nbgLayer.name = "רקע מותג אוטומטי";\ndoc.selection.selectAll();\nvar color = new SolidColor();\ncolor.rgb.hexValue = "B22222"; // אדום מוסדי\ndoc.selection.fill(color);\ndoc.selection.deselect();`;
-            } else {
-                generatedCode = `// סקריפט ניהול שכבות חכם - Photopea\nvar doc = app.activeDocument || app.documents.add(800, 600, 72, "מיני פרויקט");\nfor(var i=1; i<=3; i++){\n  var l = doc.artLayers.add();\n  l.name = "שכבת עבודה אומנותית מספר " + i;\n}\nalert("טוביה יצר עבורך 3 שכבות עבודה נקיות באופן אוטומטי!");`;
-            }
-        } 
-        
-        // --- נתיב ג': שיחה כללית / הנחיית השראה במצב מקוון ---
-        else {
-            botResponse = `🎨 <b>הקרב החל! אני מחובר כעת למאגרי המידע המקוונים של SVG ו-JavaScript!</b><br>` +
-                          `תרגיש חופשי לאתגר אותי ולקבל קודים בלייב מהרשת:<br>` +
-                          `• <b>עבור אלמנט וקטורי:</b> רשום לי <i>"קוד SVG של כוכב"</i>, <i>"אייקון של חתול"</i> או <i>"צורה של מגן"</i>.<br>` +
-                          `• <b>עבור פוטופיאה:</b> רשום לי <i>"סקריפט JS לרקע"</i> או <i>"קוד לשכבת טקסט"</i>.<br><br>` +
-                          `<i>"כל סקיצה גדולה מתחילה מקוד נקי אחד. במה נתחיל לעצב עכשיו?"</i>`;
-        }
-
-        // 3. בניית הבלוק הוויזואלי והזרקתו לחלונית הצ'אט
-        let finalHtml = `<b>טוביה:</b><br>${botResponse}`;
-        if (generatedCode) {
-            const uniqueCodeId = `code-block-${Date.now()}`;
-            const escapedCode = generatedCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            
-            finalHtml += `
-                <div style="position:relative; margin-top: 10px;">
-                    <button class="btn-copy-code" onclick="copyToClipboard('${uniqueCodeId}', this)">העתק קוד</button>
-                    <pre id="${uniqueCodeId}">${escapedCode}</pre>
-                </div>
-                <br>
-                🚀 <b>הנחיות להמשך עבודה בכיתה:</b><br>
-                • ${codeType === 'svg' ? 'העתק את הקוד, כנס ל-<b>SVG-Edit</b>, לחץ על כפתור ה-<b>Source</b> (קוד מקור), הדבק ולחץ <b>Save</b>!' : 'בתוכנת <b>Photopea</b>, גש לתפריט העליון ל-<b>File -> Script</b>, הדבק את הקוד שקיבלת ולחץ על <b>Run</b>!'}`;
-        }
-
-        document.getElementById(loadingId).innerHTML = finalHtml;
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    } catch (error) {
-        console.error("שגיאה במנוע המקוון", error);
-        document.getElementById(loadingId).innerHTML = `<b>טוביה:</b> אחי, חלה שגיאה במשיכת המידע מהרשת. ודא שמחשב המעבדה מחובר לאינטרנט ושאין חסימת שרתים!`;
-    }
-}
-    // פונקציית העתקת קוד נוחה לתלמידים
-    window.copyToClipboard = function(elementId, btn) {
-        const pre = document.getElementById(elementId);
-        if(!pre) return;
-        
-        let text = pre.innerText || pre.textContent;
-        
-        // יצירת אלמנט זמני להעתקה בטוחה מתוך iframe / google sites
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-
-        btn.innerText = "הועתק! ✓";
-        btn.style.backgroundColor = "#1A5C2A";
-        setTimeout(() => {
-            btn.innerText = "העתק קוד";
-            btn.style.backgroundColor = "rgba(255,255,255,0.15)";
-        }, 2000);
-    }
-
-    // פונקציית עדכון פתיח הבוט בהתאם לשם התלמיד והנושא
-    function updateBotWelcome() {
-        const studentName = document.getElementById('student-name').value.trim();
-        const projectTheme = document.getElementById('project-theme').value.trim();
-        const welcomeBox = document.getElementById('bot-welcome-msg');
-        
-        if(!welcomeBox) return;
-
-        if(studentName || projectTheme) {
-            welcomeBox.innerHTML = `<b>טוביה איתך בתהליך, ${studentName || 'תלמיד יקר'}!</b><br>` +
-            `אני רואה שאתה מתכנן פרויקט בנושא: <strong>${projectTheme || 'עדיין לא נבחר'}</strong>.<br>` +
-            `צריך קוד SVG מרהיב או עזרה בשכבות ומסכות ב-Photopea עבור התוצרים שלך? תשאל אותי הכל!`;
-        }
-    }
-
-    // ניווט ופתיחה/סגירה של שלבים
-    function toggleStep(stepNum) {
-        const card = document.getElementById(`step${stepNum}`);
-        if (card && !card.classList.contains('locked')) {
-            const content = card.querySelector('.step-content');
-            if (content.style.display === 'block' || card.classList.contains('active')) {
-                content.style.display = 'none';
-                card.classList.remove('active');
-            } else {
-                closeAllSteps();
-                card.classList.add('active');
-                content.style.display = 'block';
-            }
-        }
-    }
-
-    function closeAllSteps() {
-        for (let i = 1; i <= 5; i++) {
-            const card = document.getElementById(`step${i}`);
-            if (card) {
-                card.classList.remove('active');
-                const content = card.querySelector('.step-content');
-                if (content) content.style.display = 'none';
-            }
-        }
-    }
-
-    function goToStep(stepNum) {
-        const nextCard = document.getElementById(`step${stepNum}`);
-        if (nextCard) {
-            nextCard.classList.remove('locked');
-            closeAllSteps();
-            nextCard.classList.add('active');
-            const content = nextCard.querySelector('.step-content');
-            if (content) content.style.display = 'block';
-            
-            const icon = document.getElementById(`status-icon-${stepNum}`);
-            if (icon && icon.innerText === '🔒') icon.innerText = '📝';
-            
-            updateProgress();
-            window.scrollTo({ top: nextCard.offsetTop - 20, behavior: 'smooth' });
-        }
-    }
-
-    // בדיקות מוכנות שלבים (Validations)
-    function checkStep1Ready() {
-        const name = document.getElementById('student-name').value.trim();
-        const theme = document.getElementById('project-theme').value.trim();
-        const approved = document.getElementById('teacher-approval-checkbox').checked;
-        const btn = document.getElementById('btn-next-1');
-        const card = document.getElementById('step1');
-        const icon = document.getElementById('status-icon-1');
-
-        if (name && theme && approved) {
-            btn.classList.remove('btn-disabled');
-            card.classList.add('completed');
-            icon.innerText = '✅';
-            document.getElementById('step2').classList.remove('locked');
-            const icon2 = document.getElementById('status-icon-2');
-            if (icon2 && icon2.innerText === '🔒') icon2.innerText = '📝';
-        } else {
-            btn.classList.add('btn-disabled');
-            card.classList.remove('completed');
-            icon.innerText = '📝';
-        }
-        updateProgress();
-    }
-
-    function checkStep2Ready() {
-        let filledCount = 0;
-        for (let i = 1; i <= totalProductsCount; i++) {
-            const pName = document.getElementById(`product-name-${i}`);
-            if (pName && pName.value.trim() !== '') {
-                filledCount++;
-            }
-        }
-
-        const checkboxChecked = document.getElementById('products-checkbox').checked;
-        const btn = document.getElementById('btn-next-2');
-        const card = document.getElementById('step2');
-        const icon = document.getElementById('status-icon-2');
-
-        if (filledCount >= 5 && checkboxChecked) {
-            btn.classList.remove('btn-disabled');
-            card.classList.add('completed');
-            icon.innerText = '✅';
-            document.getElementById('step3').classList.remove('locked');
-            const icon3 = document.getElementById('status-icon-3');
-            if (icon3 && icon3.innerText === '🔒') icon3.innerText = '📝';
-        } else {
-            btn.classList.add('btn-disabled');
-            card.classList.remove('completed');
-            icon.innerText = '📝';
-        }
-        updateProgress();
-    }
-
-    function checkStep3Ready() {
-        const ppea = document.getElementById('tool-photoshop').checked;
-        const svedit = document.getElementById('tool-illustrator').checked;
-        const canva = document.getElementById('tool-canva').checked;
-        const ai = document.getElementById('tool-ai').checked;
-        const other = document.getElementById('other-tool').value.trim();
-
-        const btn = document.getElementById('btn-next-3');
-        const card = document.getElementById('step3');
-        const icon = document.getElementById('status-icon-3');
-
-        if (ppea || svedit || canva || ai || other) {
-            btn.classList.remove('btn-disabled');
-            card.classList.add('completed');
-            icon.innerText = '✅';
-            document.getElementById('step4').classList.remove('locked');
-            const icon4 = document.getElementById('status-icon-4');
-            if (icon4 && icon4.innerText === '🔒') icon4.innerText = '📝';
-        } else {
-            btn.classList.add('btn-disabled');
-            card.classList.remove('completed');
-            icon.innerText = '📝';
-        }
-        updateProgress();
-    }
-
-    function toggleTool(toolId) {
-        const chk = document.getElementById(`tool-${toolId}`);
-        const card = document.getElementById(`card-${toolId}`);
-        if (chk && card) {
-            chk.checked = !chk.checked;
-            if (chk.checked) card.classList.add('selected');
-            else card.classList.remove('selected');
-            saveData();
-            checkStep3Ready();
-        }
-    }
-
-    function checkStep4Ready() {
-        const r1 = document.getElementById('check-req-1').checked;
-        const r2 = document.getElementById('check-req-2').checked;
-        const r3 = document.getElementById('check-req-3').checked;
-
-        const btn = document.getElementById('btn-next-4');
-        const card = document.getElementById('step4');
-        const icon = document.getElementById('status-icon-4');
-
-        if (r1 && r2 && r3) {
-            btn.classList.remove('btn-disabled');
-            card.classList.add('completed');
-            icon.innerText = '✅';
-            document.getElementById('step5').classList.remove('locked');
-            const icon5 = document.getElementById('status-icon-5');
-            if (icon5 && icon5.innerText === '🔒') icon5.innerText = '📝';
-        } else {
-            btn.classList.add('btn-disabled');
-            card.classList.remove('completed');
-            icon.innerText = '📝';
-        }
-        updateProgress();
-    }
-
-    // חישוב ועדכון מד ההתקדמות (Progress Bar)
-    function updateProgress() {
-        let totalPoints = 0;
-        
-        // שלב 1: 20%
-        if (document.getElementById('student-name').value.trim()) totalPoints += 5;
-        if (document.getElementById('project-theme').value.trim()) totalPoints += 5;
-        if (document.getElementById('teacher-approval-checkbox').checked) totalPoints += 10;
-
-        // שלב 2: 25%
-        let filledProducts = 0;
-        for (let i = 1; i <= totalProductsCount; i++) {
-            const pName = document.getElementById(`product-name-${i}`);
-            if (pName && pName.value.trim() !== '') filledProducts++;
-        }
-        if (filledProducts >= 5) totalPoints += 15;
-        if (document.getElementById('products-checkbox').checked) totalPoints += 10;
-
-        // שלב 3: 15%
-        const ppea = document.getElementById('tool-photoshop').checked;
-        const svedit = document.getElementById('tool-illustrator').checked;
-        const canva = document.getElementById('tool-canva').checked;
-        const ai = document.getElementById('tool-ai').checked;
-        const other = document.getElementById('other-tool').value.trim();
-        if (ppea || svedit || canva || ai || other) totalPoints += 15;
-
-        // שלב 4: 20%
-        if (document.getElementById('check-req-1').checked) totalPoints += 7;
-        if (document.getElementById('check-req-2').checked) totalPoints += 7;
-        if (document.getElementById('check-req-3').checked) totalPoints += 6;
-
-        // שלב 5: פתיחה סופית שווה עוד 20%
-        if (!document.getElementById('step5').classList.contains('locked')) {
-            totalPoints += 20;
-        }
-
-        if (totalPoints > 100) totalPoints = 100;
-
-        const pBar = document.getElementById('progress-bar');
-        const pText = document.getElementById('progress-percentage');
-        if (pBar && pText) {
-            pBar.style.width = totalPoints + '%';
-            pText.innerText = totalPoints + '%';
-        }
-    }
-
-    // פונקציות שמירה ואחזור מקומית (Local Storage)
-    function saveData() {
-        const data = {
-            studentName: document.getElementById('student-name').value,
-            projectTheme: document.getElementById('project-theme').value,
-            boardLink: document.getElementById('step1-board-link').value,
-            teacherApproval: document.getElementById('teacher-approval-checkbox').checked,
-            totalProductsCount: totalProductsCount,
-            products: [],
-            productsCheckbox: document.getElementById('products-checkbox').checked,
-            tools: {
-                photoshop: document.getElementById('tool-photoshop').checked,
-                illustrator: document.getElementById('tool-illustrator').checked,
-                canva: document.getElementById('tool-canva').checked,
-                ai: document.getElementById('tool-ai').checked,
-                other: document.getElementById('other-tool').value
-            },
-            checklist: {
-                r1: document.getElementById('check-req-1').checked,
-                r2: document.getElementById('check-req-2').checked,
-                r3: document.getElementById('check-req-3').checked,
-                bonus: document.getElementById('portfolio-bonus').checked
-            }
+        // מוחו של טוביה הקודברוט (FAQ וסניפטים)
+        const TuviaBrain = {
+            botName: "טוביה הקודברוט",
+            intro: "מה קורה אחי? אני כאן איתך צמוד! שאל אותי כל דבר על גרפיקה דיגיטלית, קוד, פוטופיאה או איך להזיז צורות!",
+            faq: [
+                {
+                    keywords: ["לא מופיע", "נעלם", "לא רואה", "לא מציג", "שחור", "לבן", "איפה הצורה"],
+                    answer: "הסיבות הנפוצות שצורה לא מופיעה ב-SVG:\n1. שכחת להגדיר viewBox או רוחב/גובה על ה-svg הראשי.\n2. הקואורדינטות מחוץ לתחום ה-viewBox.\n3. הגדרת בטעות fill='none' ואין stroke.\n4. ב-JS השתמשת ב-createElement במקום ב-createElementNS."
+                },
+                {
+                    keywords: ["createelement", "לא עובד בjs", "js לא מגיב", "namespace", "לא מציג בjs"],
+                    answer: "כשיוצרים אלמנט SVG ב-JS, חובה להשתמש ב-createElementNS ולא ב-createElement הרגיל!\n\nהנה הדרך הנכונה:\nconst svgNS = 'http://www.w3.org/2000/svg';\nconst circle = document.createElementNS(svgNS, 'circle');\ncircle.setAttribute('cx', 50);\ncircle.setAttribute('cy', 50);\ncircle.setAttribute('r', 20);\ncircle.setAttribute('fill', 'tomato');\nsvg.appendChild(circle);"
+                },
+                {
+                    keywords: ["גרירה", "drag", "קופץ", "עכבר", "להזיז", "תפיסה"],
+                    answer: "הגרירה קופצת? זה קורה בגלל שלא שמרת את ה-offset (המרחק) בין נקודת הלחיצה של העכבר למרכז הצורה ב-mousedown. יש לחשב offsetX/Y ב-mousedown ולהפחית אותם במהלך ה-mousemove."
+                },
+                {
+                    keywords: ["חלק", "אנימציה", "requestanimationframe", "לזוז", "תנועה", "מהירות"],
+                    answer: "לתנועה חלקה השתמש ב-requestAnimationFrame במקום ב-setInterval:\n\nlet x = 0;\nfunction animate() {\n  x += 2;\n  circle.setAttribute('cx', x);\n  if (x < 300) requestAnimationFrame(animate);\n}\nrequestAnimationFrame(animate);"
+                }
+            ],
+            snippets: [
+                {
+                    keywords: ["עיגול", "circle", "לחיצה", "צבע", "עגול"],
+                    title: "עיגול שמשנה צבע בלחיצה (SVG + JS)",
+                    code: `<svg viewBox="0 0 100 100" width="200" height="200">\n  <circle id="c1" cx="50" cy="50" r="30" fill="steelblue"/>\n</svg>\n<script>\n  const colors = ["steelblue", "tomato", "gold", "seagreen"];\n  let idx = 0;\n  const circle = document.getElementById("c1");\n  circle.addEventListener("click", () => {\n    idx = (idx + 1) % colors.length;\n    circle.setAttribute("fill", colors[idx]);\n  });\n<\/script>`
+                },
+                {
+                    keywords: ["progress", "מד התקדמות", "בר", "טעינה", "פס"],
+                    title: "מד התקדמות (Progress Bar) מעוצב",
+                    code: `<svg viewBox="0 0 220 30" width="300" height="40">\n  <rect x="0" y="0" width="200" height="20" rx="10" fill="#eee" stroke="#ccc"/>\n  <rect id="bar" x="0" y="0" width="0" height="20" rx="10" fill="#4caf50"/>\n</svg>\n<script>\n  function setProgress(percent) {\n    const bar = document.getElementById("bar");\n    bar.setAttribute("width", percent * 2);\n  }\n  setProgress(65);\n<\/script>`
+                }
+            ]
         };
 
-        for (let i = 1; i <= totalProductsCount; i++) {
-            const pName = document.getElementById(`product-name-${i}`);
-            const pLink = document.getElementById(`product-link-${i}`);
-            data.products.push({
-                name: pName ? pName.value : '',
-                link: pLink ? pLink.value : ''
+        let studentState = {
+            name: "",
+            brand: "",
+            checklist: {}
+        };
+
+        let currentStepId = 1;
+
+        function init() {
+            const selector = document.getElementById('stepSelector');
+            selector.innerHTML = '';
+            
+            stepsData.forEach((step) => {
+                const option = document.createElement('option');
+                option.value = step.id;
+                option.innerText = step.title;
+                selector.appendChild(option);
             });
+            
+            switchStep(1);
+            initBot();
         }
 
-        localStorage.setItem('graphics_project_planner', JSON.stringify(data));
-        updateProgress();
-    }
+        function openSelectedStep() {
+            const selectedId = parseInt(document.getElementById('stepSelector').value);
+            switchStep(selectedId);
+        }
 
-    function loadSavedData() {
-        const raw = localStorage.getItem('graphics_project_planner');
-        if (!raw) return;
-        try {
-            const data = JSON.parse(raw);
+        function switchStep(stepId) {
+            currentStepId = stepId;
+            const step = stepsData.find(s => s.id === stepId);
+            const container = document.getElementById('stepsContainer');
             
-            document.getElementById('student-name').value = data.studentName || '';
-            document.getElementById('project-theme').value = data.projectTheme || '';
-            document.getElementById('step1-board-link').value = data.boardLink || '';
-            document.getElementById('teacher-approval-checkbox').checked = data.teacherApproval || false;
+            let tasksHtml = '';
+            step.tasks.forEach((task, tIndex) => {
+                const taskId = `task_${step.id}_${tIndex}`;
+                const isChecked = studentState.checklist[taskId] ? 'checked' : '';
+                const checkedClass = studentState.checklist[taskId] ? 'checked' : '';
+                tasksHtml += `
+                    <div class="checklist-item ${checkedClass}" id="item_${taskId}">
+                        <input type="checkbox" id="${taskId}" ${isChecked} onchange="toggleTask('${taskId}')">
+                        <label for="${taskId}">${task}</label>
+                    </div>
+                `;
+            });
 
-            if (data.totalProductsCount && data.totalProductsCount > 5) {
-                totalProductsCount = data.totalProductsCount;
-                buildDynamicProductRows();
-            }
-
-            if (data.products && data.products.length > 0) {
-                data.products.forEach((p, idx) => {
-                    const pName = document.getElementById(`product-name-${idx+1}`);
-                    const pLink = document.getElementById(`product-link-${idx+1}`);
-                    if (pName) pName.value = p.name || '';
-                    if (pLink) {
-                        pLink.value = p.link || '';
-                        syncPrintAttribute(pLink, `print-product-link-${idx+1}`);
-                    }
-                });
-            }
-
-            document.getElementById('products-checkbox').checked = data.productsCheckbox || false;
-            
-            if (data.tools) {
-                document.getElementById('tool-photoshop').checked = data.tools.photoshop || false;
-                document.getElementById('tool-illustrator').checked = data.tools.illustrator || false;
-                document.getElementById('tool-canva').checked = data.tools.canva || false;
-                document.getElementById('tool-ai').checked = data.tools.ai || false;
-                document.getElementById('other-tool').value = data.tools.other || '';
+            container.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:10px;">
+                    <h3 style="margin:0; color:var(--primary-accent); font-weight: 800;">${step.title}</h3>
+                    <div>
+                        <span class="software-badge ${step.badge}">תוכנה: ${step.software}</span>
+                    </div>
+                </div>
+                <p style="color:var(--text-muted); margin-top:3px; font-style:italic; margin-bottom: 15px;">${step.description}</p>
                 
-                // עדכון קלאסים ויזואליים של כרטיסיות הכלים
-                if (data.tools.photoshop) document.getElementById('card-photoshop').classList.add('selected');
-                if (data.tools.illustrator) document.getElementById('card-illustrator').classList.add('selected');
-                if (data.tools.canva) document.getElementById('card-canva').classList.add('selected');
-                if (data.tools.ai) document.getElementById('card-ai').classList.add('selected');
+                <div class="checklist">
+                    <h4 style="margin-bottom: 10px; font-weight: 700;">משימות לביצוע בשלב זה:</h4>
+                    ${tasksHtml}
+                </div>
+
+                <div class="tech-tips">
+                    <h4>💡 טיפ מהמורה סהר לעבודה ב-${step.software}:</h4>
+                    <p>${step.software === 'Photopea' ? 
+                       'תמיד תעבוד בשכבות (Layers)! כשאתה מביא תמונה חדשה, תגרור אותה ישירות למשטח העבודה ותוודא שהיא בשכבה נפרדת כדי שתוכל להזיז ולשנות לה את הגודל בלי להרוס את הרקע.' : 
+                       'בתוכנה וקטורית, כל קו ועיגול הם עצמאיים. אם אתה רוצה לשנות קוד SVG ישירות, לחץ על כלי ה-Source (קוד המקור) בתוכנה והדבק את הקוד שהבוט החבר ייצר לך!'}</p>
+                </div>
+            `;
+            
+            // עדכון ה-iFrame המובנה ישירות בתוך העמוד בהתאם לתוכנה של השלב
+            const iframe = document.getElementById('softwareIframe');
+            const frameTitle = document.getElementById('frameTitle');
+            if (iframe.src !== step.url) {
+                iframe.src = step.url;
+            }
+            frameTitle.innerHTML = `💻 תוכנת עבודה מובנית: <strong>${step.software}</strong> בשילוב משימה ${step.id}`;
+
+            // נעדכן את הבורר אם שינינו את השלב דרך הקוד
+            const selector = document.getElementById('stepSelector');
+            if (selector.value !== String(stepId)) {
+                selector.value = stepId;
             }
 
-            if (data.checklist) {
-                document.getElementById('check-req-1').checked = data.checklist.r1 || false;
-                document.getElementById('check-req-2').checked = data.checklist.r2 || false;
-                document.getElementById('check-req-3').checked = data.checklist.r3 || false;
-                document.getElementById('portfolio-bonus').checked = data.checklist.bonus || false;
+            updateDashboard();
+            if (window.botWelcomeMessage) window.botWelcomeMessage(step);
+        }
+
+        function toggleTask(taskId) {
+            const cb = document.getElementById(taskId);
+            const item = document.getElementById(`item_${taskId}`);
+            
+            if (cb.checked) {
+                item.classList.add('checked');
+                studentState.checklist[taskId] = true;
+                addBotMessage("bot", "אש עליך אחי! סימנת משימה בהצלחה. ממשיכים קדימה בלי לעצור! 🔥");
+            } else {
+                item.classList.remove('checked');
+                studentState.checklist[taskId] = false;
             }
-
-            // הפעלת בדיקות רציפות לפתיחת שלבים
-            checkStep1Ready();
-            checkStep2Ready();
-            checkStep3Ready();
-            checkStep4Ready();
-            updateBotWelcome();
-
-        } catch (e) {
-            console.error("שגיאה בטעינת נתונים", e);
+            
+            updateDashboard();
         }
-    }
 
-    // ייצוא וייבוא לקובץ חיצוני למחשבי כיתה
-    function exportToFile() {
-        const raw = localStorage.getItem('graphics_project_planner');
-        if (!raw) {
-            alert("אין עדיין נתונים שמורים לייצוא. מלאו קודם את השלבים!");
-            return;
+        function updateDashboard() {
+            studentState.name = document.getElementById('studentName').value || "";
+            studentState.brand = document.getElementById('brandName').value || "";
+
+            document.getElementById('dashStudentName').innerText = studentState.name || "תלמיד/ה";
+            document.getElementById('dashBrandName').innerText = studentState.brand || "המותג שלי";
+
+            let total = 0, completed = 0;
+            stepsData.forEach(step => {
+                step.tasks.forEach((task, tIndex) => {
+                    total++;
+                    if (studentState.checklist[`task_${step.id}_${tIndex}`]) completed++;
+                });
+            });
+
+            document.getElementById('completedCount').innerText = completed;
+            document.getElementById('totalCount').innerText = total;
+
+            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressPercent').innerText = percent + '%';
+
+            const msgBox = document.getElementById('teacherMessage');
+            let txt = `<strong>הודעה מהמורה סהר:</strong> `;
+            if (percent === 0) txt += `אהלן ${studentState.name || 'תלמיד'}! רשום את השם והמותג שלך למעלה, והחבר הבוט מימין יעזור לך בכל שלב בתפריטים!`;
+            else if (percent < 50) txt += `יופי של קצב! התוכנה פתוחה למטה, תעזר בבוט כדי להוציא קודים מתאימים לעיצוב.`;
+            else if (percent === 100) txt += `פרויקט מדהים ומלא! גאה בך מאוד על ההשקעה! 🎉`;
+            else txt += `אתה כבר מעבר לחצי הדרך, העסק של ${studentState.brand || 'המותג'} הולך להראות מטורף!`;
+            msgBox.innerHTML = txt;
         }
-        const blob = new Blob([raw], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        
-        const name = document.getElementById('student-name').value.trim() || 'פרויקט_גרפיקה';
-        a.href = url;
-        a.download = `תוכנית_עבודה_${name}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast("💾 קובץ הגיבוי הורד בהצלחה!");
-    }
 
-    function triggerFileInput() {
-        document.getElementById('file-input').click();
-    }
+        function initBot() {
+            const step = stepsData.find(s => s.id === currentStepId);
+            window.botWelcomeMessage(step);
+        }
 
-    function importFromFile(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const content = e.target.result;
-                JSON.parse(content); // ולידציה של התוכן
-                localStorage.setItem('graphics_project_planner', content);
-                loadSavedData();
-                showToast("📂 קובץ הגיבוי נטען בהצלחה!");
-            } catch(err) {
-                alert("הקובץ שנבחר אינו קובץ גיבוי תקין.");
+        window.botWelcomeMessage = function(step) {
+            const messagesContainer = document.getElementById('botMessages');
+            messagesContainer.innerHTML = ''; // מנקה את השיח במעבר שלב
+            
+            let welcomeTxt = `מה קורה אחי? אני כאן איתך צמוד! אנחנו כרגע ב**${step.title}**. <br>`;
+            if(step.software === 'Photopea') {
+                welcomeTxt += `הפעלתי לך את **Photopea** ממש כאן למטה בתוך הדף! בשביל להתחיל, כנס לתפריט העליון בתוכנה ל- **File -> New**, תבחר גודל פלייר, ותגיד לי מה הרעיון שלך כדי שנעשה את זה ביחד ונוציא גם קוד JS לאוטומציה מהירה.`;
+            } else {
+                welcomeTxt += `הפעלתי לך את **SVG-Edit** פה למטה בתוך הדף! דבר איתי, ספר לי איזה אלמנטים או צורות בא לך להוסיף ללוגו ואני אייצר לך קוד SVG מוכן שתוכל להטמיע ישר בלחיצה על כפתור ה-Source!`;
             }
-        };
-        reader.readAsText(file);
-    }
+            addBotMessage("bot", welcomeTxt);
+        }
 
-    // חלונית סיום חגיגית
-    function finishAndCelebrate() {
-        const studentName = document.getElementById('student-name').value.trim() || 'תלמיד/ה יקר/ה';
-        const projectTheme = document.getElementById('project-theme').value.trim() || 'לא הוגדר';
-        
-        let productsHtml = '';
-        let filledProductsCount = 0;
-        
-        for (let i = 1; i <= totalProductsCount; i++) {
-            const pName = document.getElementById(`product-name-${i}`).value.trim();
-            const pLink = document.getElementById(`product-link-${i}`).value.trim();
-            if (pName !== '') {
-                filledProductsCount++;
-                productsHtml += `<li><strong>${pName}</strong> ${pLink !== '' ? `— <a href="${pLink}" target="_blank" class="interactive-link">צפייה בתוצר באוויר 🔗</a>` : '(טרם הוזן קישור)'}</li>`;
+        function addBotMessage(sender, text, code = "") {
+            const container = document.getElementById('botMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-msg ${sender}`;
+            msgDiv.innerHTML = text;
+            
+            if(code) {
+                const codeDiv = document.createElement('div');
+                codeDiv.className = "code-block";
+                codeDiv.innerText = code;
+                msgDiv.appendChild(codeDiv);
             }
+            
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
         }
 
-        const summaryHtml = `
-            <p><strong>שם התלמיד/ה:</strong> ${studentName}</p>
-            <p><strong>הנושא הנבחר:</strong> ${projectTheme}</p>
-            <p style="margin-top: 10px; font-weight: 700; color: var(--primary-color);">רשימת התוצרים והקישורים שלך (${filledProductsCount}):</p>
-            <ul style="padding-right: 20px; margin-bottom: 12px; text-align: right;">
-                ${productsHtml}
-            </ul>
-            <p style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 10px; font-weight: 600; color: var(--secondary-color);">
-                ${document.getElementById('portfolio-bonus').checked ? '🌟 כולל בונוס: הגשת תיק עבודות שנתי מלא!' : '💡 שים לב: הגשת תיק עבודות שנתי מעניקה עד 20% בונוס לציון.'}
-            </p>
-        `;
+        function sendBotMessage() {
+            const input = document.getElementById('botInput');
+            const query = input.value.trim();
+            if(!query) return;
 
-        const summaryContainer = document.getElementById('celebration-summary');
-        if (summaryContainer) summaryContainer.innerHTML = summaryHtml;
-        
-        const screen = document.getElementById('celebration-screen');
-        if (screen) screen.style.display = 'flex';
-    }
+            addBotMessage("user", query);
+            input.value = '';
 
-    function closeCelebration() {
-        document.getElementById('celebration-screen').style.display = 'none';
-    }
+            const step = stepsData.find(s => s.id === currentStepId);
+            
+            setTimeout(() => {
+                let lowerQuery = query.toLowerCase();
+                let foundFaq = TuviaBrain.faq.find(item => 
+                    item.keywords.some(keyword => lowerQuery.includes(keyword))
+                );
 
-    function showToast(text) {
-        const t = document.getElementById('toast');
-        if (t) {
-            t.innerText = text;
-            t.style.display = 'block';
-            setTimeout(() => { t.style.display = 'none'; }, 4000);
+                let foundSnippet = TuviaBrain.snippets.find(item => 
+                    item.keywords.some(keyword => lowerQuery.includes(keyword))
+                );
+
+                if (foundFaq) {
+                    addBotMessage("bot", `💡 <b>הנה מה שאתה צריך לעשות אחי:</b><br>${foundFaq.answer.replace(/\n/g, '<br>')}`);
+                } else if (foundSnippet) {
+                    addBotMessage("bot", `🎨 <b>מצאתי קוד מתאים בבנק המקומי עבור "${query}":</b><br>הנה הקוד שלך להעתקה. כנס לתוכנה למטה והדבק אותו!`, foundSnippet.code);
+                } else {
+                    // תגובת ברירת מחדל בהתאם לתוכנה הנוכחית של השלב
+                    if(step.software === 'SVG-Edit') {
+                        let svgCode = `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">\n  <circle cx="100" cy="100" r="80" fill="#2c3e50" stroke="#d35400" stroke-width="5"/>\n  <text x="100" y="110" font-size="20" fill="white" font-family="sans-serif" text-anchor="middle">${studentState.brand || 'Logo'}</text>\n</svg>`;
+                        addBotMessage("bot", `איזה רעיון חזק אחי! יצרתי לך שבלונה וקטורית יפה עבור המותג שלך <b>${studentState.brand || 'המותג שלי'}</b>. רד ל-SVG-Edit למטה, לחץ על לחצן ה-<strong style="color:var(--secondary-accent);">Source</strong> (קוד מקור בסרגל) ותדביק את זה:`, svgCode);
+                    } else {
+                        let jsCode = `// סקריפט אוטומציה ל-Photopea\napp.activeDocument.activeLayer.opacity = 85;\nalert("השכבה שונתה ל-85% שקיפות בהצלחה ע"י הבוט החבר!");`;
+                        addBotMessage("bot", `קלטתי אותך לגמרי! בוא נבצע ב-**Photopea** שמתחתנו:<br>1. כנס ל-**File -> Open and Place** ותבחר תמונה מהמחשב.<br>2. בשביל לשנות גודל או לסובב, כנס ל-**Edit -> Free Transform**.<br>3. הנה קוד ה-JavaScript המיוחד שהכנתי לך, כנס ל-**File -> Script** בתוכנה, תדביק ותראה את הקסם:`, jsCode);
+                    }
+                }
+            }, 600);
         }
-    }
-</script>
+
+        function simulateScreenshot() {
+            addBotMessage("user", "📸 <em>[העלה צילום מסך של התוכנה לקבלת עזרה]</em>");
+            setTimeout(() => {
+                addBotMessage("bot", "ראיתי את צילום המסך שלך אחי! שים לב לתוכנה למטה - בסרגל הכלים השמאלי יש לך את החץ (כלי הבחירה). לחץ עליו ותוכל להזיז את השכבה בדיוק לאמצע המשטח. פגז!");
+            }, 800);
+        }
+
+        function downloadProgress() {
+            const sName = studentState.name.trim() || "תלמיד";
+            const bName = studentState.brand.trim() || "מותג";
+            const filename = `תיקיית_עבודה_${sName}_${bName}.json`;
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(studentState));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", filename);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function uploadProgress(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed && typeof parsed === 'object') {
+                        studentState = parsed;
+                        document.getElementById('studentName').value = studentState.name || "";
+                        document.getElementById('brandName').value = studentState.brand || "";
+                        switchStep(currentStepId);
+                        alert("הקובץ נטען בהצלחה אחי! המשך עבודה נעימה.");
+                    }
+                } catch (err) { alert("שגיאה בטעינת הקובץ."); }
+            };
+            reader.readAsText(file);
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
