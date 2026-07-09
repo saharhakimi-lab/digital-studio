@@ -1346,115 +1346,130 @@
         }
     }
 
-    // ----------------------------------------------------------------
-    // לוגיקת הצ'אטבוט הסימולטיבי המקומי (אופליין מלא, אידיאלי לכיתות לימוד!)
-    // ----------------------------------------------------------------
-    async function sendChatMessage() {
-        const chatMessages = document.getElementById('chat-messages');
-        const inputEl = document.getElementById('chat-input');
-        const query = inputEl.value.trim();
-        if(!query) return;
+// ----------------------------------------------------------------
+// מנוע טוביה המקוון: חיבור למאגרי המידע הגלובליים (Iconify & Scripts)
+// ----------------------------------------------------------------
+async function sendChatMessage() {
+    const chatMessages = document.getElementById('chat-messages');
+    const inputEl = document.getElementById('chat-input');
+    const query = inputEl.value.trim();
+    if(!query) return;
 
-        // הצגת הודעת המשתמש
-        chatMessages.innerHTML += `<div class="chat-msg user">${query}</div>`;
-        inputEl.value = "";
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    // 1. הצגת הודעת המשתמש בצ'אט
+    chatMessages.innerHTML += `<div class="chat-msg user">${query}</div>`;
+    inputEl.value = "";
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // יצירת מזהה טעינה ייחודי
-        const loadingId = "load-" + Date.now();
-        chatMessages.innerHTML += `<div class="chat-msg bot" id="${loadingId}">טוביה מנתח את הרעיון הוויזואלי במקום... ⚡</div>`;
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    // 2. יצירת הודעת טעינה זמנית
+    const loadingId = "load-" + Date.now();
+    chatMessages.innerHTML += `<div class="chat-msg bot" id="${loadingId}">טוביה מתחבר למאגרי המידע המקוונים... ⚡</div>`;
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // טיימאאוט קצר לדימוי חשיבה אנושית
-        setTimeout(() => {
-            let botResponse = "";
-            let generatedCode = "";
-            let codeType = "javascript"; // svg, javascript, xml
+    let botResponse = "";
+    let generatedCode = "";
+    let codeType = "svg"; 
+    const lowerQuery = query.toLowerCase();
 
-            const lowerQuery = query.toLowerCase();
+    // מילון תרגום מובנה להזרקה חכמה מול ה-API העולמי (עברית -> אנגלית)
+    const dictionary = {
+        'מגן': 'shield', 'לב': 'heart', 'כוכב': 'star', 'משתמש': 'user', 'בית': 'home', 
+        'טלפון': 'phone', 'מחשב': 'computer', 'מסך': 'monitor', 'אש': 'fire', 'להבה': 'flame',
+        'חתול': 'cat', 'כלב': 'dog', 'משחק': 'gamepad', 'גיימינג': 'game', 'מפתח': 'key',
+        'מנעול': 'lock', 'אוטו': 'car', 'רכב': 'car', 'נשק': 'sword', 'חרב': 'sword', 
+        'ספר': 'book', 'מוזיקה': 'music', 'תו': 'music-note', 'כתר': 'crown', 'יהלום': 'diamond',
+        'שמש': 'sun', 'ירח': 'moon', 'ענן': 'cloud', 'עץ': 'tree', 'פרח': 'flower',
+        'רובוט': 'robot', 'טיל': 'rocket', 'חלל': 'space', 'פלאש': 'flash', 'ברק': 'lightning'
+    };
 
-            // זיהוי בקשות לקודי SVG וקטוריים
-            if (lowerQuery.includes('svg') || lowerQuery.includes('מגן') || lowerQuery.includes('לוגו') || lowerQuery.includes('סמל') || lowerQuery.includes('צורה') || lowerQuery.includes('וקטור')) {
-                codeType = "svg";
-                botResponse = `🎨 <b>ניתוח ויזואלי של קומפוזיציית ה-SVG שלך:</b><br>
-                • בחרתי לבנות עבורך צורת מגן ניאון מודרני בעיצוב וקטורי נקי.<br>
-                • שימוש במעבר צבעים (Gradient) מדורג מחבר בין אדום כהה לירוק מנטה כדי ליצור עניין ועומק חברתי.<br><br>
-                💻 <b>קוד ה-SVG שלך להעתקה:</b>`;
+    try {
+        // --- נתיב א': המשתמש מבקש קוד SVG או אלמנט וקטורי ---
+        if (lowerQuery.includes('svg') || lowerQuery.includes('מגן') || lowerQuery.includes('לוגו') || lowerQuery.includes('סמל') || lowerQuery.includes('צורה') || lowerQuery.includes('וקטור') || lowerQuery.includes('אייקון') || lowerQuery.includes('ציור')) {
+            codeType = "svg";
+            
+            // ניקוי מילות קישור בעברית כדי לבודד את מילת החיפוש
+            let searchKeyword = query.replace(/טוביה|תביא|לי|קוד|של|אייקון|צורה|וקטור|ציור|תייצר|תבנה/g, '').trim();
+            
+            // בדיקה ותרגום מול המילון
+            if (dictionary[searchKeyword]) {
+                searchKeyword = dictionary[searchKeyword];
+            } else if (!searchKeyword) {
+                searchKeyword = "star"; // ברירת מחדל אם התלמיד שלח פקודה ריקה
+            }
+
+            // פנייה בזמן אמת ל-API של Iconify
+            let searchResponse = await fetch(`https://api.iconify.design/search?query=${encodeURIComponent(searchKeyword)}`);
+            let searchData = await searchResponse.json();
+
+            if (searchData.icons && searchData.icons.length > 0) {
+                // לוקחים את התוצאה הראשונה והמדויקת ביותר
+                let bestIcon = searchData.icons[0]; 
                 
-                generatedCode = `<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="neonGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#B22222;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1A5C2A;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  <!-- צורת מגן וקטורית -->
-  <path d="M 100,20 Q 150,20 160,70 Q 160,130 100,180 Q 40,130 40,70 Q 50,20 100,20 Z" fill="none" stroke="url(#neonGlow)" stroke-width="6" />
-  <circle cx="100" cy="95" r="30" fill="url(#neonGlow)" opacity="0.8" />
-  <text x="100" y="105" font-family="Assistant" font-size="24" fill="#ffffff" font-weight="bold" text-anchor="middle">Click</text>
-</svg>`;
-
-            // זיהוי בקשות לסקריפטים של Photopea
-            } else if (lowerQuery.includes('js') || lowerQuery.includes('סקריפט') || lowerQuery.includes('קוד') || lowerQuery.includes('טקסט') || lowerQuery.includes('כותרת') || lowerQuery.includes('רקע')) {
-                codeType = "javascript";
-                if (lowerQuery.includes('טקסט') || lowerQuery.includes('כותרת') || lowerQuery.includes('בריונות')) {
-                    botResponse = `🎨 <b>סקריפט Photopea מותאם אישית:</b><br>
-                    • סקריפט JavaScript זה יוצר באופן אוטומטי שכבת טקסט מעוצבת וחדה עם המסר שבחרת.<br>
-                    • מומלץ להריץ לאחר פתיחת קנבס חדש ב-Photopea.<br><br>
-                    💻 <b>קוד ה-JS שלך להעתקה:</b>`;
-                    
-                    generatedCode = `var doc = app.activeDocument;
-var textLayer = doc.artLayers.add();
-textLayer.type = LayerType.TEXT;
-var textItem = textLayer.textItem;
-textItem.contents = "ביחד נלחמים בבריונות!";
-textItem.size = 90;
-textItem.position = [200, 350];`;
-                } else {
-                    botResponse = `🎨 <b>סקריפט אוטומציה לקומפוזיציית רקע ב-Photopea:</b><br>
-                    • קוד זה יוצר שכבה חדשה, מגדיר את שמה וממלא אותה בצבע הנושא הגרפי בצורה אוטומטית.<br><br>
-                    💻 <b>קוד ה-JS שלך להעתקה:</b>`;
-                    
-                    generatedCode = `var doc = app.activeDocument;
-var bgLayer = doc.artLayers.add();
-bgLayer.name = "שכבת רקע אוטומטית של טוביה";
-doc.selection.selectAll();
-var color = new SolidColor();
-color.rgb.hexValue = "B22222"; // צבע אדום מותג
-doc.selection.fill(color);`;
-                }
-
-            // ברירת מחדל / תשובה כללית של טוביה המעוררת השראה
+                // משיכת קוד ה-SVG הגולמי (Raw) של האלמנט
+                let svgResponse = await fetch(`https://api.iconify.design/${bestIcon}.svg`);
+                generatedCode = await svgResponse.text();
+                
+                botResponse = `🎨 <b>הזרקת קוד SVG הצליחה! שלפתי אלמנט ממאגר הווקטורים העולמי:</b><br>` +
+                              `• מזהה ויזואלי ברשת: <code>${bestIcon}</code>.<br>` +
+                              `• הקוד רספונסיבי, נקי ומוכן לעבודה ב-<b>SVG-Edit</b>.<br><br>` +
+                              `💻 <b>קוד ה-SVG שלך להעתקה:</b>`;
             } else {
-                botResponse = `🎨 <b>היי! איזה יופי של כיוון עיצובי!</b><br>
-                כדי שאוכל לעזור לך בצורה הטובה ביותר, נסה לבקש ממני משהו ממוקד:<br>
-                • אם תרצה <b>קוד SVG וקטורי</b>: רשום לי למשל "טוביה, תכין לי קוד SVG של מגן".<br>
-                • אם תרצה <b>סקריפט אוטומטי ל-Photopea</b>: רשום לי "קוד JS לכותרת".<br><br>
-                <i>"אל תשכח תלמיד יקר! בכל שלב תוכל לעצור, לבחון, לשאול ולחקור לעומק את הנושא הגרפי."</i>`;
+                // גיבוי (Fallback) במקרה שהמילה לא נמצאה ב-API
+                botResponse = `🔍 חיפשתי במאגר הגלובלי ולא מצאתי אלמנט מדויק עבור "${searchKeyword}". יצרתי עבורך צורת מגן בסיסית חלופית:`;
+                generatedCode = `<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">\n  <path d="M 100,20 Q 160,20 170,80 Q 170,140 100,190 Q 30,140 30,80 Q 40,20 100,20 Z" fill="#B22222" stroke="#1A5C2A" stroke-width="4"/>\n</svg>`;
             }
+        } 
+        
+        // --- נתיב ב': המשתמש מבקש קוד JavaScript או סקריפט אוטומציה ל-Photopea ---
+        else if (lowerQuery.includes('js') || lowerQuery.includes('סקריפט') || lowerQuery.includes('קוד') || lowerQuery.includes('טקסט') || lowerQuery.includes('כותרת') || lowerQuery.includes('רקע') || lowerQuery.includes('שכבה') || lowerQuery.includes('פוטו')) {
+            codeType = "javascript";
+            
+            // בקרב הנוכחי: אנו מזריקים מאגר סקריפטים דינמי חכם מבוסס תנאים
+            botResponse = `🚀 <b>מנוע האוטומציה של טוביה יצר סקריפט JavaScript מותאם ל-Photopea API:</b><br>` +
+                          `• הסקריפט מוכן להרצה מיידית בתוך תוכנת Photopea דרך תפריט Scripts.<br><br>` +
+                          `💻 <b>קוד ה-JS שלך להעתקה:</b>`;
 
-            // יצירת מבנה ההודעה הסופי להצגה
-            let finalHtml = `<b>טוביה:</b><br>${botResponse}`;
-            if (generatedCode) {
-                const uniqueCodeId = `code-block-${Date.now()}`;
-                const escapedCode = generatedCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                
-                finalHtml += `
-                    <div style="position:relative; margin-top: 10px;">
-                        <button class="btn-copy-code" onclick="copyToClipboard('${uniqueCodeId}', this)">העתק קוד</button>
-                        <pre id="${uniqueCodeId}">${escapedCode}</pre>
-                    </div>
-                    <br>
-                    🚀 <b>שלבים להמשך עבודה בתוכנה:</b><br>
-                    • ${codeType === 'svg' ? 'כנס ל-<b>SVG-Edit</b>, לחץ על כפתור ה-Source (קוד מקור), הדבק את הקוד ולחץ Save!' : 'בתוכנת <b>Photopea</b>, גש לתפריט העליון ל-<b>File -> Script</b>, הדבק את הקוד שקיבלת ולחץ על <b>Run</b>!'}`;
+            if (lowerQuery.includes('טקסט') || lowerQuery.includes('כותרת')) {
+                generatedCode = `// סקריפט כותרת אוטומטי - מגמת תקשוב\nvar doc = app.activeDocument || app.documents.add(1000, 1000, 72, "פרויקט גרפי");\nvar textLayer = doc.artLayers.add();\ntextLayer.type = LayerType.TEXT;\nvar textItem = textLayer.textItem;\ntextItem.contents = "עיצוב ויזואלי אינטראקטיבי";\ntextItem.size = 65;\ textItem.position = [150, 500];\nalert("הכותרת התווספה לשכבה חדשה ב-Photopea!");`;
+            } else if (lowerQuery.includes('רקע') || lowerQuery.includes('צבע')) {
+                generatedCode = `// סקריפט קומפוזיציית רקע - מגמת תקשוב\nvar doc = app.activeDocument || app.documents.add(1920, 1080, 72, "רקע פרויקט");\nvar bgLayer = doc.artLayers.add();\nbgLayer.name = "רקע מותג אוטומטי";\ndoc.selection.selectAll();\nvar color = new SolidColor();\ncolor.rgb.hexValue = "B22222"; // אדום מוסדי\ndoc.selection.fill(color);\ndoc.selection.deselect();`;
+            } else {
+                generatedCode = `// סקריפט ניהול שכבות חכם - Photopea\nvar doc = app.activeDocument || app.documents.add(800, 600, 72, "מיני פרויקט");\nfor(var i=1; i<=3; i++){\n  var l = doc.artLayers.add();\n  l.name = "שכבת עבודה אומנותית מספר " + i;\n}\nalert("טוביה יצר עבורך 3 שכבות עבודה נקיות באופן אוטומטי!");`;
             }
+        } 
+        
+        // --- נתיב ג': שיחה כללית / הנחיית השראה במצב מקוון ---
+        else {
+            botResponse = `🎨 <b>הקרב החל! אני מחובר כעת למאגרי המידע המקוונים של SVG ו-JavaScript!</b><br>` +
+                          `תרגיש חופשי לאתגר אותי ולקבל קודים בלייב מהרשת:<br>` +
+                          `• <b>עבור אלמנט וקטורי:</b> רשום לי <i>"קוד SVG של כוכב"</i>, <i>"אייקון של חתול"</i> או <i>"צורה של מגן"</i>.<br>` +
+                          `• <b>עבור פוטופיאה:</b> רשום לי <i>"סקריפט JS לרקע"</i> או <i>"קוד לשכבת טקסט"</i>.<br><br>` +
+                          `<i>"כל סקיצה גדולה מתחילה מקוד נקי אחד. במה נתחיל לעצב עכשיו?"</i>`;
+        }
 
-            document.getElementById(loadingId).innerHTML = finalHtml;
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+        // 3. בניית הבלוק הוויזואלי והזרקתו לחלונית הצ'אט
+        let finalHtml = `<b>טוביה:</b><br>${botResponse}`;
+        if (generatedCode) {
+            const uniqueCodeId = `code-block-${Date.now()}`;
+            const escapedCode = generatedCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            
+            finalHtml += `
+                <div style="position:relative; margin-top: 10px;">
+                    <button class="btn-copy-code" onclick="copyToClipboard('${uniqueCodeId}', this)">העתק קוד</button>
+                    <pre id="${uniqueCodeId}">${escapedCode}</pre>
+                </div>
+                <br>
+                🚀 <b>הנחיות להמשך עבודה בכיתה:</b><br>
+                • ${codeType === 'svg' ? 'העתק את הקוד, כנס ל-<b>SVG-Edit</b>, לחץ על כפתור ה-<b>Source</b> (קוד מקור), הדבק ולחץ <b>Save</b>!' : 'בתוכנת <b>Photopea</b>, גש לתפריט העליון ל-<b>File -> Script</b>, הדבק את הקוד שקיבלת ולחץ על <b>Run</b>!'}`;
+        }
 
-        }, 800);
+        document.getElementById(loadingId).innerHTML = finalHtml;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    } catch (error) {
+        console.error("שגיאה במנוע המקוון", error);
+        document.getElementById(loadingId).innerHTML = `<b>טוביה:</b> אחי, חלה שגיאה במשיכת המידע מהרשת. ודא שמחשב המעבדה מחובר לאינטרנט ושאין חסימת שרתים!`;
     }
-
+}
     // פונקציית העתקת קוד נוחה לתלמידים
     window.copyToClipboard = function(elementId, btn) {
         const pre = document.getElementById(elementId);
