@@ -76,10 +76,10 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
       <!-- ===================== טור ראשי (משתנה לפי פרויקט) ===================== -->
-      <section class="lg:col-span-8 flex flex-col gap-6">
+      <section class="lg:col-span-8 min-w-0 flex flex-col gap-6">
 
         <!-- ===== תוכן פרויקט 1: מיתוג אישי ===== -->
-        <div id="project1-view" class="flex flex-col gap-6">
+        <div id="project1-view" class="min-w-0 flex flex-col gap-6">
 
           <!-- פרטי תלמיד + התקדמות -->
           <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-stone-100">
@@ -114,10 +114,14 @@
             </div>
           </div>
 
-          <!-- טאבים ל-15 שלבים -->
-          <div class="w-full bg-white/40 p-2 rounded-2xl border border-stone-200/60 card-shadow">
-  <div id="tabs-container-1" class="tabs-scroll flex flex-nowrap overflow-x-auto gap-3 py-1 px-1"></div>
-</div>
+          <!-- בורר שלבים - רשימה נפתחת מעוצבת -->
+          <div class="w-full bg-white p-4 rounded-2xl border border-stone-200/60 card-shadow flex items-center gap-3">
+            <span class="text-2xl shrink-0">📚</span>
+            <div class="flex-1">
+              <label for="step-selector-1" class="block text-xs font-bold text-stone-500 mb-1">בחר שלב עבודה מתוך 15:</label>
+              <select id="step-selector-1" onchange="switchStep(parseInt(this.value))" class="w-full p-3 rounded-xl border-2 border-purple-200 bg-[#FAF7F0] font-black text-stone-800 text-sm focus:outline-hidden focus:border-purple-500 cursor-pointer appearance-none bg-no-repeat bg-left" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237c3aed%22 stroke-width=%223%22><path d=%22M6 9l6 6 6-6%22/></svg>'); background-position: left 0.9rem center; padding-left: 2.5rem;"></select>
+            </div>
+          </div>
 
           <!-- כרטיס תוכן שלב פעיל -->
           <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-stone-100">
@@ -549,16 +553,18 @@ let studentState = { name: "", brand: "", checklist: {} };
 let currentStepId = 1;
 
 function renderTabs1() {
-  const container = document.getElementById('tabs-container-1');
-  container.innerHTML = '';
+  const select = document.getElementById('step-selector-1');
+  select.innerHTML = '';
   stepsData.forEach(step => {
-    const isActive = currentStepId === step.id;
-    const btn = document.createElement('button');
-    btn.className = `flex-shrink-0 py-3 px-5 rounded-xl font-bold text-xs transition-all duration-300 flex flex-col items-center justify-center min-w-[130px] border ${isActive ? 'bg-purple-600 text-white border-purple-600 shadow-md scale-[1.02]' : 'bg-transparent text-stone-600 border-stone-200 hover:bg-purple-50 hover:text-purple-600'}`;
-    btn.innerHTML = `<span class="text-[9px] uppercase tracking-wider ${isActive ? 'text-purple-200' : 'text-stone-400'}">שלב ${step.id}</span><span class="text-xs font-black mt-0.5 whitespace-nowrap">${step.title.replace(/^\d+\.\s*/,'')}</span>`;
-    btn.onclick = () => switchStep(step.id);
-    container.appendChild(btn);
+    const opt = document.createElement('option');
+    opt.value = step.id;
+    const total = step.tasks.length;
+    const done = step.tasks.filter((t, i) => studentState.checklist[`task_${step.id}_${i}`]).length;
+    const mark = done === total ? '✅ ' : (done > 0 ? '🟣 ' : '');
+    opt.innerText = `${mark}${step.title}  •  ${step.software}`;
+    select.appendChild(opt);
   });
+  select.value = currentStepId;
 }
 
 function switchStep(stepId) {
@@ -786,17 +792,5 @@ window.onload = function() {
   campToggleWorkspace('vector');
 };
 </script>
-
-<script>
-document.addEventListener('DOMContentLoaded',()=>{
- const el=document.getElementById('tabs-container-1');
- if(el){
-  el.addEventListener('wheel',e=>{
-    if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){e.preventDefault();el.scrollLeft+=e.deltaY;}
-  },{passive:false});
- }
-});
-</script>
-
 </body>
 </html>
