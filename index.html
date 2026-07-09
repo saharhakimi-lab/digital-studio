@@ -3,1116 +3,632 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מגמת תקשוב | סטודיו פרויקטים אינטראקטיבי</title>
+    <title>תיקיית עבודה אישית בדיגיטל - סטודיו לתלמיד</title>
     <!-- פונט גוגל Assistant מעוצב בעברית -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;550;700;800&display=swap" rel="stylesheet">
     
-    <style>
-        :root {
-            --bg-cream: #FDF8F2;
-            --primary-accent: #2c3e50;
-            --primary-color: #B22222;
-            --primary-hover: #911B1B;
-            --secondary-color: #1A5C2A;
-            --secondary-hover: #12401D;
-            --text-dark: #2C3E50;
-            --text-muted: #7F8C8D;
-            --border-color: #E2D7CD;
-            --shadow-light: 0 4px 15px rgba(178, 34, 34, 0.05);
-            --chat-msg-user: #E2F0D9;
-            --chat-msg-bot: #F2F2F2;
+    <!-- שימוש ב-Tailwind CSS עם הגדרת צבעי ערכת הנושא החמה -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#fbf9f4',
+                        cardBg: '#ffffff',
+                        primaryAccent: '#2c3e50',
+                        secondaryAccent: '#d35400',
+                        textMain: '#2c3e50',
+                        textMuted: '#7f8c8d',
+                        borderColor: '#e2dacb',
+                        successColor: '#27ae60',
+                        botColor: '#8e44ad',
+                    }
+                }
+            }
         }
+    </script>
 
+    <style>
         * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
             font-family: 'Assistant', sans-serif;
         }
-
         body {
-            background-color: var(--bg-cream);
-            color: var(--text-dark);
-            line-height: 1.6;
-            padding: 15px;
+            background-color: #fbf9f4;
+            color: #2c3e50;
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 15px;
-        }
-
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        header {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, var(--primary-color), #7A1414);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .header-text h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
-
-        .header-text p {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-action {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .btn-action:hover {
-            background-color: white;
-            color: var(--primary-color);
-        }
-
-        .workspace-panel {
-            background: white;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-light);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            min-height: 700px;
-        }
-
-        .tab-bar {
-            background-color: #F5EFE6;
-            display: flex;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .tab-btn {
-            padding: 12px 20px;
-            background: none;
-            border: none;
-            border-left: 1px solid var(--border-color);
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .tab-btn:hover {
-            background-color: rgba(255,255,255,0.5);
-        }
-
-        .tab-btn.active {
-            background-color: white;
-            border-bottom: 3px solid var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .tab-content {
-            display: none;
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .tab-content.active {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .wizard-steps {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            overflow-x: auto;
-        }
-
-        .step-bubble {
-            padding: 8px 12px;
-            background-color: #EEE;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
-
-        .step-bubble.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .step-container {
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-
-        .step-container.active {
-            display: block;
-        }
-
-        .step-header {
-            margin-bottom: 15px;
-            background-color: #FAF8F5;
-            padding: 15px;
-            border-right: 4px solid var(--primary-color);
-            border-radius: 4px;
-        }
-
-        .step-header h3 {
-            font-size: 1.25rem;
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-
-        .step-header p {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 6px;
-            font-size: 0.95rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            background-color: #FAFAFA;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            background-color: white;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            direction: ltr;
-            text-align: left;
-        }
-
-        .sandbox-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            flex-grow: 1;
-            min-height: 450px;
-        }
-
-        @media (max-width: 768px) {
-            .sandbox-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .editor-side {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .preview-side {
-            border: 1px dashed var(--border-color);
-            border-radius: 8px;
-            background-color: #FAF8F5;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .preview-header {
-            background-color: #EEE;
-            padding: 8px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .preview-body {
-            flex-grow: 1;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: white;
-            overflow: auto;
-        }
-
-        .preview-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        }
-
-        .btn-run-code {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-run-code:hover {
-            background-color: var(--secondary-hover);
-        }
-
-        .iframe-embed-container {
-            width: 100%;
-            height: 600px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .iframe-embed {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .sidebar-bot {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: var(--shadow-light);
-            display: flex;
-            flex-direction: column;
-            height: 700px;
-            overflow: hidden;
-        }
-
-        .bot-header {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 15px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .bot-header-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #2ecc71;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse 1.5s infinite;
-        }
-
-        .chat-messages {
-            flex-grow: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background-color: #FAF8F5;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chat-msg {
-            max-width: 85%;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            word-wrap: break-word;
-        }
-
-        .chat-msg.user {
-            background-color: var(--chat-msg-user);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .chat-msg.bot {
-            background-color: var(--chat-msg-bot);
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            width: 100%;
-        }
-
-        .chat-input-area {
-            padding: 12px;
-            border-top: 1px solid var(--border-color);
-            background: white;
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-input {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 0.95rem;
-        }
-
-        .chat-send-btn {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 0 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: background 0.2s;
-        }
-
-        .chat-send-btn:hover {
-            background-color: var(--secondary-hover);
-        }
-
-        pre {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 15px;
-            border-radius: 6px;
-            direction: ltr;
-            text-align: left;
-            overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            margin-top: 5px;
-        }
-
-        .btn-copy-code {
-            background: rgba(255,255,255,0.15);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 3px 8px;
-            font-size: 0.75rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-bottom: 5px;
-            transition: background 0.2s;
-        }
-
-        .btn-copy-code:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .wizard-nav-btns {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .btn-wizard {
-            background-color: var(--primary-accent);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-wizard:hover {
-            background-color: #34495e;
-        }
-
-        .btn-wizard.next {
-            background-color: var(--primary-color);
-        }
-
-        .btn-wizard.next:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .celebration-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .celebration-card {
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 550px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .celebration-title {
-            color: var(--secondary-color);
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .btn-close-celebration {
-            background-color: var(--primary-accent);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #333;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            z-index: 2000;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
+        /* מניעת קפיצות של גרירה */
         @keyframes pulse {
             0% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.2); opacity: 0.7; }
             100% { transform: scale(1); opacity: 1; }
         }
-
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .status-dot-active {
+            animation: pulse 1.5s infinite;
         }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-6">
 
-<div class="container">
-    <header>
-        <div class="header-text">
-            <h1>סטודיו המיני-פרויקטים וההגשות - מגמת תקשוב</h1>
-            <p>שלבי עבודה אינטראקטיביים, סטודיו קוד חי וטוביה הקודברוט הנתמך ב-GitHub Database</p>
-        </div>
-        <div class="header-actions">
-            <button class="btn-action" onclick="downloadStudentProgress()">שמור התקדמות (JSON) 💾</button>
-            <button class="btn-action" onclick="document.getElementById('uploadFile').click()">טען קובץ משימה 📂</button>
-            <input type="file" id="uploadFile" style="display: none;" accept=".json" onchange="uploadStudentProgress(event)">
-        </div>
-    </header>
-
-    <!-- פאנל עבודה ראשי -->
-    <div class="workspace-panel">
-        <div class="tab-bar">
-            <button class="tab-btn active" onclick="switchTab('tasks', this)">📋 שלבי המשימה והגשה</button>
-            <button class="tab-btn" onclick="switchTab('sandbox', this)">🎨 סטודיו קוד לייב (Preview)</button>
-            <button class="tab-btn" onclick="switchTab('photopea', this)">🖥️ פוטופיאה מובנית (Photopea)</button>
+    <div class="max-w-[1400px] mx-auto space-y-6">
+        
+        <!-- באנר כותרת ראשי -->
+        <div class="bg-gradient-to-r from-[#2c3e50] to-[#1a252f] text-white p-6 md:p-8 text-center rounded-xl border-b-4 border-[#d35400] shadow-md">
+            <h1 class="text-2xl md:text-3.5xl font-extrabold tracking-wide">תיקיית עבודה אישית דיגיטלית - פרויקט מיתוג עיצובי</h1>
+            <p class="text-sm md:text-base text-gray-200 mt-2 opacity-90 font-light">קורס עיצוב גרפי דיגיטלי מתקדם • בהנחיית המורה סהר • סטודיו אינטראקטיבי</p>
         </div>
 
-        <!-- טאב א': משימות ושלבי עבודה -->
-        <div id="tab-tasks" class="tab-content active">
-            <div class="wizard-steps" id="wizard-steps">
-                <div class="step-bubble active" onclick="switchStep(1)">1. מותג ואסטרטגיה</div>
-                <div class="step-bubble" onclick="switchStep(2)">2. תכנון וציור SVG</div>
-                <div class="step-bubble" onclick="switchStep(3)">3. אינטראקטיביות ו-DOM</div>
-                <div class="step-bubble" onclick="switchStep(4)">4. אנימציות ותנועה</div>
-                <div class="step-bubble" onclick="switchStep(5)">5. רפלקציה והגשה</div>
-            </div>
-
-            <!-- שלב 1: מותג ואסטרטגיה -->
-            <div id="step-1" class="step-container active">
-                <div class="step-header">
-                    <h3>שלב 1: מחקר מותג, קהל יעד ואסטרטגיה ויזואלית</h3>
-                    <p>לפני שמתחילים לכתוב קוד, עלינו להבין מהו המוצר או המותג שאנו מעצבים, מי הקהל שלו ואילו רגשות או ערכים אנו רוצים להעביר באמצעות קו וצבע.</p>
-                </div>
-                <div class="form-group">
-                    <label>שם התלמיד/ה:</label>
-                    <input type="text" id="studentName" class="form-control" placeholder="ישראל ישראלי" oninput="updateState('name', this.value)">
-                </div>
-                <div class="form-group">
-                    <label>שם המותג/הפרויקט שנבחר:</label>
-                    <input type="text" id="brandName" class="form-control" placeholder="לדוגמה: CyberSafe, EcoPulse" oninput="updateState('brand', this.value)">
-                </div>
-                <div class="form-group">
-                    <label>תיאור קצר של המותג ומה הוא מציע:</label>
-                    <textarea id="brandDesc" class="form-control" placeholder="כתוב כאן על מה הפרויקט שלך..." oninput="updateState('desc', this.value)"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>קהל היעד המרכזי של הפרויקט:</label>
-                    <input type="text" id="brandAudience" class="form-control" placeholder="למשל: בני נוער חובבי גיימינג, מנהלי רשתות" oninput="updateState('audience', this.value)">
-                </div>
-            </div>
-
-            <!-- שלב 2: תכנון וציור ה-SVG -->
-            <div id="step-2" class="step-container">
-                <div class="step-header">
-                    <h3>שלב 2: תכנון וציור ה-SVG הראשי</h3>
-                    <p>בשלב זה נבנה את הבסיס הוקטורי של הפרויקט. ה-SVG צריך לכלול לפחות 3 סוגי אלמנטים גיאומטריים שונים (rect, circle, path, וכו') עם viewBox מוגדר היטב.</p>
-                </div>
-                <div class="form-group">
-                    <label>קוד ה-SVG הראשי שלך:</label>
-                    <textarea id="svgCode" class="form-control" placeholder="<svg viewBox='0 0 400 300'>...</svg>" oninput="updateState('svg', this.value)"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>הסבר קצר על מבנה ה-SVG שלך (אילו צורות בחרת ומדוע?):</label>
-                    <textarea id="svgDesc" class="form-control" placeholder="הסבר על הבחירות העיצוביות..." oninput="updateState('svg_desc', this.value)"></textarea>
-                </div>
-            </div>
-
-            <!-- שלב 3: אינטראקטיביות ו-DOM -->
-            <div id="step-3" class="step-container">
-                <div class="step-header">
-                    <h3>שלב 3: חיבור דינמי ל-DOM באמצעות JavaScript</h3>
-                    <p>כעת נהפוך את ה-SVG לאינטראקטיבי. נשתמש ב-JavaScript כדי להאזין לאירועים (click, mouseover) ולשנות מאפיינים בזמן אמת. זכור להשתמש ב-createElementNS אם אתה מייצר אלמנטים דינמית!</p>
-                </div>
-                <div class="form-group">
-                    <label>קוד ה-JavaScript לאינטראקטיביות:</label>
-                    <textarea id="jsCode" class="form-control" placeholder="// קוד JS לשינוי attributes או האזנה לאירועים..." oninput="updateState('js', this.value)"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>תאר מה קורה בפרויקט כאשר המשתמש לוחץ או מרחף מעל הצורות:</label>
-                    <textarea id="jsDesc" class="form-control" placeholder="הסבר על הלוגיקה והאינטראקטיביות..." oninput="updateState('js_desc', this.value)"></textarea>
-                </div>
-            </div>
-
-            <!-- שלב 4: אנימציות ותנועה חלקה -->
-            <div id="step-4" class="step-container">
-                <div class="step-header">
-                    <h3>שלב 4: הוספת אנימציה ותנועה חלקה</h3>
-                    <p>כדי לתת חיים לפרויקט, נוסיף אנימציות. מומלץ להשתמש ב-requestAnimationFrame בתוך לולאת ה-JS לקבלת תנועה חלקה ומסונכרנת, או לשלב תגיות animate מובנות ב-SVG.</p>
-                </div>
-                <div class="form-group">
-                    <label>קוד האנימציה (אם נכתב בנפרד):</label>
-                    <textarea id="animCode" class="form-control" placeholder="// קוד אנימציה מבוסס requestAnimationFrame או CSS..." oninput="updateState('animation', this.value)"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>מה זז בפרויקט וכיצד מומשה האנימציה?</label>
-                    <textarea id="animDesc" class="form-control" placeholder="הסבר על לולאת האנימציה והתנועה..." oninput="updateState('anim_desc', this.value)"></textarea>
-                </div>
-            </div>
-
-            <!-- שלב 5: סיכום, רפלקציה והגשה -->
-            <div id="step-5" class="step-container">
-                <div class="step-header">
-                    <h3>שלב 5: סיכום, רפלקציה עצמית והגשה סופית</h3>
-                    <p>הגעת לשלב האחרון! ערוך סיכום קצר של תהליך הלמידה שלך, סמן את המטלות שהשלמת בהצלחה ושגר את הפרויקט החגיגי שלך לשרת.</p>
-                </div>
-                <div class="form-group">
-                    <label>רפלקציה עצמית - מה היה החלק המאתגר ביותר ומה למדת ממנו?</label>
-                    <textarea id="reflection" class="form-control" placeholder="כתוב כאן מספר משפטים על התהליך..." oninput="updateState('reflection', this.value)"></textarea>
-                </div>
-                
-                <h4 style="margin: 15px 0 10px 0; font-weight: 700; color: var(--primary-color);">צ'קליסט סופי לבדיקה עצמית:</h4>
-                <div style="display: flex; flex-direction: column; gap: 8px; background: #FAF8F5; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px;">
-                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 400;">
-                        <input type="checkbox" id="check-svg" style="width: 18px; height: 18px;" onchange="updateChecklist('check_svg', this.checked)"> ה-SVG שלי תקין, מכיל לפחות 3 סוגי אלמנטים ו-viewBox רספונסיבי.
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 400;">
-                        <input type="checkbox" id="check-js" style="width: 18px; height: 18px;" onchange="updateChecklist('check_js', this.checked)"> חיברתי קוד JavaScript שמבצע מניפולציות DOM ל-SVG (שימוש ב-setAttribute).
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 400;">
-                        <input type="checkbox" id="check-anim" style="width: 18px; height: 18px;" onchange="updateChecklist('check_anim', this.checked)"> הוספתי אנימציה חלקה (CSS / requestAnimationFrame / SVG Animate).
-                    </label>
+        <!-- גריד קונטיינר ראשי -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- כרטיס פרטי תלמיד ושמירת התקדמות -->
+            <div class="lg:col-span-3 bg-white border border-[#e2dacb] rounded-xl p-5 shadow-sm space-y-4">
+                <h3 class="text-lg font-bold border-b border-[#e2dacb] pb-2 text-[#2c3e50]">פרטי התלמיד ושמירת התקדמות</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1.5">
+                        <label for="studentName" class="font-bold text-sm">שם התלמיד:</label>
+                        <input type="text" id="studentName" class="p-2.5 border border-[#e2dacb] rounded-md bg-[#fbf9f4] text-base focus:outline-none focus:border-[#d35400]" placeholder="הקלד את שמך כאן..." oninput="updateDashboard()">
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <label for="brandName" class="font-bold text-sm">שם המותג / החברה שבחרת:</label>
+                        <input type="text" id="brandName" class="p-2.5 border border-[#e2dacb] rounded-md bg-[#fbf9f4] text-base focus:outline-none focus:border-[#d35400]" placeholder="למשל: פיצה ברון, בגדי אופנה..." oninput="updateDashboard()">
+                    </div>
                 </div>
 
-                <button class="btn-run-code" style="width: 100%; padding: 15px; font-size: 1.1rem;" onclick="submitProject()">שגר פרויקט לשרת המעבדה 🚀</button>
-            </div>
-
-            <!-- כפתורי ניווט של האשף -->
-            <div class="wizard-nav-btns">
-                <button id="btn-prev" class="btn-wizard" onclick="navigateStep(-1)" style="visibility: hidden;">⬅️ שלב הקודם</button>
-                <button id="btn-next" class="btn-wizard next" onclick="navigateStep(1)">שלב הבא ➡️</button>
-            </div>
-        </div>
-
-        <!-- טאב ב': סטודיו קוד לייב (Sandbox) -->
-        <div id="tab-sandbox" class="tab-content">
-            <div style="margin-bottom: 15px;">
-                <h3 style="color: var(--primary-color);">סטודיו קוד חי - Live Sandbox</h3>
-                <p style="font-size: 0.95rem;">כאן תוכל לכתוב, לערוך ולבדוק את קוד ה-SVG וה-JavaScript שלך בזמן אמת. לחץ על <b>הרץ קוד ⚡</b> כדי לראות את התוצאה!</p>
-            </div>
-            <div class="sandbox-container">
-                <div class="editor-side">
-                    <label style="font-weight: 700; font-size: 0.9rem;">עורך קוד (הזן כאן SVG + Script):</label>
-                    <textarea id="sandboxCode" class="form-control" style="flex-grow: 1; font-family: monospace; min-height: 400px; text-align: left; direction: ltr;" placeholder="<!-- כתוב כאן את קוד ה-SVG שלך -->&#10;<svg viewBox='0 0 200 200' width='100%' height='100%'>&#10;  <circle id='ball' cx='100' cy='100' r='40' fill='tomato' />&#10;</svg>&#10;&#10;<script>&#10;  const ball = document.getElementById('ball');&#10;  ball.addEventListener('click', () => {&#10;    ball.setAttribute('fill', 'gold');&#10;  });&#10;<\/script>"></textarea>
-                    <button class="btn-run-code" onclick="runSandboxCode()">הרץ קוד ⚡</button>
-                </div>
-                <div class="preview-side">
-                    <div class="preview-header">תוצאה והרצה בלייב 💻</div>
-                    <div class="preview-body">
-                        <iframe id="sandboxIframe" class="preview-iframe"></iframe>
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <button class="bg-[#d35400] hover:bg-[#b34700] text-white font-bold py-2.5 px-5 rounded-md text-sm transition duration-200 shadow-sm" onclick="downloadProgress()">💾 שמור והורד קובץ התקדמות (לשמור בדרייב)</button>
+                    <div class="relative inline-block overflow-hidden">
+                        <button class="bg-[#27ae60] hover:bg-[#1e8449] text-white font-bold py-2.5 px-5 rounded-md text-sm transition duration-200 shadow-sm">📂 העלאת קובץ התקדמות והמשך עבודה</button>
+                        <input type="file" id="uploadFile" accept=".json" class="absolute left-0 top-0 opacity-0 cursor-pointer text-[100px]" onchange="uploadProgress(event)">
                     </div>
                 </div>
             </div>
+
+            <!-- מחוון התקדמות ומסר פדגוגי מהמורה סהר -->
+            <div class="lg:col-span-3 bg-white border border-[#e2dacb] rounded-xl p-5 shadow-sm space-y-4">
+                <h3 class="text-lg font-bold text-[#2c3e50]">מצב התקדמות בפרויקט: <span id="dashBrandName" class="text-[#d35400]">המותג שלי</span></h3>
+                <div class="text-sm md:text-base">שלום <strong id="dashStudentName">תלמיד/ה</strong>! ביצעת עד כה <span id="completedCount" class="font-bold text-[#27ae60]">0</span> מתוך <span id="totalCount" class="font-bold">60</span> תתי-משימות.</div>
+                <div class="bg-gray-200 rounded-full h-5 w-full overflow-hidden">
+                    <div id="progressBar" class="bg-[#27ae60] h-full w-0 transition-all duration-300"></div>
+                </div>
+                <div class="text-center font-extrabold text-xl text-[#27ae60]" id="progressPercent">0%</div>
+                
+                <div class="bg-[#ebf5fb] border-r-4 border-[#3498db] p-4 rounded-md text-right text-sm md:text-base italic" id="teacherMessage">
+                    <strong>הודעה מהמורה סהר:</strong> ברוך הבא לפרויקט העיצוב האישי שלך! רשום את שמך ואת החברה שבחרת למעלה, ובוא נתחיל לבנות לוגו מנצח בשלב 1. בהצלחה!
+                </div>
+            </div>
+
+            <!-- עמודת המשימות, בורר השלבים וסביבת העבודה המובנית -->
+            <div class="lg:col-span-2 bg-white border border-[#e2dacb] rounded-xl p-5 shadow-sm space-y-4">
+                <div class="text-lg font-bold border-b border-[#e2dacb] pb-2 text-[#2c3e50] flex items-center justify-between">
+                    <span>משימות לפי שלבים וסביבת עבודה</span>
+                </div>
+                
+                <div class="space-y-2">
+                    <label for="stepSelector" class="font-bold text-base block">בחר שלב עבודה:</label>
+                    <select id="stepSelector" onchange="openSelectedStep()" class="w-full p-2.5 text-base rounded-md border border-[#e2dacb] font-bold bg-white cursor-pointer focus:outline-none">
+                    </select>
+                </div>
+
+                <div id="stepsContainer" class="p-3 bg-[#fafafa] rounded-lg border border-gray-100"></div>
+
+                <!-- סביבת עבודה מובנית (iFrame של התוכנה המתאימה) -->
+                <div class="border-2 border-[#2c3e50] rounded-xl overflow-hidden bg-[#333] shadow-md">
+                    <div class="bg-[#2c3e50] text-white py-2 px-4 text-sm font-bold flex justify-between items-center">
+                        <span id="frameTitle">💻 סביבת עבודה משולבת</span>
+                        <span class="text-xs bg-white/20 py-1 px-2.5 rounded">אינטגרציה חיונית</span>
+                    </div>
+                    <iframe id="softwareIframe" class="w-full h-[650px] border-none bg-white"></iframe>
+                </div>
+            </div>
+
+            <!-- עמודת הבוט המלווה: טוביה הקודברוט -->
+            <div class="lg:col-span-1 flex flex-col">
+                <div class="border-2 border-[#8e44ad] rounded-xl flex flex-col bg-white h-[850px] shadow-sm overflow-hidden sticky top-5">
+                    <div class="bg-[#8e44ad] text-white p-4 font-bold text-lg flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <span class="status-dot-active w-2.5 h-2.5 bg-[#2ecc71] rounded-full"></span>
+                            <span>🤖 טוביה הקודברוט (היועץ האישי שלך)</span>
+                        </div>
+                        <span class="text-xs bg-white/20 py-1 px-2.5 rounded-full">מחובר תמיד</span>
+                    </div>
+                    
+                    <div class="flex-1 p-4 overflow-y-auto bg-[#fdfbfd] space-y-3" id="botMessages"></div>
+                    
+                    <div class="p-3 border-t border-[#e2dacb] flex gap-2 bg-white">
+                        <button class="bg-[#7f8c8d] hover:bg-[#6c7a7b] text-white px-3 rounded-md text-lg shadow-sm transition" title="צרף צילום מסך מהתוכנה לעזרה" onclick="simulateScreenshot()">📸</button>
+                        <input type="text" id="botInput" class="flex-1 p-2.5 border border-[#e2dacb] rounded-md text-base focus:outline-none" placeholder="דבר איתי אחי, מה אתה צריך לעצב?" onkeydown="if(event.key === 'Enter') sendBotMessage()">
+                        <button class="bg-[#8e44ad] hover:bg-[#702e8c] text-white font-bold px-4 rounded-md shadow-sm transition" onclick="sendBotMessage()">שלח</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- טאב ג': פוטופיאה מובנית -->
-        <div id="tab-photopea" class="tab-content">
-            <div style="margin-bottom: 15px;">
-                <h3 style="color: var(--secondary-color);">פוטופיאה מובנית - Photopea Inside</h3>
-                <p style="font-size: 0.95rem;">צריך להכין קומפוזיציות רקע או לערוך שכבות? עבוד ישירות בתוך פוטופיאה המובנית כאן, בלי לצאת מהאתר!</p>
-            </div>
-            <div class="iframe-embed-container">
-                <iframe src="https://www.photopea.com" class="iframe-embed" allow="clipboard-write"></iframe>
-            </div>
-        </div>
     </div>
 
-    <!-- פאנל צ'אט: טוביה הקודברוט -->
-    <div class="sidebar-bot">
-        <div class="bot-header">
-            <div class="bot-header-title">
-                <span class="status-dot"></span>
-                <span>טוביה הקודברוט (גרסת המעבדה) 🤖</span>
-            </div>
-        </div>
-        <div class="chat-messages" id="chat-messages">
-            <div class="chat-msg bot">
-                אח שלי יקר! המערכת מנסה להתחבר כעת למאגר המוח המבוזר שלי ב-GitHub... 🧠
-            </div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="chat-input" class="chat-input" placeholder="שאל את טוביה משהו... (למשל: איך לעשות עיגול)" onkeydown="if(event.key === 'Enter') sendChatMessage()">
-            <button class="chat-send-btn" onclick="sendChatMessage()">שלח</button>
-        </div>
-    </div>
-</div>
+    <script>
+        // כל 15 שלבי המשימה המפורטים מהקובץ המקורי של המורה סהר
+        const stepsData = [
+            { id: 1, title: '1. לוגו המותג', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת הלוגו הבסיסי של המותג בצורות וקווים וקטוריים.', tasks: ['פתח את תוכנת SVG-Edit והגדר משטח עבודה ריבועי מתאים.', 'צור עיגול בסיס שחור או צורה גיאומטרית מורכבת באמצעות כלי הצורות.', 'הוסף אלמנט גרפי מרכזי או אייקון וקטורי שמאפיין את המותג.', 'השתמש בכלי הטקסט ושלב את שם המותג בצבעים בולטים.'] },
+            { id: 2, title: '2. פלייר שיווקי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב פלייר פרסומי להפצה רחבה עם המוצר המרכזי.', tasks: ['פתח דף A4 חדש ב-Photopea דרך תפריט File -> New.', 'ייבא תמונה איכותית של המוצר שלכם דרך File -> Open and Place.', 'הוסף טקסט שיווקי בולט באמצעות כלי הטקסט (T) שבסרגל הכלים השמאלי.', 'הפעל אפקט צל לטקסט דרך Layer -> Layer Style -> Drop Shadow כדי להבליט אותו.'] },
+            { id: 3, title: '3. תפריט מנות ומוצרים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'יצירת קטלוג או תפריט מעוצב המפרט את היצע החברה ומחיריה.', tasks: ['בחר פלטת צבעים קבועה לשמירה על אחידות המותג.', 'חלק את התפריט לקטגוריות ברורות כמו מנות עיקריות, עסקיות, תתוספות ושתייה.', 'רשום מחירים ברורים לצד כל פריט, והוסף אייקונים או חצים ליד מנות מומלצות.'] },
+            { id: 4, title: '4. באנר פרסומי רוחבי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'שלט רוחבי דיגיטלי לאתר האינטרנט או לרשתות החברתיות.', tasks: ['פתח קובץ במימדים רוחביים ארוכים למשל 1200 על 400 פיקסלים.', 'הוסף כיתוב שיווקי בולט ומניע לפעולה כגון הצטרפו למועדון החברים שלנו וקבלו הטבות.', 'שלב את לוגו החברה בפינת הבאנר ופרטי יצירת קשר או כתובת אתר.'] },
+            { id: 5, title: '5. הזמנה לאירוע', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב הזמנה רשמית לפתיחת העסק או להשקת מוצר חדש.', tasks: ['הגדר דף ריבועי או מלבני קטן המתאים לשליחה בנייד או הדפסה.', 'כתוב את פרטי האירוע: תאריך מדויק, שעה, ומיקום ברור.', 'עצב רקע חגיגי באמצעות כלי הגרדיאנט מעבר צבעים בתוכנה.'] },
+            { id: 6, title: '6. שער מגזין', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב דמה של שער מגזין נחשב המארח את המותג שלכם.', tasks: ['פתח דף אנכי איכותי, והוסף את כותרת המגזין המוכר בחלק העליון בשכבה נפרדת.', 'שים תמונת תקריב מרשימה של המוצר המוביל שלכם במרכז השער.', 'הוסף כותרות משנה קטנות ומסקרנות מסביב.', 'הקפד על יישור הטקסטים לימין או לשמאל כדי לשמור על מראה מגזין מקצועי.'] },
+            { id: 7, title: '7. שלט חוצות', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מודעה ענקית המיועדת להצגה בצידי הדרכים.', tasks: ['השתמש ברקע בעל צבע מותג חזק ודומיננטי שימשוך את העין מרחוק.', 'הצב את הלוגו בגודל משמעותי במרכז או בצד השלט.', 'הוסף שורת קריאה קצרה במיוחד ואיקונים של הרשתות החברתיות שלכם.'] },
+            { id: 8, title: '8. מוצר קדמ 1: מסכת פנים או כובע', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הטמעת המותג על גבי אביזר לבוש או הגנה יומיומי.', tasks: ['ייבא תמונת בסיס של מסכה חלקה או כובע.', 'השתמש בכלי שינוי הקנה מידה כדי להתאים את הלוגו שלכם למוצר.', 'שנה את צבע הבסיס של האביזר לצבעי המותג הרשמיים בעזרת כלי המילוי.'] },
+            { id: 9, title: '9. מוצר קדמ 2: חולצת עובדים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מדי עובדים רשמיים או חולצה שיווקית של החברה.', tasks: ['פתח תמונת חולצת טי שרט חלקה בשכבה נפרדת.', 'מקם את הלוגו במיקום הגיוני על החזה בצד שמאל או בגדול במרכז הגב.', 'ודא ששקיפות הלוגו מוגדרת נכון כך שישתלב בבד בצורה ריאליסטית.'] },
+            { id: 10, title: '10. מוצר קדמ 3: מחברת או יומן', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב כריכת יומן או מחברת משרדית ממותגת.', tasks: ['עצב כריכת מחברת מלבנית המשלבת גרפיקה עדינה ברקע.', 'הוסף את שנת הלימודים או השנה הנוכחית בפונט ברור ומרשים.', 'שלב את פרטי האתר או הלוגו בתחתית הכריכה האחורית או הקדמית.'] },
+            { id: 11, title: '11. מודל תלת ממד', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הדמיית מיתוג על גבי אובייקטים נפחיים כמו פחית או בקבוק.', tasks: ['פתח קובץ המכיל צורה תלת ממדית נקייה כמו פחית משקה או גליל.', 'השתמש בכלי העיוות כדי לעטוף את האובייקט בלוגו שלכם.', 'הוסף שכבת צל וברק מעל הגרפיקה כדי לתת תחושת עומק מציאותית.'] },
+            { id: 12, title: '12. נייר מכתבים ומעטפה', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב ניירת משרדית רשמית המשמשת להתכתבות העסק.', tasks: ['עצב כותרת עליונה קבועה לנייר המכתבים המכילה את הלוגו.', 'עצב תחתית עמוד עם כתובת העסק הרשמית, מייל וטלפון המיושרים במדויק.', 'העתק את האלמנטים ועצב מעטפת דואר תואמת באותה שפה חזותית.'] },
+            { id: 13, title: '13. כרטיס ביקור', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת כרטיס ביקור דו צדדי קומפקטי ומקצועי.', tasks: ['הגדר משטח עבודה בגודל סטנדרטי של כרטיס ביקור 9 על 5 סנטימטר.', 'בצד הקדמי שים את הלוגו במרכזו.', 'בצד האחורי סדר בצורה קריאה את שם נציג החברה והתפקיד שלו.'] },
+            { id: 14, title: '14. פולדר תיקיית מסמכים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב תיקייה נפתחת המשמשת להגשת מסמכים וחוזי החברה.', tasks: ['שרטט את פריסת הפולדר כולל הכנפיים הפנימיות שמחזיקות את הדפים.', 'מקם את הלוגו והצבע הראשי בחלק החיצוני הקדמי של התיקייה.', 'ודא שאין טקסטים קרובים מדי לקווי הקיפול או קווי החיתוך.'] },
+            { id: 15, title: '15. אריזה וקופסת משלוחים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'תכנון ופריסה הנדסית של קופסת קרטון עבור מוצרי החברה.', tasks: ['שרטט את פריסת הקופסה מלבנים וריבועים מחוברים כולל לשוניות ההדבקה.', 'הוסף את הלוגו ואלמנטים עיצוביים על פאות הקופסה.', 'בצע ייצוא סופי כקובץ תמונה איכותי וקובץ וקטורי פתוח להמשך עבודה.'] }
+        ];
 
-<!-- מסך סיום חגיגי -->
-<div class="celebration-screen" id="celebration-screen">
-    <div class="celebration-card">
-        <div class="celebration-title">🎉 הפרויקט שוגר בהצלחה!</div>
-        <div class="celebration-text" id="celebration-summary" style="text-align: right; margin-top: 15px; max-height: 350px; overflow-y: auto;"></div>
-        <button class="btn-close-celebration" onclick="closeCelebration()">חזור לעבודה</button>
-    </div>
-</div>
+        const TuviaBrain = {
+            botName: "טוביה הקודברוט",
+            intro: "מה קורה אחי? אני כאן איתך צמוד! שאל אותי כל דבר על גרפיקה דיגיטלית, קוד, פוטופיאה או איך להזיז צורות!",
+            
+            glossary: {
+                "אלמנט": "רכיב / Element המיוצג ע\"י תג ב-DOM.",
+                "תכונה": "מאפיין / Attribute (כמו cx, fill, rx).",
+                "תג": "Tag המשמש להגדרת הרכיב.",
+                "מרחב שמות": "Namespace - הכתובת הייחודית של SVG ב-JS (http://www.w3.org/2000/svg).",
+                "אזור תצוגה": "viewBox - חלון הקואורדינטות הפנימי של ה-SVG.",
+                "נתיב": "Path - כלי לצורות מורכבות בעזרת הפקודה d.",
+                "קו מתאר": "Stroke - קו הגבול החיצוני של הרכיב.",
+                "מילוי": "Fill - צבע הפנים של הצורה.",
+                "הזזה": "Translate - הזזת הרכיב ב-X ו-Y.",
+                "סיבוב": "Rotate - סיבוב הרכיב בזווית מסוימת.",
+                "שינוי קנה מידה": "Scale - הגדלה או הקטנה של האלמנט."
+            },
 
-<div class="toast" id="toast"></div>
+            faq: [
+                {
+                    keywords: ["לא מופיע", "נעלם", "לא רואה", "לא מציג", "שחור", "לבן", "איפה הצורה"],
+                    answer: "הסיבות הנפוצות שצורה לא מופיעה ב-SVG:\n1. שכחת להגדיר viewBox או רוחב/גובה על ה-svg הראשי.\n2. הקואורדינטות מחוץ לתחום ה-viewBox (למשל x=500 כשהרוחב הפנימי הוא 200).\n3. הגדרת בטעות fill='none' ואין stroke.\n4. ב-JS השתמשת ב-createElement במקום ב-createElementNS."
+                },
+                {
+                    keywords: ["createelement", "לא עובד בjs", "js לא מגיב", "namespace", "נספח", "לא מציג בjs", "ns"],
+                    answer: "כשיוצרים אלמנט SVG ב-JS, חובה להשתמש ב-createElementNS ולא ב-createElement הרגיל! ה-Namespace הוא: http://www.w3.org/2000/svg.\n\nהנה הדרך הנכונה:\nconst svgNS = 'http://www.w3.org/2000/svg';\nconst circle = document.createElementNS(svgNS, 'circle');\ncircle.setAttribute('cx', 50);\ncircle.setAttribute('cy', 50);\ncircle.setAttribute('r', 20);\ncircle.setAttribute('fill', 'tomato');\nsvg.appendChild(circle);"
+                },
+                {
+                    keywords: ["גרירה", "drag", "קופץ", "עכבר", "להזיז", "תפיסה", "הזזה"],
+                    answer: "הגרירה קופצת? זה קורה בגלל שלא שמרת את ה-offset (המרחק) בין נקודת הלחיצה של העכבר למרכז הצורה ב-mousedown. יש לחשב offsetX/Y ב-mousedown ולהפחית אותם במהלך ה-mousemove."
+                },
+                {
+                    keywords: ["חלק", "אנימציה", "requestanimationframe", "לזוז", "תנועה", "מהירות", "מציאותי"],
+                    answer: "לתנועה חלקה השתמש ב-requestAnimationFrame במקום ב-setInterval:\n\nlet x = 0;\nfunction animate() {\n  x += 2;\n  circle.setAttribute('cx', x);\n  if (x < 300) requestAnimationFrame(animate);\n}\nrequestAnimationFrame(animate);"
+                },
+                {
+                    keywords: ["viewbox", "ויוקבוקס", "גודל", "רשת", "מימדים", "קואורדינטות", "הבדל"],
+                    answer: "בוא נעשה סדר: viewBox זה 'מה אני רואה ובאיזו רזולוציה פנימית של קואורדינטות' (למשל viewBox='0 0 100 100' אומר שיש לך רשת של 100 על 100 יחידות).\nלעומת זאת, width ו-height קובעים כמה מקום פיזי ה-SVG יתפוס בפועל על המסך."
+                },
+                {
+                    keywords: ["rect", "circle", "path", "מתי להשתמש", "איך לבחור"],
+                    answer: "לצורות פשוטות וסטנדרטיות (מלבן, עיגול, קו) - עדיף rect/circle/line כי הקוד קריא יותר. ל-path פונים רק כשצריך צורה מורכבת שאינה סטנדרטית או עקומות בזייה."
+                },
+                {
+                    keywords: ["טקסט", "text", "כפתור", "מרכז", "כתב", "מילים"],
+                    answer: "אין מירכוז אוטומטי (כמו flexbox) בתוך SVG. עלינו להשתמש ב-text-anchor='middle' ולכוון את ה-y ידנית למרכז הצורה."
+                },
+                {
+                    keywords: ["hover", "ריחוף", "צבע בריחוף"],
+                    answer: "הדפדפן תומך ב-hover על אלמנט SVG בדיוק כמו ב-HTML! תוכל לעשות זאת דרך CSS קלאסי או בעזרת מאזיני mouseenter ו-mouseleave ב-JS."
+                }
+            ],
 
-<script>
-// ================================================================
-// בסיס הנתונים הלוקאלי (Fallback) למקרה שאין אינטרנט או שהקבצים טרם עלו
-// ================================================================
-let TuviaBrain = {
-    faq: [],
-    snippets: []
-};
+            snippets: [
+                {
+                    keywords: ["עיגול צבע", "click color", "שינוי צבע בלחיצה"],
+                    title: "עיגול שמשנה צבע בלחיצה (SVG + JS)",
+                    // המרה בטוחה של תגיות script על מנת למנוע SyntaxError
+                    code: '<svg viewBox="0 0 100 100" width="200" height="200">\n  <circle id="c1" cx="50" cy="50" r="30" fill="steelblue" style="cursor:pointer;"/>\n</svg>\n\x3Cscript\x3E\n  const colors = ["steelblue", "tomato", "gold", "seagreen"];\n  let idx = 0;\n  const circle = document.getElementById("c1");\n  circle.addEventListener("click", () => {\n    idx = (idx + 1) % colors.length;\n    circle.setAttribute("fill", colors[idx]);\n  });\n\x3C/script\x3E',
+                    explanation: "שימוש ב-addEventListener וב-setAttribute לשינוי תכונת ה-fill בלחיצה."
+                },
+                {
+                    keywords: ["progress bar", "מד התקדמות", "בר טעינה", "פס"],
+                    title: "מד התקדמות (Progress Bar) מעוצב",
+                    code: '<svg viewBox="0 0 220 30" width="300" height="40">\n  <rect x="0" y="0" width="200" height="20" rx="10" fill="#eee" stroke="#ccc"/>\n  <rect id="bar" x="0" y="0" width="0" height="20" rx="10" fill="#4caf50"/>\n</svg>\n\x3Cscript\x3E\n  function setProgress(percent) {\n    const w = (percent / 100) * 200;\n    document.getElementById("bar").setAttribute("width", w);\n  }\n  setProgress(65);\n\x3C/script\x3E',
+                    explanation: "מלבן רקע אפור קבוע, ומלבן עליון ירוק שהרוחב שלו מחושב ומעודכן דינמית."
+                },
+                {
+                    keywords: ["שעון", "clock", "אנלוגי", "מחוגים"],
+                    title: "שעון אנלוגי פשוט (מחוגים מסתובבים)",
+                    code: '<svg viewBox="0 0 200 200" width="200" height="200">\n  <circle cx="100" cy="100" r="90" fill="white" stroke="black" stroke-width="3"/>\n  <line id="hourHand" x1="100" y1="100" x2="100" y2="60" stroke="black" stroke-width="5"/>\n  <line id="minHand" x1="100" y1="100" x2="100" y2="40" stroke="gray" stroke-width="3"/>\n</svg>\n\x3Cscript\x3E\n  function updateClock() {\n    const now = new Date();\n    const h = now.getHours() % 12;\n    const m = now.getMinutes();\n    const hourAngle = (h + m / 60) * 30;\n    const minAngle = m * 6;\n    document.getElementById("hourHand").setAttribute("transform", "rotate(" + hourAngle + " 100 100)");\n    document.getElementById("minHand").setAttribute("transform", "rotate(" + minAngle + " 100 100)");\n  }\n  updateClock();\n  setInterval(updateClock, 30000);\n\x3C/script\x3E',
+                    explanation: "חישוב זוויות המחוגים ושינוי ה-transform rotate של המחוגים מסביב למרכז השעון."
+                },
+                {
+                    keywords: ["גרירה חופשית", "drag logic", "גרירה viewBox", "הזזה"],
+                    title: "גרירה חופשית (drag) עם תמיכה ב-viewBox",
+                    code: '<svg id="canvas" viewBox="0 0 300 200" width="300" height="200" style="background:#f5f5f5">\n  <circle id="draggable" cx="150" cy="100" r="20" fill="orange" style="cursor:grab"/>\n</svg>\n\x3Cscript\x3E\n  const svg = document.getElementById("canvas");\n  const el = document.getElementById("draggable");\n  let dragging = false;\n\n  function getSVGPoint(evt) {\n    const pt = svg.createSVGPoint();\n    pt.x = evt.clientX;\n    pt.y = evt.clientY;\n    return pt.matrixTransform(svg.getScreenCTM().inverse());\n  }\n\n  el.addEventListener("mousedown", () => dragging = true);\n  document.addEventListener("mouseup", () => dragging = false);\n  document.addEventListener("mousemove", (e) => {\n    if (!dragging) return;\n    const p = getSVGPoint(e);\n    el.setAttribute("cx", p.x);\n    el.setAttribute("cy", p.y);\n  });\n\x3C/script\x3E',
+                    explanation: "המרה של קואורדינטות מסך הדפדפן (clientX/Y) אל תוך מערכת הצירים של ה-viewBox."
+                },
+                {
+                    keywords: ["גרף", "bar chart", "תרשים עמודות"],
+                    title: "גרף עמודות (bar chart) מנתונים",
+                    code: '<svg id="chart" viewBox="0 0 220 120" width="440" height="240"></svg>\n\x3Cscript\x3E\n  const data = [40, 80, 30, 100, 60];\n  const svgNS = "http://www.w3.org/2000/svg";\n  const svg = document.getElementById("chart");\n  const barWidth = 30;\n\n  data.forEach((value, i) => {\n    const rect = document.createElementNS(svgNS, "rect");\n    rect.setAttribute("x", i * (barWidth + 10) + 10);\n    rect.setAttribute("y", 110 - value);\n    rect.setAttribute("width", barWidth);\n    rect.setAttribute("height", value);\n    rect.setAttribute("fill", "#3498db");\n    svg.appendChild(rect);\n  });\n\x3C/script\x3E',
+                    explanation: "יצירה דינמית של מלבנים (createElementNS) וחישוב מיקום הגובה השלילי שלהם."
+                },
+                {
+                    keywords: ["פועם", "pulse animation", "נשימה"],
+                    title: "אנימציית פועם (pulse) עם requestAnimationFrame",
+                    code: '<svg viewBox="0 0 100 100" width="150" height="150">\n  <circle id="pulse" cx="50" cy="50" r="20" fill="crimson"/>\n</svg>\n\x3Cscript\x3E\n  let t = 0;\n  function animatePulse() {\n    t += 0.05;\n    const r = 20 + Math.sin(t) * 5;\n    document.getElementById("pulse").setAttribute("r", r);\n    requestAnimationFrame(animatePulse);\n  }\n  animatePulse();\n\x3C/script\x3E',
+                    explanation: "שימוש בפונקציית סינוס מתמטית ובלולאת רענון מסנכרנת לאנימציית פעימה חלקה."
+                },
+                {
+                    keywords: ["הצגה הסתרה", "toggle layer", "להעלים"],
+                    title: "Toggle הצגה/הסתרה של שכבות",
+                    code: '<svg viewBox="0 0 100 100" width="150" height="150">\n  <rect id="layer1" x="10" y="10" width="80" height="80" fill="lightblue"/>\n  <circle id="layer2" cx="50" cy="50" r="30" fill="pink"/>\n</svg>\n<button onclick="toggle(\'layer2\')">הצג/הסתר עיגול</button>\n\x3Cscript\x3E\n  function toggle(id) {\n    const el = document.getElementById(id);\n    const current = el.style.display;\n    el.style.display = current === "none" ? "" : "none";\n  }\n\x3C/script\x3E',
+                    explanation: "שינוי דינמי של מאפיין ה-CSS display של אלמנט ה-SVG באמצעות לחיצת כפתור חיצונית."
+                },
+                {
+                    keywords: ["ציור חי", "line animation", "נתיב מצטייר", "dashoffset"],
+                    title: "קו מחובר (path) שמצטייר בהדרגה - ציור חי",
+                    code: '<svg viewBox="0 0 200 100" width="400" height="200">\n  <path id="drawPath" d="M10 90 L60 20 L110 80 L190 10" fill="none" stroke="black" stroke-width="3" stroke-dasharray="300" stroke-dashoffset="300"/>\n</svg>\n\x3Cscript\x3E\n  const path = document.getElementById("drawPath");\n  const length = path.getTotalLength();\n  path.style.strokeDasharray = length;\n  path.style.strokeDashoffset = length;\n  path.style.transition = "stroke-dashoffset 2s ease-in-out";\n  setTimeout(() => path.style.strokeDashoffset = 0, 100);\n\x3C/script\x3E',
+                    explanation: "שימוש בטריק הוקטורי strokeDasharray ו-strokeDashoffset לקבלת אפקט של ציור מברשת הדרגתי."
+                },
+                {
+                    keywords: ["hover interactive", "כפתור הובר", "ריחוף עכבר"],
+                    title: "תפריט/צורה עם hover אינטראקטיבי",
+                    code: '<svg viewBox="0 0 200 60" width="300" height="90">\n  <g id="btn" style="cursor:pointer">\n    <rect x="10" y="10" width="180" height="40" rx="10" fill="#2ecc71"/>\n    <text x="100" y="35" text-anchor="middle" fill="white" font-size="16">לחץ כאן</text>\n  </g>\n</svg>\n\x3Cscript\x3E\n  const btn = document.getElementById("btn");\n  btn.addEventListener("mouseenter", () => btn.querySelector("rect").setAttribute("fill", "#27ae60"));\n  btn.addEventListener("mouseleave", () => btn.querySelector("rect").setAttribute("fill", "#2ecc71"));\n\x3C/script\x3E',
+                    explanation: "האזנה לריחוף מעל קבוצת אלמנטים (g) המעדכנת את צבע המלבן הפנימי."
+                },
+                {
+                    keywords: ["נקודות דינמי", "שכפול דינמי", "רשת נקודות"],
+                    title: "שכפול דינמי של אלמנטים (טבלת נקודות)",
+                    code: '<svg id="grid" viewBox="0 0 220 220" width="220" height="220"></svg>\n\x3Cscript\x3E\n  const svgNS = "http://www.w3.org/2000/svg";\n  const svg = document.getElementById("grid");\n  for (let row = 0; row < 5; row++) {\n    for (let col = 0; col < 5; col++) {\n      const dot = document.createElementNS(svgNS, "circle");\n      dot.setAttribute("cx", col * 40 + 20);\n      dot.setAttribute("cy", row * 40 + 20);\n      dot.setAttribute("r", 5);\n      dot.setAttribute("fill", "#888");\n      svg.appendChild(dot);\n    }\n  }\n\x3C/script\x3E',
+                    explanation: "לולאה כפולה ב-JS המייצרת ומסדרת אוטומטית מטריצה של נקודות במרחב ה-SVG."
+                },
+                {
+                    keywords: ["use code", "star", "כוכבים", "defs"],
+                    title: "שימוש ב-use + defs לחיסכון בקוד",
+                    code: '<svg viewBox="0 0 200 60" width="300" height="90">\n  <defs>\n    <polygon id="star" points="10,0 12,7 20,7 14,11 16,18 10,14 4,18 6,11 0,7 8,7"/>\n  </defs>\n  <use href="#star" x="10" y="10" fill="gold"/>\n  <use href="#star" x="60" y="10" fill="silver"/>\n  <use href="#star" x="110" y="10" fill="#cd7f32"/>\n</svg>',
+                    explanation: "הגדרה חד פעמית של צורה מורכבת (כוכב) ב-defs ושכפולה במיקומים שונים עם use."
+                },
+                {
+                    keywords: ["מונה קליקים", "click count"],
+                    title: "מונה קליקים עם עדכון טקסט",
+                    code: '<svg viewBox="0 0 100 60" width="150" height="90">\n  <circle id="counterBtn" cx="50" cy="30" r="25" fill="#8e44ad" style="cursor:pointer"/>\n  <text id="counterText" x="50" y="35" text-anchor="middle" fill="white" font-size="14">0</text>\n</svg>\n\x3Cscript\x3E\n  let count = 0;\n  const btn = document.getElementById("counterBtn");\n  const text = document.getElementById("counterText");\n  btn.addEventListener("click", () => {\n    count++;\n    text.textContent = count;\n  });\n\x3C/script\x3E',
+                    explanation: "עדכון תוכן של אלמנט text באמצעות תכונת textContent בכל לחיצה."
+                },
+                {
+                    keywords: ["crosshair", "כוונת", "עוקב עכבר", "tracker"],
+                    title: "חיישן מיקום עכבר (crosshair עוקב)",
+                    code: '<svg id="tracker" viewBox="0 0 300 200" width="300" height="200" style="background:#eee">\n  <line id="hLine" x1="0" y1="100" x2="300" y2="100" stroke="red" stroke-dasharray="4"/>\n  <line id="vLine" x1="150" y1="0" x2="150" y2="200" stroke="red" stroke-dasharray="4"/>\n</svg>\n\x3Cscript\x3E\n  const svg = document.getElementById("tracker");\n  svg.addEventListener("mousemove", (e) => {\n    const pt = svg.createSVGPoint();\n    pt.x = e.clientX; pt.y = e.clientY;\n    const p = pt.matrixTransform(svg.getScreenCTM().inverse());\n    document.getElementById("hLine").setAttribute("y1", p.y);\n    document.getElementById("hLine").setAttribute("y2", p.y);\n    document.getElementById("vLine").setAttribute("x1", p.x);\n    document.getElementById("vLine").setAttribute("x2", p.x);\n  });\n\x3C/script\x3E',
+                    explanation: "שני קווים וקטוריים המשנים קואורדינטות בצורה רציפה בהתאם למיקום העכבר."
+                },
+                {
+                    keywords: ["פאי", "pie chart", "עוגה", "פרוסות"],
+                    title: "גרף עוגה (pie chart) בסיסי מ-path",
+                    code: '<svg viewBox="0 0 100 100" width="200" height="200">\n  <path d="M50 50 L50 5 A45 45 0 0 1 90 30 Z" fill="#e74c3c"/>\n  <path d="M50 50 L90 30 A45 45 0 0 1 70 90 Z" fill="#3498db"/>\n  <path d="M50 50 L70 90 A45 45 0 1 1 50 5 Z" fill="#f1c40f"/>\n</svg>',
+                    explanation: "בניית דיאגרמה מעוגלת באמצעות פקודות arc (קשתות אליפטיות) משולבות בתוך path."
+                },
+                {
+                    keywords: ["סליידר", "custom slider", "מד תזוזה"],
+                    title: "Slider מותאם אישית (SVG בלבד)",
+                    code: '<svg viewBox="0 0 200 30" width="300" height="40">\n  <line x1="10" y1="15" x2="190" y2="15" stroke="#ccc" stroke-width="4"/>\n  <circle id="knob" cx="10" cy="15" r="8" fill="#2980b9" style="cursor:pointer"/>\n</svg>\n\x3Cscript\x3E\n  const svg = document.querySelector("svg");\n  const knob = document.getElementById("knob");\n  let dragging = false;\n  knob.addEventListener("mousedown", () => dragging = true);\n  document.addEventListener("mouseup", () => dragging = false);\n  document.addEventListener("mousemove", (e) => {\n    if (!dragging) return;\n    const pt = svg.createSVGPoint();\n    pt.x = e.clientX;\n    const x = pt.matrixTransform(svg.getScreenCTM().inverse()).x;\n    const clamped = Math.max(10, Math.min(190, x));\n    knob.setAttribute("cx", clamped);\n    const value = Math.round(((clamped - 10) / 180) * 100);\n    console.log("value:", value);\n  });\n\x3C/script\x3E',
+                    explanation: "סליידר עצמאי מלא ללא שימוש בתגית input, פועל דרך חישוב קואורדינטות ו-Clamping."
+                }
+            ]
+        };
 
-// טעינה אסינכרונית של המוח מ-GitHub Database
-async function loadBrainFromGitHub() {
-    const chatMessages = document.getElementById('chat-messages');
-    try {
-        // מנסה לטעון את קבצי ה-JSON באופן יחסי מהשרת המבוזר שלך ב-GitHub Pages
-        const faqResponse = await fetch('./database/faq.json');
-        const snippetsResponse = await fetch('./database/snippets.json');
-        
-        if (faqResponse.ok && snippetsResponse.ok) {
-            TuviaBrain.faq = await faqResponse.json();
-            TuviaBrain.snippets = await snippetsResponse.json();
-            console.log("Database Loaded successfully from GitHub!");
-            chatMessages.innerHTML = `
-                <div class="chat-msg bot">
-                    <b>טוביה:</b> אח שלי יקר! התחברתי בהצלחה לבסיס הנתונים המבוזר שלי ב-GitHub! 🧠<br>
-                    כל המוח והסניפטים שלי מעודכנים ורצים בלייב. שאל אותי מה שאתה צריך לעצב! 🔥
+        let studentState = {
+            name: "",
+            brand: "",
+            checklist: {}
+        };
+
+        let currentStepId = 1;
+
+        function init() {
+            const selector = document.getElementById('stepSelector');
+            selector.innerHTML = '';
+            
+            stepsData.forEach((step) => {
+                const option = document.createElement('option');
+                option.value = step.id;
+                option.innerText = step.title;
+                selector.appendChild(option);
+            });
+            
+            switchStep(1);
+            initBot();
+        }
+
+        function openSelectedStep() {
+            const selectedId = parseInt(document.getElementById('stepSelector').value);
+            switchStep(selectedId);
+        }
+
+        function switchStep(stepId) {
+            currentStepId = stepId;
+            const step = stepsData.find(s => s.id === stepId);
+            const container = document.getElementById('stepsContainer');
+            
+            let tasksHtml = '';
+            step.tasks.forEach((task, tIndex) => {
+                const taskId = `task_${step.id}_${tIndex}`;
+                const isChecked = studentState.checklist[taskId] ? 'checked' : '';
+                const checkedClass = studentState.checklist[taskId] ? 'bg-green-50 border-r-4 border-emerald-500' : 'border-r-4 border-gray-200';
+                const labelClass = studentState.checklist[taskId] ? 'line-through text-gray-400 font-light' : 'font-semibold text-[#2c3e50]';
+                tasksHtml += `
+                    <div class="flex items-start gap-3 p-3 rounded-md mb-2 bg-white border border-gray-100 ${checkedClass} transition duration-200" id="item_${taskId}">
+                        <input type="checkbox" id="${taskId}" ${isChecked} class="w-5 h-5 mt-0.5 cursor-pointer accent-emerald-600" onchange="toggleTask('${taskId}')">
+                        <label for="${taskId}" class="text-sm md:text-base cursor-pointer ${labelClass}">${task}</label>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="flex justify-between items-center flex-wrap gap-2 mb-3">
+                    <h3 class="text-lg font-bold text-[#2c3e50]">${step.title}</h3>
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded text-xs font-bold text-white ${step.software === 'Photopea' ? 'bg-[#27ae60]' : 'bg-[#0052cc]'}">תוכנה: ${step.software}</span>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 italic mb-4">${step.description}</p>
+                
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sm text-[#2c3e50] mb-2">משימות לביצוע בשלב זה:</h4>
+                    ${tasksHtml}
+                </div>
+
+                <div class="bg-[#fff9e6] border-r-4 border-[#f1c40f] p-4 rounded-md mt-4 text-sm">
+                    <h4 class="font-bold text-[#b7950b] mb-1">💡 טיפ מהמורה סהר לעבודה ב-${step.software}:</h4>
+                    <p class="text-gray-700">${step.software === 'Photopea' ? 
+                       'תמיד תעבוד בשכבות (Layers)! כשאתה מביא תמונה חדשה, תגרור אותה ישירות למשטח העבודה ותוודא שהיא בשכבה נפרדת כדי שתוכל להזיז ולשנות לה את הגודל בלי להרוס את הרקע.' : 
+                       'בתוכנה וקטורית, כל קו ועיגול הם עצמאיים. אם אתה רוצה לשנות קוד SVG ישירות, לחץ על כלי ה-Source (קוד המקור) בתוכנה והדבק את הקוד שהבוט החבר ייצר לך!'}</p>
                 </div>
             `;
-        } else {
-            throw new Error("HTTP Status Error");
-        }
-    } catch (err) {
-        console.warn("Failed to load DB. Using fallback local brain.");
-        // שחזור מקומי מהיר למקרה שהסרבר לא זמין ברגע הראשון
-        TuviaBrain.faq = [
-            { keywords: ["לא מופיע", "נעלם", "לא רואה"], answer: "הגדרת viewBox? בדוק שהקואורדינטות מתאימות לגבולות ה-viewBox." },
-            { keywords: ["createelement", "js"], answer: "ב-SVG חובה להשתמש ב-document.createElementNS('http://www.w3.org/2000/svg', tag)!" }
-        ];
-        TuviaBrain.snippets = [
-            { keywords: ["עיגול", "circle"], title: "עיגול פשוט", code: "<circle cx='50' cy='50' r='40' fill='tomato'/>" }
-        ];
-        chatMessages.innerHTML = `
-            <div class="chat-msg bot">
-                <b>טוביה:</b> שומע אחי? לא הצלחתי למצוא את קבצי ה-Database בשרת (עדיין לא העלית את תיקיית database?), אז עליתי במצב בטוח (Local Fallback). אני עדיין איתך! 💪
-            </div>
-        `;
-    }
-}
-
-// ================================================================
-// מנוע חיפוש חכם "AI-Lite Semantic Matcher" בעברית
-// ================================================================
-function findBestMatch(userQuery) {
-    const query = userQuery.toLowerCase().trim();
-    
-    // 1. פירוק השאלה למילים בודדות (Tokenization)
-    const words = query.split(/[\s,?.!]+/);
-    
-    // 2. סינון מילים לא מועילות (Stop-Words) בעברית ובאנגלית
-    const stopWords = new Set([
-        "איך", "לעשות", "על", "את", "של", "אני", "רוצה", "ליצור", "בתוך", "עם", "למה", "מה", "זה", 
-        "הוא", "היא", "הם", "שלי", "שלנו", "כדי", "כמו", "כי", "אם", "או", "how", "to", "do", "the", "a"
-    ]);
-    const keywords = words.filter(word => word.length > 1 && !stopWords.has(word));
-
-    let bestMatch = null;
-    let highestScore = 0;
-    let matchType = null; // 'faq' or 'snippet'
-
-    // אם לא נשארו מילים לחיפוש, נחזיר null
-    if (keywords.length === 0) return null;
-
-    // סריקת ה-FAQ
-    TuviaBrain.faq.forEach(item => {
-        let score = 0;
-        keywords.forEach(word => {
-            // התאמה ישירה למילות מפתח מוגדרות
-            item.keywords.forEach(key => {
-                if (key.includes(word) || word.includes(key)) {
-                    score += 3; // ציון גבוה על התאמה ישירה
-                }
-            });
-            // התאמה עקיפה לתוך גוף התשובה
-            if (item.answer.toLowerCase().includes(word)) {
-                score += 1;
-            }
-        });
-        if (score > highestScore) {
-            highestScore = score;
-            bestMatch = item;
-            matchType = 'faq';
-        }
-    });
-
-    // סריקת הסניפטים
-    TuviaBrain.snippets.forEach(item => {
-        let score = 0;
-        keywords.forEach(word => {
-            // התאמה ישירה למילות מפתח
-            item.keywords.forEach(key => {
-                if (key.includes(word) || word.includes(key)) {
-                    score += 4; // משקל גדול יותר לסניפטים (כי תלמידים בד"כ רוצים קוד)
-                }
-            });
-            // התאמה לכותרת
-            if (item.title.toLowerCase().includes(word)) {
-                score += 2;
-            }
-        });
-        if (score > highestScore) {
-            highestScore = score;
-            bestMatch = item;
-            matchType = 'snippet';
-        }
-    });
-
-    // רק אם יש לנו ציון משמעותי נחזיר את התוצאה
-    return highestScore >= 2 ? { data: bestMatch, type: matchType } : null;
-}
-
-// ================================================================
-// שליחת הודעה בצ'אט
-// ================================================================
-function sendChatMessage() {
-    const chatMessages = document.getElementById('chat-messages');
-    const inputEl = document.getElementById('chat-input');
-    const query = inputEl.value.trim();
-    if(!query) return;
-
-    chatMessages.innerHTML += `<div class="chat-msg user">${query}</div>`;
-    inputEl.value = "";
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    const loadingId = "load-" + Date.now();
-    chatMessages.innerHTML += `<div class="chat-msg bot" id="${loadingId}">טוביה חושב... ⚡</div>`;
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    setTimeout(() => {
-        let botResponse = "";
-        let generatedCode = "";
-        
-        // הרצת מנוע ה-AI הלוקאלי שלנו מול השרת המבוזר
-        const result = findBestMatch(query);
-
-        if (result) {
-            if (result.type === 'faq') {
-                botResponse = `💡 <b>הנה מה שאתה צריך לעשות אחי:</b><br>${result.data.answer.replace(/\n/g, '<br>')}`;
-            } else if (result.type === 'snippet') {
-                botResponse = `🎨 <b>מצאתי קוד מתאים עבור "${query}":</b><br>` +
-                              `• כותרת התבנית: <i>${result.data.title}</i><br>` +
-                              `• ${result.data.explanation || ""}<br><br>` +
-                              `💻 <b>הקוד שלך להעתקה:</b>`;
-                generatedCode = result.data.code;
-            }
-        } else {
-            botResponse = `👋 <b>שומע אחי?</b> שאלת לגבי "${query}". המילים האלה עדיין לא מופו ב-Database שלי ב-GitHub.<br><br>` +
-                          `נסה לשאול אותי משהו כמו: <i>"איך ליצור עיגול"</i>, <i>"למה הקוד לא מופיע"</i>, <i>"קוד למד התקדמות"</i>, או <i>"איך עושים גרירה"</i>.<br><br>` +
-                          `<i>"תוכל תמיד להוסיף לי עוד ידע דרך ה-GitHub!"</i>`;
-        }
-
-        let finalHtml = `<b>טוביה:</b><br>${botResponse}`;
-        
-        if (generatedCode) {
-            const uniqueCodeId = `code-block-${Date.now()}`;
-            const escapedCode = generatedCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             
-            finalHtml += `
-                <div style="position:relative; margin-top: 10px;">
-                    <button class="btn-copy-code" onclick="copyToClipboard('${uniqueCodeId}', this)">העתק קוד</button>
-                    <pre id="${uniqueCodeId}">${escapedCode}</pre>
-                </div>
-                <br>
-                🚀 <b>הנחיות להמשך עבודה בכיתה:</b><br>
-                • העתק את הקוד, כנס ללשונית ה-<b>Sandbox (סטודיו קוד לייב)</b> כאן למעלה, הדבק אותו והרץ בלייב!`;
-        }
-
-        const loadEl = document.getElementById(loadingId);
-        if (loadEl) {
-            loadEl.innerHTML = finalHtml;
-        }
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 400);
-}
-
-// ================================================================
-// שמירת התקדמות ומעבר שלבים (מבוסס JSON)
-// ================================================================
-let studentState = {
-    name: "", brand: "", desc: "", audience: "", svg: "", svg_desc: "",
-    js: "", js_desc: "", animation: "", anim_desc: "", reflection: "",
-    check_svg: false, check_js: false, check_anim: false
-};
-
-let currentStepId = 1;
-
-function updateState(key, value) { studentState[key] = value; }
-function updateChecklist(key, isChecked) { studentState[key] = isChecked; }
-
-function switchStep(stepId) {
-    const bubbles = document.querySelectorAll('.step-bubble');
-    bubbles.forEach((b, idx) => {
-        b.classList.remove('active');
-        if (idx + 1 === stepId) b.classList.add('active');
-    });
-
-    const containers = document.querySelectorAll('.step-container');
-    containers.forEach((c, idx) => {
-        c.classList.remove('active');
-        if (idx + 1 === stepId) c.classList.add('active');
-    });
-
-    currentStepId = stepId;
-    document.getElementById('btn-prev').style.visibility = (stepId === 1) ? 'hidden' : 'visible';
-    const nextBtn = document.getElementById('btn-next');
-    if (stepId === 5) {
-        nextBtn.textContent = 'הגש פרויקט סופי 🏁';
-        nextBtn.onclick = submitProject;
-    } else {
-        nextBtn.textContent = 'שלב הבא ➡️';
-        nextBtn.onclick = () => navigateStep(1);
-    }
-}
-
-function navigateStep(direction) {
-    let target = currentStepId + direction;
-    if (target >= 1 && target <= 5) switchStep(target);
-}
-
-function switchTab(tabName, btnEl) {
-    const tabs = document.querySelectorAll('.tab-btn');
-    tabs.forEach(t => t.classList.remove('active'));
-    btnEl.classList.add('active');
-
-    const contents = document.querySelectorAll('.tab-content');
-    contents.forEach(c => c.classList.remove('active'));
-    document.getElementById(`tab-${tabName}`).classList.add('active');
-
-    if (tabName === 'sandbox') {
-        const sandboxArea = document.getElementById('sandboxCode');
-        if (!sandboxArea.value && studentState.svg) {
-            sandboxArea.value = studentState.svg + "\n\n<script>\n" + studentState.js + "\n<\/script>";
-        }
-    }
-}
-
-function runSandboxCode() {
-    const code = document.getElementById('sandboxCode').value;
-    const iframe = document.getElementById('sandboxIframe');
-    const iframeContent = `
-        <!DOCTYPE html>
-        <html lang="he" dir="rtl">
-        <head>
-            <meta charset="UTF-8">
-            <style>
-                body { margin: 0; padding: 10px; display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: #ffffff; }
-                svg { max-width: 100%; max-height: 90vh; }
-            </style>
-        </head>
-        <body>${code}</body>
-        </html>
-    `;
-    const doc = iframe.contentDocument || iframe.contentWindow.document;
-    doc.open(); doc.write(iframeContent); doc.close();
-}
-
-function downloadStudentProgress() {
-    const sName = studentState.name.trim() || "תלמיד";
-    const bName = studentState.brand.trim() || "מותג";
-    const filename = `פרויקט_תקשוב_${sName}_${bName}.json`;
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(studentState, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", filename);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click(); downloadAnchor.remove();
-    showToast("ההתקדמות שלך נשמרה בקובץ JSON! שמור אותו בתיקיית העבודות שלך 💾");
-}
-
-function uploadStudentProgress(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const parsed = JSON.parse(e.target.result);
-            if (parsed && typeof parsed === 'object') {
-                studentState = { ...studentState, ...parsed };
-                document.getElementById('studentName').value = studentState.name || "";
-                document.getElementById('brandName').value = studentState.brand || "";
-                document.getElementById('brandDesc').value = studentState.desc || "";
-                document.getElementById('brandAudience').value = studentState.audience || "";
-                document.getElementById('svgCode').value = studentState.svg || "";
-                document.getElementById('svgDesc').value = studentState.svg_desc || "";
-                document.getElementById('jsCode').value = studentState.js || "";
-                document.getElementById('jsDesc').value = studentState.js_desc || "";
-                document.getElementById('animCode').value = studentState.animation || "";
-                document.getElementById('animDesc').value = studentState.anim_desc || "";
-                document.getElementById('reflection').value = studentState.reflection || "";
-                document.getElementById('check-svg').checked = studentState.check_svg || false;
-                document.getElementById('check-js').checked = studentState.check_js || false;
-                document.getElementById('check-anim').checked = studentState.check_anim || false;
-                switchStep(1);
-                showToast("קובץ המשימה נטען בהצלחה! כל הנתונים עודכנו 🎉");
+            // עדכון ה-iFrame המובנה ישירות בתוך העמוד בהתאם לתוכנה של השלב
+            const iframe = document.getElementById('softwareIframe');
+            const frameTitle = document.getElementById('frameTitle');
+            if (iframe.src !== step.url) {
+                iframe.src = step.url;
             }
-        } catch (err) { alert("שגיאה בטעינת הקובץ."); }
-    };
-    reader.readAsText(file);
-}
+            frameTitle.innerHTML = `💻 תוכנת עבודה מובנית: <strong>${step.software}</strong> בשילוב משימה ${step.id}`;
 
-function submitProject() {
-    if (!studentState.name.trim() || !studentState.brand.trim()) {
-        showToast("אחי, מלא קודם שם מלא ונושא מותג בשלב 1!");
-        switchStep(1);
-        return;
-    }
-    const checklistHtml = `
-        <p><strong>שם התלמיד/ה:</strong> ${studentState.name}</p>
-        <p><strong>המותג שנבחר:</strong> ${studentState.brand}</p>
-        <p><strong>קהל יעד:</strong> ${studentState.audience || "טרם הוגדר"}</p>
-        <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-color);">
-        <p><strong>סטטוס משימות לבדיקה עצמית:</strong></p>
-        <ul style="list-style: none; padding-right: 15px; margin-top: 5px;">
-            <li>${studentState.check_svg ? '✅' : '❌'} רכיב SVG ראשי תקין</li>
-            <li>${studentState.check_js ? '✅' : '❌'} חיבור דינמי ל-DOM עם JS</li>
-            <li>${studentState.check_anim ? '✅' : '❌'} הוספת תנועה ואנימציה חלקה</li>
-        </ul>
-    `;
-    document.getElementById('celebration-summary').innerHTML = checklistHtml;
-    document.getElementById('celebration-screen').style.display = 'flex';
-}
+            // נעדכן את הבורר אם שינינו את השלב דרך הקוד
+            const selector = document.getElementById('stepSelector');
+            if (selector.value !== String(stepId)) {
+                selector.value = stepId;
+            }
 
-function closeCelebration() { document.getElementById('celebration-screen').style.display = 'none'; }
-function showToast(text) {
-    const t = document.getElementById('toast');
-    t.textContent = text; t.style.opacity = '1';
-    setTimeout(() => { t.style.opacity = '0'; }, 4000);
-}
+            updateDashboard();
+            if (window.botWelcomeMessage) window.botWelcomeMessage(step);
+        }
 
-function copyToClipboard(elementId, btn) {
-    const pre = document.getElementById(elementId);
-    if (!pre) return;
-    const textarea = document.createElement('textarea');
-    textarea.value = pre.textContent;
-    document.body.appendChild(textarea);
-    textarea.select(); document.execCommand('copy');
-    document.body.removeChild(textarea);
-    const originalText = btn.textContent;
-    btn.textContent = "הועתק! ✓";
-    btn.style.backgroundColor = "var(--secondary-color)";
-    setTimeout(() => { btn.textContent = originalText; btn.style.backgroundColor = ""; }, 2000);
-}
+        function toggleTask(taskId) {
+            const cb = document.getElementById(taskId);
+            const item = document.getElementById(`item_${taskId}`);
+            
+            if (cb.checked) {
+                item.className = item.className.replace('border-r-4 border-gray-200', 'bg-green-50 border-r-4 border-emerald-500');
+                item.querySelector('label').className = 'text-sm md:text-base cursor-pointer line-through text-gray-400 font-light';
+                studentState.checklist[taskId] = true;
+                addBotMessage("bot", "אש עליך אחי! סימנת משימה בהצלחה. ממשיכים קדימה בלי לעצור! 🔥");
+            } else {
+                item.className = item.className.replace('bg-green-50 border-r-4 border-emerald-500', 'border-r-4 border-gray-200');
+                item.querySelector('label').className = 'text-sm md:text-base cursor-pointer font-semibold text-[#2c3e50]';
+                studentState.checklist[taskId] = false;
+            }
+            
+            updateDashboard();
+        }
 
-window.onload = () => {
-    loadBrainFromGitHub();
-};
-</script>
+        function updateDashboard() {
+            studentState.name = document.getElementById('studentName').value || "";
+            studentState.brand = document.getElementById('brandName').value || "";
+
+            document.getElementById('dashStudentName').innerText = studentState.name || "תלמיד/ה";
+            document.getElementById('dashBrandName').innerText = studentState.brand || "המותג שלי";
+
+            let total = 0, completed = 0;
+            stepsData.forEach(step => {
+                step.tasks.forEach((task, tIndex) => {
+                    total++;
+                    if (studentState.checklist[`task_${step.id}_${tIndex}`]) completed++;
+                });
+            });
+
+            document.getElementById('completedCount').innerText = completed;
+            document.getElementById('totalCount').innerText = total;
+
+            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressPercent').innerText = percent + '%';
+
+            const msgBox = document.getElementById('teacherMessage');
+            let txt = `<strong>הודעה מהמורה סהר:</strong> `;
+            if (percent === 0) txt += `אהלן ${studentState.name || 'תלמיד'}! רשום את השם והמותג שלך למעלה, והחבר הבוט מימין יעזור לך בכל שלב בתפריטים!`;
+            else if (percent < 50) txt += `יופי של קצב! התוכנה פתוחה למטה, תעזר בבוט כדי להוציא קודים מתאימים לעיצוב.`;
+            else if (percent === 100) txt += `פרויקט מדהים ומלא! גאה בך מאוד על ההשקעה! 🎉`;
+            else txt += `אתה כבר מעבר לחצי הדרך, העסק של ${studentState.brand || 'המותג'} הולך להראות מטורף!`;
+            msgBox.innerHTML = txt;
+        }
+
+        function initBot() {
+            const step = stepsData.find(s => s.id === currentStepId);
+            window.botWelcomeMessage(step);
+        }
+
+        window.botWelcomeMessage = function(step) {
+            const messagesContainer = document.getElementById('botMessages');
+            messagesContainer.innerHTML = ''; // מנקה את השיח במעבר שלב
+            
+            let welcomeTxt = `מה קורה אחי? אני כאן איתך צמוד! אנחנו כרגע ב-**${step.title}**. <br>`;
+            if(step.software === 'Photopea') {
+                welcomeTxt += `הפעלתי לך את **Photopea** ממש כאן למטה בתוך הדף! בשביל להתחיל, כנס לתפריט העליון בתוכנה ל- **File -> New**, תבחר גודל פלייר, ותגיד לי מה הרעיון שלך כדי שנעשה את זה ביחד ונוציא גם קוד JS לאוטומציה מהירה.`;
+            } else {
+                welcomeTxt += `הפעלתי לך את **SVG-Edit** פה למטה בתוך הדף! דבר איתי, ספר לי איזה אלמנטים או צורות בא לך להוסיף ללוגו ואני אייצר לך קוד SVG מוכן שתוכל להטמיע ישר בלחיצה על כפתור ה-Source!`;
+            }
+            addBotMessage("bot", welcomeTxt);
+        }
+
+        function addBotMessage(sender, text, code = "") {
+            const container = document.getElementById('botMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `p-3 rounded-lg text-sm max-w-[85%] leading-relaxed ${sender === 'user' ? 'bg-[#ebf5fb] text-[#1b4f72] self-start border-r-4 border-[#3498db] rounded-bl-none shadow-sm' : 'bg-[#f1e7f8] text-[#4a235a] self-end border-r-4 border-[#8e44ad] rounded-br-none shadow-sm w-full'}`;
+            msgDiv.innerHTML = text;
+            
+            if(code) {
+                const uniqueId = "code-" + Date.now() + Math.random().toString(36).substr(2, 4);
+                const codeDiv = document.createElement('div');
+                codeDiv.className = "bg-[#2c3e50] text-gray-100 p-3 rounded-md font-mono text-xs text-left overflow-x-auto mt-2.5 relative leading-normal";
+                codeDiv.style.direction = "ltr";
+                
+                const btn = document.createElement('button');
+                btn.className = "absolute top-1.5 left-1.5 bg-white/15 border border-white/30 text-white py-1 px-2.5 rounded text-[10px] hover:bg-white/30 transition duration-150";
+                btn.innerText = "העתק קוד";
+                btn.onclick = () => copyToClipboard(uniqueId, btn);
+                codeDiv.appendChild(btn);
+
+                const pre = document.createElement('pre');
+                pre.id = uniqueId;
+                pre.className = "whitespace-pre-wrap mt-5";
+                pre.innerText = code;
+                codeDiv.appendChild(pre);
+
+                msgDiv.appendChild(codeDiv);
+            }
+            
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendBotMessage() {
+            const input = document.getElementById('botInput');
+            const query = input.value.trim();
+            if(!query) return;
+
+            addBotMessage("user", query);
+            input.value = '';
+
+            const step = stepsData.find(s => s.id === currentStepId);
+            
+            setTimeout(() => {
+                let lowerQuery = query.toLowerCase();
+                let botResponse = "";
+                let generatedCode = "";
+                let hasMatched = false;
+
+                // 1. חיפוש במילון מונחים (Glossary)
+                for (const [key, value] of Object.entries(TuviaBrain.glossary)) {
+                    if (lowerQuery.includes(key.toLowerCase())) {
+                        botResponse = `💡 <b>שומע אחי? הנה פירוש המונח "${key}":</b><br>${value}`;
+                        hasMatched = true;
+                        break;
+                    }
+                }
+
+                // 2. חיפוש בשאלות נפוצות (FAQ)
+                if (!hasMatched) {
+                    let foundFaq = TuviaBrain.faq.find(item => 
+                        item.keywords.some(keyword => lowerQuery.includes(keyword))
+                    );
+                    if (foundFaq) {
+                        botResponse = `💡 <b>הנה פתרון פדגוגי בשבילך:</b><br>${foundFaq.answer.replace(/\n/g, '<br>')}`;
+                        hasMatched = true;
+                    }
+                }
+
+                // 3. חיפוש בקודים וסניפטים (Snippets)
+                if (!hasMatched) {
+                    let foundSnippet = TuviaBrain.snippets.find(item => 
+                        item.keywords.some(keyword => lowerQuery.includes(keyword))
+                    );
+                    if (foundSnippet) {
+                        botResponse = `🎨 <b>מצאתי קוד מתאים מתוך ספריית 15 הסניפטים שלי:</b><br>` +
+                                      `• כותרת התבנית: <i>${foundSnippet.title}</i><br>` +
+                                      `• <i>${foundSnippet.explanation}</i><br><br>` +
+                                      `💻 <b>הקוד שלך מוכן להעתקה:</b>`;
+                        generatedCode = foundSnippet.code;
+                        hasMatched = true;
+                    }
+                }
+
+                // 4. תגובה מותאמת כללית במידה ולא נמצאה התאמה ישירה
+                if (!hasMatched) {
+                    if (step.software === 'SVG-Edit') {
+                        generatedCode = `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">\n  <circle cx="100" cy="100" r="80" fill="#2c3e50" stroke="#d35400" stroke-width="5"/>\n  <text x="100" y="110" font-size="20" fill="white" font-family="sans-serif" text-anchor="middle">${studentState.brand || 'Logo'}</text>\n</svg>`;
+                        botResponse = `איזה כיוון חזק אחי! לא מצאתי משהו ספציפי במאגר עבור "${query}", אבל הכנתי לך שבלונה וקטורית יפה עבור המותג שלך <b>${studentState.brand || 'המותג שלי'}</b>. רד ל-SVG-Edit למטה, לחץ על לחצן ה-<b>Source</b> ותדביק את זה:<br><br><i>שאלת אתגר: רוצה שנוסיף לזה צורת מלבן או שננפיש את השמש ברקע?</i>`;
+                    } else {
+                        generatedCode = `// סקריפט אוטומציה ל-Photopea\napp.activeDocument.activeLayer.opacity = 85;\nalert("השכבה שונתה ל-85% שקיפות בהצלחה ע"י הבוט החבר!");`;
+                        botResponse = `קלטתי אותך לגמרי! בוא נבצע ב-<b>Photopea</b> שמתחתנו:<br>1. כנס ל-<b>File -> Open and Place</b> ותבחר תמונה מהמחשב.<br>2. בשביל לשנות גודל או לסובב, כנס ל-<b>Edit -> Free Transform</b>.<br>3. הנה קוד ה-JavaScript המיוחד שהכנתי לך, כנס ל-<b>File -> Script</b> בתוכנה, תדביק ותראה את הקסם:<br><br><i>אתגר: מה לדעתך יקרה אם נשנה את ה-opacity ל-50%?</i>`;
+                    }
+                }
+
+                let opening = `<b>טוביה הקודברוט:</b><br>`;
+                addBotMessage("bot", opening + botResponse, generatedCode);
+            }, 600);
+        }
+
+        function simulateScreenshot() {
+            addBotMessage("user", "📸 <em>[העלה צילום מסך של התוכנה לקבלת עזרה]</em>");
+            setTimeout(() => {
+                addBotMessage("bot", "ראיתי את צילום המסך שלך אחי! שים לב לתוכנה למטה - בסרגל הכלים השמאלי יש לך את החץ (כלי הבחירה). לחץ עליו ותוכל להזיז את השכבה בדיוק לאמצע המשטח. פגז!");
+            }, 800);
+        }
+
+        function copyToClipboard(elementId, btn) {
+            const pre = document.getElementById(elementId);
+            if (!pre) return;
+            const textarea = document.createElement('textarea');
+            textarea.value = pre.textContent;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            const originalText = btn.textContent;
+            btn.textContent = "הועתק! ✓";
+            btn.style.backgroundColor = "var(--success-color)";
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.backgroundColor = "";
+            }, 2000);
+        }
+
+        /* --- ניהול קבצי התקדמות --- */
+        function downloadProgress() {
+            const sName = studentState.name.trim() || "תלמיד";
+            const bName = studentState.brand.trim() || "מותג";
+            const filename = `תיקיית_עבודה_${sName}_${bName}.json`;
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(studentState));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", filename);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function uploadProgress(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed && typeof parsed === 'object') {
+                        studentState = parsed;
+                        document.getElementById('studentName').value = studentState.name || "";
+                        document.getElementById('brandName').value = studentState.brand || "";
+                        switchStep(currentStepId);
+                        alert("הקובץ נטען בהצלחה אחי! המשך עבודה נעימה.");
+                    }
+                } catch (err) { alert("שגיאה בטעינת הקובץ."); }
+            };
+            reader.readAsText(file);
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
