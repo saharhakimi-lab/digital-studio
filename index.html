@@ -12,15 +12,25 @@
     body { font-family: 'Assistant', 'Heebo', sans-serif; background-color: #FAF7F0; }
     .cream-bg { background-color: #FAF7F0; }
     .card-shadow { box-shadow: 0 4px 20px -2px rgba(139, 92, 26, 0.08); }
-    .tabs-scroll::-webkit-scrollbar { display: none; }
-    .tabs-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     #tuvia-box::-webkit-scrollbar { width: 4px; }
     #tuvia-box::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
     @keyframes pulse2 { 0%{transform:scale(1);opacity:1;} 50%{transform:scale(1.2);opacity:.6;} 100%{transform:scale(1);opacity:1;} }
     .status-dot { animation: pulse2 1.5s infinite; }
+    @keyframes tuvia-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.55); }
+      50% { box-shadow: 0 0 0 14px rgba(99, 102, 241, 0); }
+    }
+    .tuvia-fab { animation: tuvia-glow 2.2s infinite; }
   </style>
 </head>
 <body class="cream-bg text-stone-800 min-h-screen pb-12">
+
+  <!-- Toviya Bot Floating Button -->
+  <a href="https://gemini.google.com/gem/b5ce5f617ce4" target="_blank" rel="noopener"
+     class="tuvia-fab fixed bottom-6 left-6 z-50 flex items-center gap-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold px-5 py-4 rounded-full shadow-2xl transition duration-300 transform hover:scale-105">
+    <span class="text-2xl">🤖</span>
+    <span class="text-sm md:text-base">תקוע/ה? דבר עם טוביה - הבוט שמלווה אותך במשימה</span>
+  </a>
 
   <!-- חגיגת סיום -->
   <div id="celebration-overlay" class="fixed inset-0 bg-purple-500/20 backdrop-blur-xs z-50 hidden flex-col items-center justify-center">
@@ -42,13 +52,13 @@
           סטודיו העיצוב 🎨
         </div>
         <div>
-          <h1 class="text-xl sm:text-2xl font-black text-stone-900 leading-tight">התיק הדיגיטלי של סהר</h1>
+          <h1 class="text-xl sm:text-2xl font-black text-stone-900 leading-tight">התיק הדיגיטלי שנבנה עבורך על ידי המורה סהר כדי שתצליח במטלת הביצוע</h1>
           <p class="text-xs sm:text-sm text-stone-500 font-medium">פרויקט מיתוג אישי + קמפיין עיצוב חברתי — הכל במקום אחד 🚀</p>
         </div>
       </div>
 
       <!-- כפתור גדול ובולט לשיחה עם טוביה ב-Gemini -->
-      <a href="https://gemini.google.com/u/3/gem/b5ce5f617ce4" target="_blank" rel="noopener noreferrer"
+      <a href="https://gemini.google.com/gem/b5ce5f617ce4" target="_blank" rel="noopener noreferrer"
         class="group relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-bold text-stone-900 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 hover:text-white transition-all duration-300 shadow-lg">
         <span class="relative px-7 py-4 transition-all ease-in duration-75 bg-white rounded-xl group-hover:bg-opacity-0 text-stone-900 group-hover:text-white flex items-center gap-3 shadow-sm font-black text-base">
           <span class="text-2xl">✨</span>
@@ -76,10 +86,10 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
       <!-- ===================== טור ראשי (משתנה לפי פרויקט) ===================== -->
-      <section class="lg:col-span-8 min-w-0 flex flex-col gap-6">
+      <section class="lg:col-span-8 flex flex-col gap-6">
 
         <!-- ===== תוכן פרויקט 1: מיתוג אישי ===== -->
-        <div id="project1-view" class="min-w-0 flex flex-col gap-6">
+        <div id="project1-view" class="flex flex-col gap-6">
 
           <!-- פרטי תלמיד + התקדמות -->
           <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-stone-100">
@@ -114,12 +124,15 @@
             </div>
           </div>
 
-          <!-- בורר שלבים - רשימה נפתחת מעוצבת -->
-          <div class="w-full bg-white p-4 rounded-2xl border border-stone-200/60 card-shadow flex items-center gap-3">
-            <span class="text-2xl shrink-0">📚</span>
-            <div class="flex-1">
-              <label for="step-selector-1" class="block text-xs font-bold text-stone-500 mb-1">בחר שלב עבודה מתוך 15:</label>
-              <select id="step-selector-1" onchange="switchStep(parseInt(this.value))" class="w-full p-3 rounded-xl border-2 border-purple-200 bg-[#FAF7F0] font-black text-stone-800 text-sm focus:outline-hidden focus:border-purple-500 cursor-pointer appearance-none bg-no-repeat bg-left" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237c3aed%22 stroke-width=%223%22><path d=%22M6 9l6 6 6-6%22/></svg>'); background-position: left 0.9rem center; padding-left: 2.5rem;"></select>
+          <!-- רשימה נפתחת לבחירת שלב (15 שלבים) -->
+          <div class="w-full bg-white/40 p-2 rounded-2xl border border-stone-200/60 card-shadow">
+            <div class="relative">
+              <select id="tabs-container-1" onchange="switchStep(parseInt(this.value))"
+                class="w-full appearance-none bg-white border-2 border-purple-200 text-stone-800 font-black text-sm rounded-xl px-4 py-3.5 pl-10 cursor-pointer focus:outline-hidden focus:border-purple-500 transition-all">
+              </select>
+              <svg class="w-5 h-5 text-purple-600 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </div>
           </div>
 
@@ -281,7 +294,7 @@
       <!-- ===================== בוט טוביה — קטן פי חצי, קבוע בצד ===================== -->
       <section class="lg:col-span-4 flex flex-col gap-3 sticky top-24 self-start">
 
-        <a href="https://gemini.google.com/u/3/gem/b5ce5f617ce4" target="_blank" rel="noopener noreferrer"
+        <a href="https://gemini.google.com/gem/b5ce5f617ce4" target="_blank" rel="noopener noreferrer"
           class="block bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 rounded-2xl shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 text-center">
           <span class="font-black text-sm">✨ שיחה מלאה עם טוביה ב-Gemini →</span>
         </a>
@@ -553,18 +566,15 @@ let studentState = { name: "", brand: "", checklist: {} };
 let currentStepId = 1;
 
 function renderTabs1() {
-  const select = document.getElementById('step-selector-1');
+  const select = document.getElementById('tabs-container-1');
   select.innerHTML = '';
   stepsData.forEach(step => {
     const opt = document.createElement('option');
     opt.value = step.id;
-    const total = step.tasks.length;
-    const done = step.tasks.filter((t, i) => studentState.checklist[`task_${step.id}_${i}`]).length;
-    const mark = done === total ? '✅ ' : (done > 0 ? '🟣 ' : '');
-    opt.innerText = `${mark}${step.title}  •  ${step.software}`;
+    opt.textContent = `שלב ${step.id} - ${step.title.replace(/^\d+\.\s*/,'')}`;
+    if (currentStepId === step.id) opt.selected = true;
     select.appendChild(opt);
   });
-  select.value = currentStepId;
 }
 
 function switchStep(stepId) {
@@ -792,5 +802,6 @@ window.onload = function() {
   campToggleWorkspace('vector');
 };
 </script>
+
 </body>
 </html>
