@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>תיקיית עבודה אישית בדיגיטל - סטודיו לתלמיד</title>
+    <style>
+        :root {
+            --bg-cream: #fbf9f4;
+            --card-bg: #ffffff;
+            --primary-accent: #2c3e50;
+            --secondary-accent: #d35400;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border-color: #e2dacb;
+            --success-color: #27ae60;
+            --bot-color: #8e44ad;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* --- Header --- */
+        .header-banner {
+            background-color: var(--primary-accent);
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .header-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            border: 3px solid #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transform: rotate(30deg);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .header-avatar:hover {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .header-text { text-align: center; }
+        .header-banner h1 { margin: 0; font-size: 28px; font-weight: 700; }
+        .header-banner p { margin: 5px 0 0 0; font-size: 16px; color: #ecf0f1; }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 1000px) {
+            .container {
+                grid-template-columns: 1.8fr 1.2fr;
+            }
+            .full-width { grid-column: span 2; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            height: fit-content;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            color: var(--primary-accent);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: var(--bg-cream);
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary { background-color: var(--secondary-accent); color: white; }
+        .btn-primary:hover { background-color: #b34700; }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-success:hover { background-color: #1e8449; }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer;
+        }
+
+        .progress-box {
+            background-color: #fcfcfc;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .progress-container {
+            background-color: #e0e0e0; border-radius: 20px; height: 20px; width: 100%; margin: 15px 0; overflow: hidden;
+        }
+
+        .progress-bar { background-color: var(--success-color); height: 100%; width: 0%; transition: width 0.4s ease; }
+
+        .teacher-bubble {
+            background-color: #ebf5fb; border-right: 4px solid #3498db; padding: 15px; border-radius: 4px; margin-top: 15px; font-style: italic; text-align: right;
+        }
+
+        .software-badge {
+            display: inline-block; padding: 6px 12px; border-radius: 4px; font-size: 14px; font-weight: bold; color: white; margin-bottom: 15px;
+        }
+        .badge-photopea { background-color: #2ecc71; }
+        .badge-svg { background-color: #0052cc; }
+
+        .checklist-item {
+            display: flex; align-items: flex-start; gap: 12px; background: var(--bg-cream); padding: 12px; border-radius: 6px; margin-bottom: 10px; border-right: 3px solid var(--border-color);
+        }
+        .checklist-item input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; cursor: pointer; }
+        .checklist-item.checked { border-right-color: var(--success-color); background-color: #f4fbf7; }
+        .checklist-item.checked label { text-decoration: line-through; color: var(--text-muted); }
+
+        .tech-tips { background-color: #fff9e6; border-right: 4px solid #f1c40f; padding: 15px; border-radius: 4px; margin-top: 20px; margin-bottom: 20px; }
+        .tech-tips h4 { margin-top: 0; color: #b7950b; }
+
+        .workspace-frame-container {
+            margin-top: 20px;
+            border: 2px solid var(--primary-accent);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .workspace-frame-header {
+            background: var(--primary-accent);
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .workspace-iframe {
+            width: 100%;
+            height: 650px;
+            border: none;
+            background: #ffffff;
+        }
+
+        .bot-container {
+            border: 2px solid var(--bot-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            height: 750px;
+            position: sticky;
+            top: 20px;
+        }
+        .bot-header {
+            background: var(--bot-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 18px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .bot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #fdfbfd;
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background: #fff;
+            overflow: hidden;
+        }
+        .accordion-header {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--primary-accent);
+            border-bottom: 1px solid #eee;
+        }
+        .accordion-header:hover { background: #f1f1f1; }
+        .accordion-content {
+            padding: 15px;
+            display: none;
+            font-size: 14px;
+            line-height: 1.5;
+            background: #ffffff;
+        }
+        .accordion-item.open .accordion-content { display: block; }
+
+        .step-content { background: #fff; border-radius: 8px; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .modal-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            border-top: 5px solid var(--secondary-accent);
+        }
+        .modal-card h2 { margin-top: 0; color: var(--primary-accent); }
+
+        .floating-bot-widget {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .floating-avatar-container {
+            position: relative;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8e44ad, #3498db, #e74c3c);
+            padding: 4px;
+            box-shadow: 0 8px 25px rgba(142, 68, 173, 0.5);
+            animation: crazyPulse 2s infinite ease-in-out, crazyFloat 3s infinite ease-in-out;
+            transition: transform 0.3s ease;
+        }
+
+        .floating-avatar-container:hover { transform: scale(1.15) rotate(-10deg); }
+
+        .floating-avatar-img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid white; background: white;
+        }
+
+        .floating-tooltip {
+            background: #2c3e50;
+            color: #ffffff;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid #8e44ad;
+            white-space: nowrap;
+            position: relative;
+            animation: crazyFloat 3s infinite ease-in-out reverse;
+        }
+
+        .floating-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 8px 0 8px 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent #2c3e50;
+        }
+
+        @keyframes crazyPulse {
+            0% { box-shadow: 0 0 0 0 rgba(142, 68, 173, 0.7); }
+            70% { box-shadow: 0 0 0 18px rgba(142, 68, 173, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(142, 68, 173, 0); }
+        }
+
+        @keyframes crazyFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Onboarding Modal -->
+    <div id="onboardingModal" class="modal-overlay">
+        <div class="modal-card">
+            <h2>👋 ברוכים הבאים לשיעור: מה זה לוגו ואיפה משתמשים בו?</h2>
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label>האם אתה מכיר ויודע מה זה לוגו?</label>
+                <select id="knowsLogoSelect" onchange="toggleLogoExplanation()">
+                    <option value="">-- בחר תשובה --</option>
+                    <option value="yes">כן, אני יודע מה זה לוגו!</option>
+                    <option value="no">לא בדיוק, אשמח להסבר קצר</option>
+                </select>
+            </div>
+
+            <div id="logoExplanation" style="display: none; background: #eef6fc; padding: 12px; border-radius: 6px; border-right: 4px solid #3498db; margin-bottom: 15px; font-size: 14px;">
+                💡 <strong>מה זה לוגו?</strong><br>
+                לוגו הוא סמל חזותי (טקסט, צורה או שילוב שלהם) המייצג חברה, מותג או רעיון. המטרה שלו היא להיות פשוט, זכיר ולשקף את אופי החברה במבט אחד.
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="topicSelect">בחר את מספר/נושא החברה שקיבלת מהמורה:</label>
+                <select id="topicSelect" onchange="handleTopicChoice()">
+                    <option value="">-- בחר נושא מהרשימה --</option>
+                    <option value="ערוץ טלוויזיה (ערוץ 17)">1. ערוץ טלוויזיה (ערוץ 17)</option>
+                    <option value="פוסטרים בנושא חברתי/סביבתי">2. פוסטרים בנושא חברתי/סביבתי</option>
+                    <option value="ליגת העל בכדורגל">3. ליגת העל בכדורגל</option>
+                    <option value="ברכות וגלויות לחגים">4. ברכות וגלויות לחגים</option>
+                    <option value="ממשק אפליקציה לנייד (UX/UI)">5. ממשק אפליקציה לנייד (UX/UI)</option>
+                    <option value="סדרת דמויות/פוטומניפולציות">6. סדרת דמויות/פוטומניפולציות</option>
+                    <option value="סדרת אלמנטים בתלת-ממד">7. סדרת אלמנטים בתלת-ממד</option>
+                    <option value="להקת מוזיקה/זמר">8. להקת מוזיקה/זמר</option>
+                    <option value="סדרת איורים דיגיטליים וקריקטורות">9. סדרת איורים דיגיטליים וקריקטורות</option>
+                    <option value="ערכת חזרה לבית הספר">10. ערכת חזרה לבית הספר</option>
+                    <option value="סדרת רקעים רפטיטיביים ומנדלות">11. סדרת רקעים רפטיטיביים ומנדלות</option>
+                    <option value="custom">✨ נושא מותאם אישית (הקלדה חופשית)</option>
+                </select>
+            </div>
+
+            <div id="customTopicBlock" style="display: none;" class="form-group">
+                <label for="modalBrandInput">הקלד את שם הנושא/החברה:</label>
+                <input type="text" id="modalBrandInput" placeholder="הקלד כאן...">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="finishOnboarding()">התחל בחקר השימושים בלוגו 🚀</button>
+        </div>
+    </div>
+
+    <!-- Header Banner -->
+    <div class="header-banner">
+        <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="Avatar Header" class="header-avatar">
+        <div class="header-text">
+            <h1>תיקיית עבודה אישית דיגיטלית - פרויקט מיתוג עיצובי</h1>
+            <p>קורס עיצוב גרפי דיגיטלי מתקדם • בהנחיית המורה סהר</p>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="card full-width">
+            <div class="card-title">פרטי התלמיד ושמירת התקדמות</div>
+            <div class="profile-grid">
+                <div class="form-group">
+                    <label for="studentName">שם התלמיד:</label>
+                    <input type="text" id="studentName" placeholder="הקלד את שמך כאן..." oninput="updateDashboard()">
+                </div>
+                <div class="form-group">
+                    <label for="brandName">שם המותג / החברה שנבחרה:</label>
+                    <input type="text" id="brandName" placeholder="למשל: ערוץ 17, ליגת העל..." oninput="updateDashboard()">
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-primary" onclick="downloadProgress()">💾 שמור והורד קובץ התקדמות (לשמור בדרייב)</button>
+                <div class="file-input-wrapper">
+                    <button class="btn btn-success">📂 העלאת קובץ התקדמות והמשך עבודה</button>
+                    <input type="file" id="uploadFile" accept=".json" onchange="uploadProgress(event)">
+                </div>
+            </div>
+        </div>
+
+        <div class="card progress-box full-width">
+            <h3 style="margin-top: 0;">מצב התקדמות בחקר שימושי בלוגו: <span id="dashBrandName">המותג שלי</span></h3>
+            <div>שלום <strong id="dashStudentName">תלמיד/ה</strong>! חקרת עד כה <span id="completedCount">0</span> מתוך <span id="totalCount">45</span> נקודות חקר.</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div style="font-weight: bold; font-size: 18px;" id="progressPercent">0%</div>
+            
+            <div class="teacher-bubble" id="teacherMessage">
+                <strong>הודעה מהמורה סהר:</strong> ברוך הבא! בחר מרשימת הנושאים למטה וגלה איפה ואיך הלוגו בא לידי ביטוי בעולם האמיתי!
+            </div>
+        </div>
+
+        <div class="card">
+            <!-- שינוי כותרת הפרק לפי בקשתך -->
+            <div class="card-title">איפה משתמשים בלוגו?</div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="stepSelector" style="font-weight: bold; font-size: 16px; margin-left: 10px;">בחר שימוש/מוצר לחקר הלוגו:</label>
+                <select id="stepSelector" onchange="openSelectedStep()" style="padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid var(--border-color); font-weight: bold; background: white; width: 100%;">
+                </select>
+            </div>
+
+            <div id="stepsContainer" class="step-content"></div>
+
+            <div class="workspace-frame-container">
+                <div class="workspace-frame-header">
+                    <span id="frameTitle">💻 סביבת עבודה משולבת</span>
+                    <span style="font-size: 11px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">אינטגרציה חיונית</span>
+                </div>
+                <iframe id="softwareIframe" class="workspace-iframe" src=""></iframe>
+            </div>
+        </div>
+
+        <div class="bot-container">
+            <div class="bot-header">
+                <span>📘 מרכז הכוונה ומדריכים מפורטים</span>
+                <span style="font-size: 12px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;">תמיכה לפי תוצר</span>
+            </div>
+            <div class="bot-messages" id="botMessages">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- חלונית צפה עם אוואטר שמפנה לבוט -->
+    <a href="https://gemini.google.com/gem/12Z7LVe1nfZ4yPIMzVAXQT1TGkSrVQZ11?usp=sharing" target="_blank" class="floating-bot-widget" title="דבר עם עוזר הבינה המלאכותית!">
+        <div class="floating-avatar-container">
+            <img src="https://lh3.googleusercontent.com/d/1BHxytxfATgrv3wpk_8slqpRX08p2Dzml" alt="AI Bot Avatar" class="floating-avatar-img">
+        </div>
+        <div class="floating-tooltip">
+            🤖 צריך עזרה עיצובית? לחץ לדבר עם הבוט!
+        </div>
+    </a>
+
+    <script>
+        // עדכון הרשימה להסברים מפורטים לפי השימוש בלוגו בכל פריט
+        const stepsData = [
+            { 
+                id: 1, 
+                title: '1. תכנון והבנת לוגו המותג', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'מהו לוגו וכיצד הוא מהווה את סמל הליבה של כל חברה.', 
+                tasks: [
+                    'הבנת תפקיד הלוגו: לוגו מייצג את הפיזיונומיה והזהות החזותית של העסק.',
+                    'בחינת פשטות הלוגו כדי שיפעל היטב בכל מדיה (ממסך נייד ועד שלט חוצות).',
+                    'בחירת הצבעים והצורות הבסיסיות של הלוגו הראשוני.',
+                    'הכנת הסקיצה הבסיסית לקראת עריכת קוד SVG בהמשך.'
+                ],
+                detailedGuide: '<b>מהו לוגו?</b> הסמל הראשי. לוגו מוצלח חייב להיות זכיר, קליט ולעבוד בפורמטים שונים.',
+                faq: [
+                    { q: 'מהם הרכיבים הבסיסיים של לוגו?', a: 'סמל חזותי (אייקון/צורה), שם המותג בגופן בולט, ופלטת צבעים אחידה.' },
+                    { q: 'איך מתאימים צבע לחברה?', a: 'כחול לאמינות וטכנולוגיה, אדום וצהוב לאנרגיה, ירוק לטבע וסביבה.' }
+                ]
+            },
+            { 
+                id: 2, 
+                title: '2. פלייר שיווקי', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: כיצד הלוגו מופיע בפליירים ודפי מידע מודפסים.', 
+                tasks: [
+                    'הבנת מיקום הלוגו: בפלייר הלוגו ממוקם לרוב בחלק העליון ליצירת זיהוי מיידי.',
+                    'שמירה על ניגודיות: הלוגו חייב להיות קריא מעל תמונת הרקע של הפלייר.',
+                    'שילוב פרטי יצירת קשר לצד הלוגו בתחתית או בראש הפלייר.',
+                    'ייבוא תמונת מוצר והנחת הלוגו מעליה בשכבה נפרדת.'
+                ],
+                detailedGuide: '<b>הלוגו בפלייר:</b> משמש כחותמת הרשמית של העסק. הקורא צריך לדעת מיד מי המפרסם.',
+                faq: [
+                    { q: 'איך מונעים מהלוגו להיעלם ברקע?', a: 'מוסיפים צל (Drop Shadow) או מניחים אותו על גבי מלבן רקע אטום.' }
+                ]
+            },
+            { 
+                id: 3, 
+                title: '3. תפריט מנות ומוצרים', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: השימוש בלוגו בתפריטים וקטלוגים עיצובים.', 
+                tasks: [
+                    'הלוגו מופיע בכריכה הראשית של התפריט כאלמנט מרכזי.',
+                    'הופעת לוגו קטן כסימן מים (Watermark) או בכותרת העליונה של דפי הפנים.',
+                    'שמירה על סגנון צבעים אחיד בין הלוגו לבין הקטגוריות בתפריט.',
+                    'סידור מנות ומוצרים מתחת לכותרת ממותגת.'
+                ],
+                detailedGuide: '<b>הלוגו בתפריטים:</b> מייצר חווית מותג יוקרתית ואחידה לאורך כל זמני השהות של הלקוח.',
+                faq: [{ q: 'איך שומרים על אחידות מותג בתפריט?', a: 'משתמשים באותם צבעים ופונטים המופיעים בלוגו.' }] 
+            },
+            { 
+                id: 4, 
+                title: '4. באנר פרסומי רוחבי', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: שילוב הלוגו בפרסום דיגיטלי ובאנרים לרשת.', 
+                tasks: [
+                    'בבאנר רוחבי הלוגו ממוקם לרוב בפינה הימנית או השמאלית.',
+                    'הלוגו חייב להיות קריא גם בגדלים קטנים במסכי סמארטפון.',
+                    'שילוב הנעה לפעולה (CTA) לצד הלוגו והמסר המרכזי.',
+                    'בדיקת קריאות הלוגו במבט מהיר של 2 שניות.'
+                ],
+                detailedGuide: '<b>הלוגו בפרסום דיגיטלי:</b> צריך להעביר זיהוי מותג ברגע אחד של גלילה ברשת.',
+                faq: [{ q: 'מה המיקום הכי טוב בלוגו בבאנר?', a: 'בפינה העליונה או התחתונה כדי לא להסתיר את המציג המרכזי.' }] 
+            },
+            { 
+                id: 5, 
+                title: '5. הזמנה לאירוע', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו כאלמנט רשמי בהזמנות ואירועי חברה.', 
+                tasks: [
+                    'הלוגו מוסיף רשמיות וסמכותיות להזמנה.',
+                    'שימוש בלוגו בגווני זהב, כסף או גרדיאנט חגיגי.',
+                    'מיקום הלוגו בראש ההזמנה לפני הפרטים הטכניים.',
+                    'שילוב רקע יוקרתי שמבליט את צורת הלוגו.'
+                ],
+                detailedGuide: '<b>הלוגו בהזמנות:</b> מעניק את התחושה שזהו אירוע רשמי ומאורגן מטעם החברה.',
+                faq: [{ q: 'איך יוצרים מראה יוקרתי בלוגו?', a: 'משתמשים בצבעי מעבר (Gradient) מעודנים מעל הלוגו הוקטורי.' }] 
+            },
+            { 
+                id: 6, 
+                title: '6. שער מגזין', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: הלוגו כסמל המגזין או כנותן חסות ראשי בשער.', 
+                tasks: [
+                    'הלוגו בשער מופיע בפורמט מוגדל (Masthead) בחלק העליון.',
+                    'שילוב תמונת השער כך שהיא יכולה להסתיר חלק קטן מהלוגו (אפקט עומק).',
+                    'שמירה על ניגודיות חזקה בין לוגו המגזין לתמונה המרכזית.',
+                    'מיקום כותרות המשנה סביב הלוגו.'
+                ],
+                detailedGuide: '<b>הלוגו בשער:</b> זהו ה"פנים" של המגזין במדף העיתונים - חייב למשוך תשומת לב מידית.',
+                faq: [{ q: 'איך עושים שהדמות בתמונה תהיה חלקית מעל הלוגו?', a: 'שמים את שכבת הדמות מעל שכבת הלוגו בחלונית Layers.' }] 
+            },
+            { 
+                id: 7, 
+                title: '7. שלט חוצות', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: חשיפת הלוגו במרחב הציבורי ובשלטי ענק.', 
+                tasks: [
+                    'בשלט חוצות הלוגו צריך להיראות בבירור ממרחק עשרות מטרים.',
+                    'שימוש בלוגו פשוט ללא פרטים קטנים מדי שנעלמים בנסיעה.',
+                    'שילוב צבעי ניגודיות עזים ברקע של השלט.',
+                    'בחינת הלוגו בזום קטן כדי לדמות צפייה ממרחק.'
+                ],
+                detailedGuide: '<b>הלוגו בשלטי חוצות:</b> הנהגים רואים אותו לשבריר שנייה. הפשטות והגודל הם המפתח.',
+                faq: [{ q: 'למה הלוגו חייב להיות פשוט בשלט חוצות?', a: 'כי הצופה חולף על פניו במהירות ואין לו זמן לקרוא פרטים מורכבים.' }] 
+            },
+            { 
+                id: 8, 
+                title: '8. מוצר קדמ 1: מסכת פנים או כובע', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר מהו מוצר קד"מ עיצובי: הלוגו על אביזרי לבוש קטנים.', 
+                tasks: [
+                    'הבנת מוצרי קד"מ (קידום מכירות): מוצרים יומיומיים הנושאים את הלוגו כפרסום מהלך.',
+                    'התאמת גודל הלוגו לשטח המוגבל של הכובע או המסכה.',
+                    'שימוש בגרסה קומפקטית או באייקון של הלוגו בלבד.',
+                    'הטמעת הלוגו בצורה המדמה רקמה או הדפסה על בד.'
+                ],
+                detailedGuide: '<b>הלוגו על כובע/מסכה:</b> הופך את הלקוח או העובד לשגריר מותג מהלך שמפיץ את הלוגו בכל מקום.',
+                faq: [{ q: 'מה עושים אם שם המותג ארוך מדי לכובע?', a: 'משתמשים רק באייקון/סמל הוקטורי מתוך הלוגו.' }] 
+            },
+            { 
+                id: 9, 
+                title: '9. מוצר קדמ 2: חולצת עובדים', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר מהי חולצה עיצובית: שילוב הלוגו במדי צוות החברה.', 
+                tasks: [
+                    'הבנת מיקומים מקובלים: לוגו קטן על חזה שמאל (מעל הלב) או לוגו גדול בגב.',
+                    'שמירה על פרופורציה נכונה כך שהלוגו לא ייראה מתוח או מעוות על הבד.',
+                    'בחירת צבע חולצה המהווה רקע מנגד לצבעי הלוגו.',
+                    'שימוש במצב שילוב (Blend Mode) כדי לתת ללוגו טקסטורה של הדפסה ריאליסטית.'
+                ],
+                detailedGuide: '<b>מהי חולצה עיצובית?</b> חולצת מותג משדרת מקצועיות, מגבשת את הצוות ומזהה את העובדים מול לקוחות.',
+                faq: [{ q: 'איך משיגים מראה של הדפסה אמיתית על חולצה?', a: 'משנים את שכבת הלוגו למצב Multiply או Overlay ב-Photopea.' }] 
+            },
+            { 
+                id: 10, 
+                title: '10. מוצר קדמ 3: מחברת או יומן', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: מיתוג ציוד משרדי ויומנים עסקיים.', 
+                tasks: [
+                    'הלוגו במרכז הכריכה מעניק מראה משרדי ורשמי.',
+                    'שילוב הלוגו כהטבעת יבשה (Emboss) או הטבעת נוצצת.',
+                    'שימוש באלמנטים מתוך הלוגו כדפוס חוזר (Pattern) ברקע המחברת.',
+                    'שמירה על שוליים נקיים סביב הלוגו בכריכה.'
+                ],
+                detailedGuide: '<b>הלוגו על מחברות:</b> מחברת ממותגת נשארת על שולחן העבודה של הלקוח לאורך חודשים רבים.',
+                faq: [{ q: 'איך יוצרים תחושה של הטבעה בכריכה?', a: 'משתמשים באפקט Bevel & Emboss בהגדרות השכבה.' }] 
+            },
+            { 
+                id: 11, 
+                title: '11. מודל תלת ממד', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: כיצד הלוגו מתקמר ומסתגל לאובייקטים תלת-ממדיים.', 
+                tasks: [
+                    'הלוגו על מוצרים נפחיים (פחית, בקבוק, קופסה מעוגלת).',
+                    'הבנת העיוות הפיזיקלי: הלוגו צריך להתקמר לפי קימור המוצר.',
+                    'הוספת השתקפויות ותאורה מעל הלוגו לשילוב טבעי.',
+                    'שימוש בכלי העיוות (Warp) להתאמת הלוגו לצורת הגליל.'
+                ],
+                detailedGuide: '<b>הלוגו בתלת-ממד:</b> מאפשר לראות כיצד המותג ייראה על מדף המוצרים בחנות האמיתית.',
+                faq: [{ q: 'איך מעוותים לוגו שישב על פחית מעוגלת?', a: 'משתמשים בתפריט Edit -> Transform -> Warp.' }] 
+            },
+            { 
+                id: 12, 
+                title: '12. נייר מכתבים ומעטפה', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו בניירת משרדית והתכתבות רשמית.', 
+                tasks: [
+                    'הלוגו בראש נייר המכתבים (Letterhead) מייצג את גורם המקור של המכתב.',
+                    'מיקום הלוגו בפינה העליונה של המעטפה לצד הכתובת.',
+                    'שמירה על שטח טקסט נקי במרכז הדף להדפסת התוכן.',
+                    'יישור מודגש של הלוגו מול שולי הדף.'
+                ],
+                detailedGuide: '<b>הלוגו בניירת רשמית:</b> מעניק לתכתובת העסקית תוקף משפטי ומקצועי.',
+                faq: [{ q: 'מה הגודל המומלץ ללוגו בראש נייר מכתבים?', a: 'גודל קטן עד בינוני (כ-3-5 ס"מ) כדי לא לגזול שטח כתיבה.' }] 
+            },
+            { 
+                id: 13, 
+                title: '13. כרטיס ביקור', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו בכרטיס ביקור אישי ועסקי.', 
+                tasks: [
+                    'בצד הקדמי: הלוגו במרכז במלוא תפארתו כאלמנט יחיד.',
+                    'בצד האחורי: הלוגו מופיע בקטן לצד פרטי היצירת קשר והשם.',
+                    'הקפדה על איכות וקטורית גבוהה כדי שהלוגו ייצא חד בדפוס קטן.',
+                    'שמירה על מרחק בטיחות של 5 מ"מ מקצוות הכרטיס.'
+                ],
+                detailedGuide: '<b>הלוגו בכרטיס ביקור:</b> זהו המפגש הראשוני והפיזי של הלקוח עם זהות המותג שלך.',
+                faq: [{ q: 'למה חשוב שהלוגו בכרטיס ביקור יהיה וקטורי?', a: 'כדי שבמידות הקטנות של הכרטיס ההדפסה תהיה חדה ללא פיקסלים.' }] 
+            },
+            { 
+                id: 14, 
+                title: '14. פולדר תיקיית מסמכים', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו על גבי התיקייה האוגרת את מסמכי החברה.', 
+                tasks: [
+                    'מיקום הלוגו בחזית הפולדר במרכז שטח הצפייה.',
+                    'שילוב הלוגו על הכנפיים הפנימיות של התיקייה.',
+                    'שימוש בצבע הראשי של הלוגו כצבע הרקע המלא של הפולדר.',
+                    'וידוא שהלוגו אינו חוצה את קווי הקיפול של התיקייה.'
+                ],
+                detailedGuide: '<b>הלוגו על פולדר:</b> יוצר רושם של ארגון מסודר ומכובד בעת הגשת הצעות מחיר וחוזה ללקוח.',
+                faq: [{ q: 'מה עושים כדי שהלוגו לא ייפגע בקיפול?', a: 'מרחיקים אותו לפחות 2 ס"מ מקווי הקיפול המרכזיים.' }] 
+            },
+            { 
+                id: 15, 
+                title: '15. אריזה וקופסת משלוחים', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו על קופסאות אריזה ומשלוחים ממותגים.', 
+                tasks: [
+                    'הלוגו מופיע על הפאה העליונה והפאות הצדדיות של הקופסה.',
+                    'חווית ה-Unboxing: הלקוח רואה את הלוגו מיד עם פתיחת המארז.',
+                    'התאמת הלוגו להדפסה על גבי קרטון חום או לבן.',
+                    'בדיקת כיוון הלוגו בכל הפאות כך שיוצג ישר ולא הפוך.'
+                ],
+                detailedGuide: '<b>הלוגו על אריזה:</b> הופך את המשלוח הפשוט למוצר מותגי יוקרתי ומחזק את חוויית הקנייה.',
+                faq: [{ q: 'מהי חווית Unboxing ואיך הלוגו קשור לזה?', a: 'זו חווית פתיחת האריזה. הלוגו בפנים הקופסה מעצים את ההתרגשות מהמוצר.' }] 
+            }
+        ];
+
+        let studentState = { name: "", brand: "", checklist: {} };
+        let currentStepId = 1;
+
+        function init() {
+            const selector = document.getElementById('stepSelector');
+            selector.innerHTML = '';
+            
+            stepsData.forEach((step) => {
+                const option = document.createElement('option');
+                option.value = step.id;
+                option.innerText = step.title;
+                selector.appendChild(option);
+            });
+            
+            switchStep(1);
+        }
+
+        function toggleLogoExplanation() {
+            const val = document.getElementById('knowsLogoSelect').value;
+            document.getElementById('logoExplanation').style.display = val === 'no' ? 'block' : 'none';
+        }
+
+        function handleTopicChoice() {
+            const val = document.getElementById('topicSelect').value;
+            const customBlock = document.getElementById('customTopicBlock');
+            
+            if (val === 'custom') {
+                customBlock.style.display = 'block';
+                document.getElementById('modalBrandInput').value = '';
+            } else {
+                customBlock.style.display = 'none';
+                document.getElementById('modalBrandInput').value = val;
+            }
+        }
+
+        function finishOnboarding() {
+            const brandVal = document.getElementById('modalBrandInput').value.trim();
+            if (brandVal) {
+                document.getElementById('brandName').value = brandVal;
+            }
+            document.getElementById('onboardingModal').style.display = 'none';
+            updateDashboard();
+        }
+
+        function openSelectedStep() {
+            const selectedId = parseInt(document.getElementById('stepSelector').value);
+            switchStep(selectedId);
+        }
+
+        function switchStep(stepId) {
+            currentStepId = stepId;
+            const step = stepsData.find(s => s.id === stepId);
+            const container = document.getElementById('stepsContainer');
+            
+            let tasksHtml = '';
+            step.tasks.forEach((task, tIndex) => {
+                const taskId = `task_${step.id}_${tIndex}`;
+                const isChecked = studentState.checklist[taskId] ? 'checked' : '';
+                const checkedClass = studentState.checklist[taskId] ? 'checked' : '';
+                tasksHtml += `
+                    <div class="checklist-item ${checkedClass}" id="item_${taskId}">
+                        <input type="checkbox" id="${taskId}" ${isChecked} onchange="toggleTask('${taskId}')">
+                        <label for="${taskId}">${task}</label>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:15px;">
+                    <h3 style="margin:0; color:var(--primary-accent);">${step.title}</h3>
+                    <div>
+                        <span class="software-badge ${step.badge}">תוכנה: ${step.software}</span>
+                    </div>
+                </div>
+                <p style="color:var(--text-muted); margin-top:5px; font-style:italic;">${step.description}</p>
+                
+                <div class="checklist">
+                    <h4>נקודות חקר ומשימות לביצוע:</h4>
+                    ${tasksHtml}
+                </div>
+
+                <div class="tech-tips">
+                    <h4>💡 טיפ מהמורה סהר לעבודה ב-${step.software}:</h4>
+                    <p>${step.software === 'Photopea' ? 
+                       'תמיד תעבוד בשכבות (Layers)! כשאתה מביא תמונה חדשה, תגרור אותה ישירות למשטח העבודה ותוודא שהיא בשכבה נפרדת כדי שתוכל להזיז ולשנות לה את הגודל בלי להרוס את הרקע.' : 
+                       'בתוכנה וקטורית, כל קו ועיגול הם עצמאיים. אם אתה רוצה לשנות קוד SVG ישירות, לחץ על כלי ה-Source (קוד המקור) בתוכנה והדבק את הקוד!'}</p>
+                </div>
+            `;
+            
+            const iframe = document.getElementById('softwareIframe');
+            const frameTitle = document.getElementById('frameTitle');
+            if (iframe.src !== step.url) {
+                iframe.src = step.url;
+            }
+            frameTitle.innerHTML = `💻 תוכנת עבודה מובנית: <strong>${step.software}</strong> בשילוב משימה ${step.id}`;
+
+            updateDashboard();
+            updateSidebarGuides(step);
+        }
+
+        function updateSidebarGuides(step) {
+            const container = document.getElementById('botMessages');
+            let accordionHtml = '';
+            
+            if (step.faq && step.faq.length > 0) {
+                step.faq.forEach((item, idx) => {
+                    accordionHtml += `
+                        <div class="accordion-item" id="acc_${idx}">
+                            <div class="accordion-header" onclick="toggleAccordion('acc_${idx}')">
+                                <span>❓ ${item.q}</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                ${item.a}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            container.innerHTML = `
+                <div style="background: #ebf5fb; padding: 12px; border-radius: 6px; border-right: 4px solid #3498db; margin-bottom: 15px;">
+                    <h4 style="margin: 0 0 5px 0; color: #1b4f72;">📍 מדריך ממוקד: ${step.title}</h4>
+                    <div style="font-size: 14px; color: #2c3e50;">${step.detailedGuide || step.description}</div>
+                </div>
+                <h4 style="margin-top: 10px; margin-bottom: 10px; color: var(--bot-color);">💬 שאלות נפוצות והכוונה מדויקת:</h4>
+                ${accordionHtml || '<div style="font-size: 14px; color: var(--text-muted);">בחר משימה כדי לראות הכוונה מפורטת.</div>'}
+            `;
+        }
+
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.toggle('open');
+            }
+        }
+
+        function toggleTask(taskId) {
+            const cb = document.getElementById(taskId);
+            const item = document.getElementById(`item_${taskId}`);
+            
+            if (cb.checked) {
+                item.classList.add('checked');
+                studentState.checklist[taskId] = true;
+            } else {
+                item.classList.remove('checked');
+                studentState.checklist[taskId] = false;
+            }
+            
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            studentState.name = document.getElementById('studentName').value || "";
+            studentState.brand = document.getElementById('brandName').value || "";
+
+            document.getElementById('dashStudentName').innerText = studentState.name || "תלמיד/ה";
+            document.getElementById('dashBrandName').innerText = studentState.brand || "המותג שלי";
+
+            let total = 0, completed = 0;
+            stepsData.forEach(step => {
+                step.tasks.forEach((task, tIndex) => {
+                    total++;
+                    if (studentState.checklist[`task_${step.id}_${tIndex}`]) completed++;
+                });
+            });
+
+            document.getElementById('completedCount').innerText = completed;
+            document.getElementById('totalCount').innerText = total;
+
+            const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressPercent').innerText = percent + '%';
+
+            const msgBox = document.getElementById('teacherMessage');
+            let txt = `<strong>הודעה מהמורה סהר:</strong> `;
+            if (percent === 0) txt += `אהלן ${studentState.name || 'תלמיד'}! בחר שימוש מתוך הרשימה למעלה ולמד איפה משתמשים בלוגו!`;
+            else if (percent < 50) txt += `כל הכבוד! תמשיך לחקור עוד שימושים בלוגו דרך הרשימה.`;
+            else if (percent === 100) txt += `מדהים! סיימת לחקור את כל השימושים של הלוגו! 🎉`;
+            else txt += `אתה מתקדם מעולה בחקר השימושים עבור ${studentState.brand || 'המותג'}!`;
+            msgBox.innerHTML = txt;
+        }
+
+        function downloadProgress() {
+            const sName = studentState.name.trim() || "תלמיד";
+            const bName = studentState.brand.trim() || "מותג";
+            const filename = `תיקיית_עבודה_${sName}_${bName}.json`;
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(studentState));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", filename);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function uploadProgress(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed && typeof parsed === 'object') {
+                        studentState = parsed;
+                        document.getElementById('studentName').value = studentState.name || "";
+                        document.getElementById('brandName').value = studentState.brand || "";
+                        switchStep(currentStepId);
+                        alert("הקובץ נטען בהצלחה! המשך עבודה נעימה.");
+                    }
+                } catch (err) { alert("שגיאה בטעינת הקובץ."); }
+            };
+            reader.readAsText(file);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
