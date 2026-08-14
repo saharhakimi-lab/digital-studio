@@ -30,7 +30,7 @@
             line-height: 1.6;
         }
 
-        /* --- Header עם אוואטר בהטיה של 30 מעלות --- */
+        /* --- Header --- */
         .header-banner {
             background-color: var(--primary-accent);
             color: #ffffff;
@@ -52,7 +52,7 @@
             border-radius: 12px;
             border: 3px solid #ffffff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            transform: rotate(30deg); /* הטיה של 30 מעלות */
+            transform: rotate(30deg);
             object-fit: cover;
             transition: transform 0.3s ease;
         }
@@ -61,10 +61,7 @@
             transform: rotate(0deg) scale(1.1);
         }
 
-        .header-text {
-            text-align: center;
-        }
-
+        .header-text { text-align: center; }
         .header-banner h1 { margin: 0; font-size: 28px; font-weight: 700; }
         .header-banner p { margin: 5px 0 0 0; font-size: 16px; color: #ecf0f1; }
 
@@ -264,9 +261,7 @@
             color: var(--primary-accent);
             border-bottom: 1px solid #eee;
         }
-        .accordion-header:hover {
-            background: #f1f1f1;
-        }
+        .accordion-header:hover { background: #f1f1f1; }
         .accordion-content {
             padding: 15px;
             display: none;
@@ -274,9 +269,7 @@
             line-height: 1.5;
             background: #ffffff;
         }
-        .accordion-item.open .accordion-content {
-            display: block;
-        }
+        .accordion-item.open .accordion-content { display: block; }
 
         .step-content { background: #fff; border-radius: 8px; }
 
@@ -293,14 +286,13 @@
             background: white;
             padding: 30px;
             border-radius: 12px;
-            max-width: 500px;
+            max-width: 550px;
             width: 90%;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
             border-top: 5px solid var(--secondary-accent);
         }
         .modal-card h2 { margin-top: 0; color: var(--primary-accent); }
 
-        /* --- חלונית צפה מטורללת עם אוואטר שמפנה לבוט --- */
         .floating-bot-widget {
             position: fixed;
             bottom: 30px;
@@ -325,17 +317,10 @@
             transition: transform 0.3s ease;
         }
 
-        .floating-avatar-container:hover {
-            transform: scale(1.15) rotate(-10deg);
-        }
+        .floating-avatar-container:hover { transform: scale(1.15) rotate(-10deg); }
 
         .floating-avatar-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid white;
-            background: white;
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid white; background: white;
         }
 
         .floating-tooltip {
@@ -380,40 +365,51 @@
     <!-- Onboarding Modal -->
     <div id="onboardingModal" class="modal-overlay">
         <div class="modal-card">
-            <h2>👋 ברוכים הבאים לפרויקט המיתוג!</h2>
-            <p>לפני שמתחילים לעצב, בוא נבדוק איפה אתה עומד:</p>
+            <h2>👋 ברוכים הבאים לשיעור: מה זה לוגו ואיפה משתמשים בו?</h2>
             
             <div class="form-group" style="margin-bottom: 15px;">
-                <label>האם כבר יש לך נושא / שם מותג לפרויקט?</label>
-                <select id="hasTopicSelect" onchange="toggleTopicSetup()">
+                <label>האם אתה מכיר ויודע מה זה לוגו?</label>
+                <select id="knowsLogoSelect" onchange="toggleLogoExplanation()">
                     <option value="">-- בחר תשובה --</option>
-                    <option value="yes">כן, כבר בחרתי נושא ומותג!</option>
-                    <option value="no">עדיין לא, אשמח לעזרה בבחירת נושא</option>
+                    <option value="yes">כן, אני יודע מה זה לוגו!</option>
+                    <option value="no">לא בדיוק, אשמח להסבר קצר</option>
                 </select>
             </div>
 
-            <div id="yesTopicBlock" style="display: none;" class="form-group">
-                <label for="modalBrandInput">מה שם המותג / החברה שבחרת?</label>
-                <input type="text" id="modalBrandInput" placeholder="למשל: פיצה ברון, בגדי אופנה...">
+            <div id="logoExplanation" style="display: none; background: #eef6fc; padding: 12px; border-radius: 6px; border-right: 4px solid #3498db; margin-bottom: 15px; font-size: 14px;">
+                💡 <strong>מה זה לוגו?</strong><br>
+                לוגו הוא סמל חזותי (טקסט, צורה או שילוב שלהם) המייצג חברה, מותג או רעיון. המטרה שלו היא להיות פשוט, זכיר ולשקף את אופי החברה במבט אחד.
             </div>
 
-            <div id="noTopicBlock" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
-                <label style="font-weight: bold; display: block; margin-bottom: 8px;">רעיונות מהירים לבחירת נושא:</label>
-                <select id="ideaGenerator" onchange="applySuggestedIdea()">
-                    <option value="">-- בחר רעיון שמוצא חן בעיניך --</option>
-                    <option value="פיצה טרייה - פיצרייה שכונתית">🍕 אוכל: פיצרייה שכונתית מודרנית</option>
-                    <option value="סטודיו אימונים - FitLife">🏋️ ספורט: מכון כושר ואימונים אישיים</option>
-                    <option value="מותג אופנה - UrbanStyle">👗 אופנה: מותג ביגוד רחוב צעיר</option>
-                    <option value="מעבדת סלולר - TechFix">📱 טכנולוגיה: מעבדת תיקונים וגאדג'טים</option>
-                    <option value="בית קפה - הקפה השכונתי">☕ בית קפה ומאפייה איכותית</option>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="topicSelect">בחר את מספר/נושא החברה שקיבלת מהמורה:</label>
+                <select id="topicSelect" onchange="handleTopicChoice()">
+                    <option value="">-- בחר נושא מהרשימה --</option>
+                    <option value="ערוץ טלוויזיה (ערוץ 17)">1. ערוץ טלוויזיה (ערוץ 17)</option>
+                    <option value="פוסטרים בנושא חברתי/סביבתי">2. פוסטרים בנושא חברתי/סביבתי</option>
+                    <option value="ליגת העל בכדורגל">3. ליגת העל בכדורגל</option>
+                    <option value="ברכות וגלויות לחגים">4. ברכות וגלויות לחגים</option>
+                    <option value="ממשק אפליקציה לנייד (UX/UI)">5. ממשק אפליקציה לנייד (UX/UI)</option>
+                    <option value="סדרת דמויות/פוטומניפולציות">6. סדרת דמויות/פוטומניפולציות</option>
+                    <option value="סדרת אלמנטים בתלת-ממד">7. סדרת אלמנטים בתלת-ממד</option>
+                    <option value="להקת מוזיקה/זמר">8. להקת מוזיקה/זמר</option>
+                    <option value="סדרת איורים דיגיטליים וקריקטורות">9. סדרת איורים דיגיטליים וקריקטורות</option>
+                    <option value="ערכת חזרה לבית הספר">10. ערכת חזרה לבית הספר</option>
+                    <option value="סדרת רקעים רפטיטיביים ומנדלות">11. סדרת רקעים רפטיטיביים ומנדלות</option>
+                    <option value="custom">✨ נושא מותאם אישית (הקלדה חופשית)</option>
                 </select>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="finishOnboarding()">התחל לעבוד 🚀</button>
+            <div id="customTopicBlock" style="display: none;" class="form-group">
+                <label for="modalBrandInput">הקלד את שם הנושא/החברה:</label>
+                <input type="text" id="modalBrandInput" placeholder="הקלד כאן...">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="finishOnboarding()">התחל בחקר השימושים בלוגו 🚀</button>
         </div>
     </div>
 
-    <!-- Header Banner עם אוואטר בהטיה של 30 מעלות -->
+    <!-- Header Banner -->
     <div class="header-banner">
         <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="Avatar Header" class="header-avatar">
         <div class="header-text">
@@ -432,8 +428,8 @@
                     <input type="text" id="studentName" placeholder="הקלד את שמך כאן..." oninput="updateDashboard()">
                 </div>
                 <div class="form-group">
-                    <label for="brandName">שם המותג / החברה שבחרת:</label>
-                    <input type="text" id="brandName" placeholder="למשל: פיצה ברון, בגדי אופנה..." oninput="updateDashboard()">
+                    <label for="brandName">שם המותג / החברה שנבחרה:</label>
+                    <input type="text" id="brandName" placeholder="למשל: ערוץ 17, ליגת העל..." oninput="updateDashboard()">
                 </div>
             </div>
 
@@ -447,23 +443,24 @@
         </div>
 
         <div class="card progress-box full-width">
-            <h3 style="margin-top: 0;">מצב התקדמות בפרויקט: <span id="dashBrandName">המותג שלי</span></h3>
-            <div>שלום <strong id="dashStudentName">תלמיד/ה</strong>! ביצעת עד כה <span id="completedCount">0</span> מתוך <span id="totalCount">45</span> תתי-משימות.</div>
+            <h3 style="margin-top: 0;">מצב התקדמות בחקר שימושי בלוגו: <span id="dashBrandName">המותג שלי</span></h3>
+            <div>שלום <strong id="dashStudentName">תלמיד/ה</strong>! חקרת עד כה <span id="completedCount">0</span> מתוך <span id="totalCount">45</span> נקודות חקר.</div>
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
             <div style="font-weight: bold; font-size: 18px;" id="progressPercent">0%</div>
             
             <div class="teacher-bubble" id="teacherMessage">
-                <strong>הודעה מהמורה סהר:</strong> ברוך הבא לפרויקט העיצוב האישי שלך! רשום את שמך ואת החברה שבחרת למעלה, ובוא נתחיל לבנות לוגו מנצח בשלב 1. בהצלחה!
+                <strong>הודעה מהמורה סהר:</strong> ברוך הבא! בחר מרשימת הנושאים למטה וגלה איפה ואיך הלוגו בא לידי ביטוי בעולם האמיתי!
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title">משימות לפי שלבים וסביבת עבודה</div>
+            <!-- שינוי כותרת הפרק לפי בקשתך -->
+            <div class="card-title">איפה משתמשים בלוגו?</div>
             
             <div style="margin-bottom: 20px;">
-                <label for="stepSelector" style="font-weight: bold; font-size: 16px; margin-left: 10px;">בחר תוצר לעבודה (מתוך 15 התוצרים):</label>
+                <label for="stepSelector" style="font-weight: bold; font-size: 16px; margin-left: 10px;">בחר שימוש/מוצר לחקר הלוגו:</label>
                 <select id="stepSelector" onchange="openSelectedStep()" style="padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid var(--border-color); font-weight: bold; background: white; width: 100%;">
                 </select>
             </div>
@@ -490,7 +487,7 @@
 
     </div>
 
-    <!-- חלונית צפה מטורללת עם אוואטר שמפנה לבוט -->
+    <!-- חלונית צפה עם אוואטר שמפנה לבוט -->
     <a href="https://gemini.google.com/gem/12Z7LVe1nfZ4yPIMzVAXQT1TGkSrVQZ11?usp=sharing" target="_blank" class="floating-bot-widget" title="דבר עם עוזר הבינה המלאכותית!">
         <div class="floating-avatar-container">
             <img src="https://lh3.googleusercontent.com/d/1BHxytxfATgrv3wpk_8slqpRX08p2Dzml" alt="AI Bot Avatar" class="floating-avatar-img">
@@ -501,20 +498,25 @@
     </a>
 
     <script>
+        // עדכון הרשימה להסברים מפורטים לפי השימוש בלוגו בכל פריט
         const stepsData = [
             { 
                 id: 1, 
-                title: '1. לוגו המותג', 
+                title: '1. תכנון והבנת לוגו המותג', 
                 software: 'SVG-Edit', 
                 url: 'https://svgedit.netlify.app/', 
                 badge: 'badge-svg', 
-                description: 'יצירת הלוגו הבסיסי של המותג בצורות וקווים וקטוריים.', 
-                tasks: ['פתח את תוכנת SVG-Edit והגדר משטח עבודה ריבועי מתאים.', 'צור עיגול בסיס שחור או צורה גיאומטרית מורכבת באמצעות כלי הצורות.', 'הוסף אלמנט גרפי מרכזי או אייקון וקטורי שמאפיין את המותג.', 'השתמש בכלי הטקסט ושלב את שם המותג בצבעים בולטים.'],
-                detailedGuide: '<b>מבנה מומלץ ללוגו:</b> אלמנט מרכזי ברור + שם המותג בגופן בולט. שמו לב לשמור על פשטות ואיזון צבעים (עד 3 צבעים).',
+                description: 'מהו לוגו וכיצד הוא מהווה את סמל הליבה של כל חברה.', 
+                tasks: [
+                    'הבנת תפקיד הלוגו: לוגו מייצג את הפיזיונומיה והזהות החזותית של העסק.',
+                    'בחינת פשטות הלוגו כדי שיפעל היטב בכל מדיה (ממסך נייד ועד שלט חוצות).',
+                    'בחירת הצבעים והצורות הבסיסיות של הלוגו הראשוני.',
+                    'הכנת הסקיצה הבסיסית לקראת עריכת קוד SVG בהמשך.'
+                ],
+                detailedGuide: '<b>מהו לוגו?</b> הסמל הראשי. לוגו מוצלח חייב להיות זכיר, קליט ולעבוד בפורמטים שונים.',
                 faq: [
-                    { q: 'איך יוצרים עיגול או מלבן מדויק?', a: 'בסרגל הכלים השמאלי בחר במיכל הצורות, לחץ על מקש Shift תוך כדי גרירת העכבר לקבלת פרופורציה מושלמת.' },
-                    { q: 'איך מזינים קוד SVG מוכן?', a: 'לחץ על הכפתור "Source" בסרגל העליון, הדבק את הקוד הרצוי ולחץ Apply.' },
-                    { q: 'איך משנים צבע מילוי?', a: 'בחר את הצורה ולחץ על ריבוע הצבע (Fill) בתחתית המסך.' }
+                    { q: 'מהם הרכיבים הבסיסיים של לוגו?', a: 'סמל חזותי (אייקון/צורה), שם המותג בגופן בולט, ופלטת צבעים אחידה.' },
+                    { q: 'איך מתאימים צבע לחברה?', a: 'כחול לאמינות וטכנולוגיה, אדום וצהוב לאנרגיה, ירוק לטבע וסביבה.' }
                 ]
             },
             { 
@@ -523,27 +525,226 @@
                 software: 'Photopea', 
                 url: 'https://www.photopea.com/', 
                 badge: 'badge-photopea', 
-                description: 'עיצוב פלייר פרסומי להפצה רחבה עם המוצר המרכזי.', 
-                tasks: ['פתח דף A4 חדש ב-Photopea דרך תפריט File -> New.', 'ייבא תמונה איכותית של המוצר שלכם דרך File -> Open and Place.', 'הוסף טקסט שיווקי בולט באמצעות כלי הטקסט (T) שבסרגל הכלים השמאלי.', 'הפעל אפקט צל לטקסט דרך Layer -> Layer Style -> Drop Shadow כדי להבליט אותו.'],
-                detailedGuide: '<b>מבנה פלייר מנצח:</b> כותרת מושכת בחלק העליון, תמונה מרכזית איכותית באמצע, והנעה לפעולה (למשל: "התקשרו עכשיו") בתחתית.',
+                description: 'הסבר: כיצד הלוגו מופיע בפליירים ודפי מידע מודפסים.', 
+                tasks: [
+                    'הבנת מיקום הלוגו: בפלייר הלוגו ממוקם לרוב בחלק העליון ליצירת זיהוי מיידי.',
+                    'שמירה על ניגודיות: הלוגו חייב להיות קריא מעל תמונת הרקע של הפלייר.',
+                    'שילוב פרטי יצירת קשר לצד הלוגו בתחתית או בראש הפלייר.',
+                    'ייבוא תמונת מוצר והנחת הלוגו מעליה בשכבה נפרדת.'
+                ],
+                detailedGuide: '<b>הלוגו בפלייר:</b> משמש כחותמת הרשמית של העסק. הקורא צריך לדעת מיד מי המפרסם.',
                 faq: [
-                    { q: 'איך מייבאים תמונה מבלי להרוס את משטח העבודה?', a: 'תמיד להשתמש ב-File -> Open and Place ולא בסתם Open.' },
-                    { q: 'איך משנים גודל תמונה בצורה חופשית?', a: 'בחר את השכבה ולחץ Ctrl+Alt+T (Free Transform).' }
+                    { q: 'איך מונעים מהלוגו להיעלם ברקע?', a: 'מוסיפים צל (Drop Shadow) או מניחים אותו על גבי מלבן רקע אטום.' }
                 ]
             },
-            { id: 3, title: '3. תפריט מנות ומוצרים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'יצירת קטלוג או תפריט מעוצב המפרט את היצע החברה ומחיריה.', tasks: ['בחר פלטת צבעים קבועה לשמירה על אחידות המותג.', 'חלק את התפריט לקטגוריות ברורות כמו מנות עיקריות, עסקיות, תוספות ושתייה.', 'רשום מחירים ברורים לצד כל פריט, והוסף אייקונים או חצים ליד מנות מומלצות.'], detailedGuide: 'ארגן את הפריטים בעזרת גריד ישר, הקפד על פונטים קריאים ומרווחים שווים בין המחירים.', faq: [{ q: 'איך שומרים על יישור הטקסט?', a: 'השתמש בסרגלי העזר (Rulers) או בכלי היישור בסרגל העליון.' }] },
-            { id: 4, title: '4. באנר פרסומי רוחבי', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'שלט רוחבי דיגיטלי לאתר האינטרנט או לרשתות החברתיות.', tasks: ['פתח קובץ במימדים רוחביים ארוכים למשל 1200 על 400 פיקסלים.', 'הוסף כיתוב שיווקי בולט ומניע לפעולה כגון הצטרפו למועדון החברים שלנו וקבלו הטבות.', 'שלב את לוגו החברה בפינת הבאנר ופרטי יצירת קשר או כתובת אתר.'], detailedGuide: 'בבאנר רוחבי המסר צריך להיות קצר וקולע – התלמיד קורא אותו תוך 2 שניות.', faq: [{ q: 'מה הגודל המומלץ לבאנר?', a: '1200x400 פיקסלים או 1920x1080 לשלט רחב.' }] },
-            { id: 5, title: '5. הזמנה לאירוע', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב הזמנה רשמית לפתיחת העסק או להשקת מוצר חדש.', tasks: ['הגדר דף ריבועי או מלבני קטן המתאים לשליחה בנייד או הדפסה.', 'כתוב את פרטי האירוע: תאריך מדויק, שעה, ומיקום ברור.', 'עצב רקע חגיגי באמצעות כלי הגרדיאנט מעבר צבעים בתוכנה.'], detailedGuide: 'הזמנה צריכה להיות נקייה וחגיגית. שימוש בגרדיאנט עדין ברקע מעניק מראה יוקרתי.', faq: [{ q: 'איך יוצרים מעבר צבעים (Gradient)?', a: 'בבחירת צבע המילוי בחר בטאב הגרדיאנט והגדר 2 צבעים.' }] },
-            { id: 6, title: '6. שער מגזין', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב דמה של שער מגזין נחשב המארח את המותג שלכם.', tasks: ['פתח דף אנכי איכותי, והוסף את כותרת המגזין המוכר בחלק העליון בשכבה נפרדת.', 'שים תמונת תקריב מרשימה של המוצר המוביל שלכם במרכז השער.', 'הוסף כותרות משנה קטנות ומסקרנות מסביב.', 'הקפד על יישור הטקסטים לימין או לשמאל כדי לשמור על מראה מגזין מקצועי.'], detailedGuide: 'הקפד שהתמונה המרכזית תהיה בפרופורציה גדולה והטקסטים ההיקפיים יהיו קטנים יותר.', faq: [{ q: 'איך מביאים טקסט לקדמת התמונה?', a: 'בחלונית השכבות (Layers) אגור את שכבת הטקסט מעל שכבת התמונה.' }] },
-            { id: 7, title: '7. שלט חוצות', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מודעה ענקית המיועדת להצגה בצידי הדרכים.', tasks: ['השתמש ברקע בעל צבע מותג חזק ודומיננטי שימשוך את העין מרחוק.', 'הצב את הלוגו בגודל משמעותי במרכז או בצד השלט.', 'הוסף שורת קריאה קצרה במיוחד ואיקונים של הרשתות החברתיות שלכם.'], detailedGuide: 'שלט חוצות נצפה בנסיעה - השתמש בניגודיות חזקה ובכמה פחות מילים.', faq: [{ q: 'איך בודקים אם הניגודיות טובה?', a: 'אם הטקסט קריא בקלות גם מרחוק בשינוי זום קטן.' }] },
-            { id: 8, title: '8. מוצר קדמ 1: מסכת פנים או כובע', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הטמעת המותג על גבי אביזר לבוש או הגנה יומיומי.', tasks: ['ייבא תמונת בסיס של מסכה חלקה או כובע.', 'השתמש בכלי שינוי הקנה מידה כדי להתאים את הלוגו שלכם למוצר.', 'שנה את צבע הבסיס של האביזר לצבעי המותג הרשמיים בעזרת כלי המילוי.'], detailedGuide: 'ודא שהלוגו נראה טבעי ואינו חורג משטח האביזר.', faq: [{ q: 'איך מוחקים רקע לבן מתמונת מוצר?', a: 'השתמש בכלי מטה הקסם (Magic Wand) לבחירת הלבן ולחץ Delete.' }] },
-            { id: 9, title: '9. מוצר קדמ 2: חולצת עובדים', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב מדי עובדים רשמיים או חולצה שיווקית של החברה.', tasks: ['פתח תמונת חולצת טי שרט חלקה בשכבה נפרדת.', 'מקם את הלוגו במיקום הגיוני על החזה בצד שמאל או בגדול במרכז הגב.', 'ודא ששקיפות הלוגו מוגדרת נכון כך שישתלב בבד בצורה ריאליסטית.'], detailedGuide: 'מיקום קלאסי: לוגו קטן על חזה שמאל או לוגו מוגדל במרכז הגב.', faq: [{ q: 'איך משנים את מצב השילוב לקבלת מראה בד?', a: 'בחלונית השכבות שנה את ה-Blend Mode ל-Multiply.' }] },
-            { id: 10, title: '10. מוצר קדמ 3: מחברת או יומן', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'עיצוב כריכת יומן או מחברת משרדית ממותגת.', tasks: ['עצב כריכת מחברת מלבנית המשלבת גרפיקה עדינה ברקע.', 'הוסף את שנת הלימודים או השנה הנוכחית בפונט ברור ומרשים.', 'שלב את פרטי האתר או הלוגו בתחתית הכריכה האחורית או הקדמית.'], detailedGuide: 'עיצוב נקי עם דפוס רקע חוזר (Pattern) מעניק תחושה משרדית יוקרתית.', faq: [{ q: 'איך יוצרים טקסט ישר ומיושר?', a: 'בחר בכלי הטקסט והשתמש באפשרויות היישור בסרגל העליון.' }] },
-            { id: 11, title: '11. מודל תלת ממד', software: 'Photopea', url: 'https://www.photopea.com/', badge: 'badge-photopea', description: 'הדמיית מיתוג על גבי אובייקטים נפחיים כמו פחית או בקבוק.', tasks: ['פתח קובץ המכיל צורה תלת ממדית נקייה כמו פחית משקה או גליל.', 'השתמש בכלי העיוות כדי לעטוף את האובייקט בלוגו שלכם.', 'הוסף שכבת צל וברק מעל הגרפיקה כדי לתת תחושת עומק מציאותית.'], detailedGuide: 'עיוות קל לפי קימור האובייקט מעניק ריאליזם מדהים.', faq: [{ q: 'איך מעוותים שכבה ב-Photopea?', a: 'בחר ב-Edit -> Transform -> Warp.' }] },
-            { id: 12, title: '12. נייר מכתבים ומעטפה', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב ניירת משרדית רשמית המשמשת להתכתבות העסק.', tasks: ['עצב כותרת עליונה קבועה לנייר המכתבים המכילה את הלוגו.', 'עצב תחתית עמוד עם כתובת העסק הרשמית, מייל וטלפון המיושרים במדויק.', 'העתק את האלמנטים ועצב מעטפת דואר תואמת באותה שפה חזותית.'], detailedGuide: 'השאר שטח לבן רחב במרכז הדף עבור תוכן המכתב העתידי.', faq: [{ q: 'מה הגודל של נייר מכתבים רשמי?', a: 'פרופורציית דף A4 סטנדרטית.' }] },
-            { id: 13, title: '13. כרטיס ביקור', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'יצירת כרטיס ביקור דו צדדי קומפקטי ומקצועי.', tasks: ['הגדר משטח עבודה בגודל סטנדרטי של כרטיס ביקור 9 על 5 סנטימטר.', 'בצד הקדמי שים את הלוגו במרכזו.', 'בצד האחורי סדר בצורה קריאה את שם נציג החברה והתפקיד שלו.'], detailedGuide: 'שמור על שוליים פנימיים בטוחים (במרחק 5 מ"מ מהקצה).', faq: [{ q: 'איך שומרים על גודל פונט קריא בדפוס?', a: 'טקסט פרטים אישיים בדרך כלל בגודל 8pt עד 10pt.' }] },
-            { id: 14, title: '14. פולדר תיקיית מסמכים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'עיצוב תיקייה נפתחת המשמשת להגשת מסמכים וחוזי החברה.', tasks: ['שרטט את פריסת הפולדר כולל הכנפיים הפנימיות שמחזיקות את הדפים.', 'מקם את הלוגו והצבע הראשי בחלק החיצוני הקדמי של התיקייה.', 'ודא שאין טקסטים קרובים מדי לקווי הקיפול או קווי החיתוך.'], detailedGuide: 'שימוש בצבע מותג מלא בחלק החיצוני מעניק רושם יוקרתי.', faq: [{ q: 'איך מסמנים קווי קיפול?', a: 'שרטט קווים מקווקווים דקים בצבע אפור.' }] },
-            { id: 15, title: '15. אריזה וקופסת משלוחים', software: 'SVG-Edit', url: 'https://svgedit.netlify.app/', badge: 'badge-svg', description: 'תכנון ופריסה הנדסית של קופסת קרטון עבור מוצרי החברה.', tasks: ['שרטט את פריסת הקופסה מלבנים וריבועים מחוברים כולל לשוניות ההדבקה.', 'הוסף את הלוגו ואלמנטים עיצוביים על פאות הקופסה.', 'בצע ייצוא סופי כקובץ תמונה איכותי וקובץ וקטורי פתוח להמשך עבודה.'], detailedGuide: 'ודא שכוון הלוגו נכון על פאות הקופסה כך שלא יופיע הפוך לאחר הרכבה.', faq: [{ q: 'איך מייצאים את התוצר הסופי?', a: 'לחץ על Export ובחר בפורמט PNG או SVG.' }] }
+            { 
+                id: 3, 
+                title: '3. תפריט מנות ומוצרים', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: השימוש בלוגו בתפריטים וקטלוגים עיצובים.', 
+                tasks: [
+                    'הלוגו מופיע בכריכה הראשית של התפריט כאלמנט מרכזי.',
+                    'הופעת לוגו קטן כסימן מים (Watermark) או בכותרת העליונה של דפי הפנים.',
+                    'שמירה על סגנון צבעים אחיד בין הלוגו לבין הקטגוריות בתפריט.',
+                    'סידור מנות ומוצרים מתחת לכותרת ממותגת.'
+                ],
+                detailedGuide: '<b>הלוגו בתפריטים:</b> מייצר חווית מותג יוקרתית ואחידה לאורך כל זמני השהות של הלקוח.',
+                faq: [{ q: 'איך שומרים על אחידות מותג בתפריט?', a: 'משתמשים באותם צבעים ופונטים המופיעים בלוגו.' }] 
+            },
+            { 
+                id: 4, 
+                title: '4. באנר פרסומי רוחבי', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: שילוב הלוגו בפרסום דיגיטלי ובאנרים לרשת.', 
+                tasks: [
+                    'בבאנר רוחבי הלוגו ממוקם לרוב בפינה הימנית או השמאלית.',
+                    'הלוגו חייב להיות קריא גם בגדלים קטנים במסכי סמארטפון.',
+                    'שילוב הנעה לפעולה (CTA) לצד הלוגו והמסר המרכזי.',
+                    'בדיקת קריאות הלוגו במבט מהיר של 2 שניות.'
+                ],
+                detailedGuide: '<b>הלוגו בפרסום דיגיטלי:</b> צריך להעביר זיהוי מותג ברגע אחד של גלילה ברשת.',
+                faq: [{ q: 'מה המיקום הכי טוב בלוגו בבאנר?', a: 'בפינה העליונה או התחתונה כדי לא להסתיר את המציג המרכזי.' }] 
+            },
+            { 
+                id: 5, 
+                title: '5. הזמנה לאירוע', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו כאלמנט רשמי בהזמנות ואירועי חברה.', 
+                tasks: [
+                    'הלוגו מוסיף רשמיות וסמכותיות להזמנה.',
+                    'שימוש בלוגו בגווני זהב, כסף או גרדיאנט חגיגי.',
+                    'מיקום הלוגו בראש ההזמנה לפני הפרטים הטכניים.',
+                    'שילוב רקע יוקרתי שמבליט את צורת הלוגו.'
+                ],
+                detailedGuide: '<b>הלוגו בהזמנות:</b> מעניק את התחושה שזהו אירוע רשמי ומאורגן מטעם החברה.',
+                faq: [{ q: 'איך יוצרים מראה יוקרתי בלוגו?', a: 'משתמשים בצבעי מעבר (Gradient) מעודנים מעל הלוגו הוקטורי.' }] 
+            },
+            { 
+                id: 6, 
+                title: '6. שער מגזין', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: הלוגו כסמל המגזין או כנותן חסות ראשי בשער.', 
+                tasks: [
+                    'הלוגו בשער מופיע בפורמט מוגדל (Masthead) בחלק העליון.',
+                    'שילוב תמונת השער כך שהיא יכולה להסתיר חלק קטן מהלוגו (אפקט עומק).',
+                    'שמירה על ניגודיות חזקה בין לוגו המגזין לתמונה המרכזית.',
+                    'מיקום כותרות המשנה סביב הלוגו.'
+                ],
+                detailedGuide: '<b>הלוגו בשער:</b> זהו ה"פנים" של המגזין במדף העיתונים - חייב למשוך תשומת לב מידית.',
+                faq: [{ q: 'איך עושים שהדמות בתמונה תהיה חלקית מעל הלוגו?', a: 'שמים את שכבת הדמות מעל שכבת הלוגו בחלונית Layers.' }] 
+            },
+            { 
+                id: 7, 
+                title: '7. שלט חוצות', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: חשיפת הלוגו במרחב הציבורי ובשלטי ענק.', 
+                tasks: [
+                    'בשלט חוצות הלוגו צריך להיראות בבירור ממרחק עשרות מטרים.',
+                    'שימוש בלוגו פשוט ללא פרטים קטנים מדי שנעלמים בנסיעה.',
+                    'שילוב צבעי ניגודיות עזים ברקע של השלט.',
+                    'בחינת הלוגו בזום קטן כדי לדמות צפייה ממרחק.'
+                ],
+                detailedGuide: '<b>הלוגו בשלטי חוצות:</b> הנהגים רואים אותו לשבריר שנייה. הפשטות והגודל הם המפתח.',
+                faq: [{ q: 'למה הלוגו חייב להיות פשוט בשלט חוצות?', a: 'כי הצופה חולף על פניו במהירות ואין לו זמן לקרוא פרטים מורכבים.' }] 
+            },
+            { 
+                id: 8, 
+                title: '8. מוצר קדמ 1: מסכת פנים או כובע', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר מהו מוצר קד"מ עיצובי: הלוגו על אביזרי לבוש קטנים.', 
+                tasks: [
+                    'הבנת מוצרי קד"מ (קידום מכירות): מוצרים יומיומיים הנושאים את הלוגו כפרסום מהלך.',
+                    'התאמת גודל הלוגו לשטח המוגבל של הכובע או המסכה.',
+                    'שימוש בגרסה קומפקטית או באייקון של הלוגו בלבד.',
+                    'הטמעת הלוגו בצורה המדמה רקמה או הדפסה על בד.'
+                ],
+                detailedGuide: '<b>הלוגו על כובע/מסכה:</b> הופך את הלקוח או העובד לשגריר מותג מהלך שמפיץ את הלוגו בכל מקום.',
+                faq: [{ q: 'מה עושים אם שם המותג ארוך מדי לכובע?', a: 'משתמשים רק באייקון/סמל הוקטורי מתוך הלוגו.' }] 
+            },
+            { 
+                id: 9, 
+                title: '9. מוצר קדמ 2: חולצת עובדים', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר מהי חולצה עיצובית: שילוב הלוגו במדי צוות החברה.', 
+                tasks: [
+                    'הבנת מיקומים מקובלים: לוגו קטן על חזה שמאל (מעל הלב) או לוגו גדול בגב.',
+                    'שמירה על פרופורציה נכונה כך שהלוגו לא ייראה מתוח או מעוות על הבד.',
+                    'בחירת צבע חולצה המהווה רקע מנגד לצבעי הלוגו.',
+                    'שימוש במצב שילוב (Blend Mode) כדי לתת ללוגו טקסטורה של הדפסה ריאליסטית.'
+                ],
+                detailedGuide: '<b>מהי חולצה עיצובית?</b> חולצת מותג משדרת מקצועיות, מגבשת את הצוות ומזהה את העובדים מול לקוחות.',
+                faq: [{ q: 'איך משיגים מראה של הדפסה אמיתית על חולצה?', a: 'משנים את שכבת הלוגו למצב Multiply או Overlay ב-Photopea.' }] 
+            },
+            { 
+                id: 10, 
+                title: '10. מוצר קדמ 3: מחברת או יומן', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: מיתוג ציוד משרדי ויומנים עסקיים.', 
+                tasks: [
+                    'הלוגו במרכז הכריכה מעניק מראה משרדי ורשמי.',
+                    'שילוב הלוגו כהטבעת יבשה (Emboss) או הטבעת נוצצת.',
+                    'שימוש באלמנטים מתוך הלוגו כדפוס חוזר (Pattern) ברקע המחברת.',
+                    'שמירה על שוליים נקיים סביב הלוגו בכריכה.'
+                ],
+                detailedGuide: '<b>הלוגו על מחברות:</b> מחברת ממותגת נשארת על שולחן העבודה של הלקוח לאורך חודשים רבים.',
+                faq: [{ q: 'איך יוצרים תחושה של הטבעה בכריכה?', a: 'משתמשים באפקט Bevel & Emboss בהגדרות השכבה.' }] 
+            },
+            { 
+                id: 11, 
+                title: '11. מודל תלת ממד', 
+                software: 'Photopea', 
+                url: 'https://www.photopea.com/', 
+                badge: 'badge-photopea', 
+                description: 'הסבר: כיצד הלוגו מתקמר ומסתגל לאובייקטים תלת-ממדיים.', 
+                tasks: [
+                    'הלוגו על מוצרים נפחיים (פחית, בקבוק, קופסה מעוגלת).',
+                    'הבנת העיוות הפיזיקלי: הלוגו צריך להתקמר לפי קימור המוצר.',
+                    'הוספת השתקפויות ותאורה מעל הלוגו לשילוב טבעי.',
+                    'שימוש בכלי העיוות (Warp) להתאמת הלוגו לצורת הגליל.'
+                ],
+                detailedGuide: '<b>הלוגו בתלת-ממד:</b> מאפשר לראות כיצד המותג ייראה על מדף המוצרים בחנות האמיתית.',
+                faq: [{ q: 'איך מעוותים לוגו שישב על פחית מעוגלת?', a: 'משתמשים בתפריט Edit -> Transform -> Warp.' }] 
+            },
+            { 
+                id: 12, 
+                title: '12. נייר מכתבים ומעטפה', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו בניירת משרדית והתכתבות רשמית.', 
+                tasks: [
+                    'הלוגו בראש נייר המכתבים (Letterhead) מייצג את גורם המקור של המכתב.',
+                    'מיקום הלוגו בפינה העליונה של המעטפה לצד הכתובת.',
+                    'שמירה על שטח טקסט נקי במרכז הדף להדפסת התוכן.',
+                    'יישור מודגש של הלוגו מול שולי הדף.'
+                ],
+                detailedGuide: '<b>הלוגו בניירת רשמית:</b> מעניק לתכתובת העסקית תוקף משפטי ומקצועי.',
+                faq: [{ q: 'מה הגודל המומלץ ללוגו בראש נייר מכתבים?', a: 'גודל קטן עד בינוני (כ-3-5 ס"מ) כדי לא לגזול שטח כתיבה.' }] 
+            },
+            { 
+                id: 13, 
+                title: '13. כרטיס ביקור', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו בכרטיס ביקור אישי ועסקי.', 
+                tasks: [
+                    'בצד הקדמי: הלוגו במרכז במלוא תפארתו כאלמנט יחיד.',
+                    'בצד האחורי: הלוגו מופיע בקטן לצד פרטי היצירת קשר והשם.',
+                    'הקפדה על איכות וקטורית גבוהה כדי שהלוגו ייצא חד בדפוס קטן.',
+                    'שמירה על מרחק בטיחות של 5 מ"מ מקצוות הכרטיס.'
+                ],
+                detailedGuide: '<b>הלוגו בכרטיס ביקור:</b> זהו המפגש הראשוני והפיזי של הלקוח עם זהות המותג שלך.',
+                faq: [{ q: 'למה חשוב שהלוגו בכרטיס ביקור יהיה וקטורי?', a: 'כדי שבמידות הקטנות של הכרטיס ההדפסה תהיה חדה ללא פיקסלים.' }] 
+            },
+            { 
+                id: 14, 
+                title: '14. פולדר תיקיית מסמכים', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו על גבי התיקייה האוגרת את מסמכי החברה.', 
+                tasks: [
+                    'מיקום הלוגו בחזית הפולדר במרכז שטח הצפייה.',
+                    'שילוב הלוגו על הכנפיים הפנימיות של התיקייה.',
+                    'שימוש בצבע הראשי של הלוגו כצבע הרקע המלא של הפולדר.',
+                    'וידוא שהלוגו אינו חוצה את קווי הקיפול של התיקייה.'
+                ],
+                detailedGuide: '<b>הלוגו על פולדר:</b> יוצר רושם של ארגון מסודר ומכובד בעת הגשת הצעות מחיר וחוזה ללקוח.',
+                faq: [{ q: 'מה עושים כדי שהלוגו לא ייפגע בקיפול?', a: 'מרחיקים אותו לפחות 2 ס"מ מקווי הקיפול המרכזיים.' }] 
+            },
+            { 
+                id: 15, 
+                title: '15. אריזה וקופסת משלוחים', 
+                software: 'SVG-Edit', 
+                url: 'https://svgedit.netlify.app/', 
+                badge: 'badge-svg', 
+                description: 'הסבר: הלוגו על קופסאות אריזה ומשלוחים ממותגים.', 
+                tasks: [
+                    'הלוגו מופיע על הפאה העליונה והפאות הצדדיות של הקופסה.',
+                    'חווית ה-Unboxing: הלקוח רואה את הלוגו מיד עם פתיחת המארז.',
+                    'התאמת הלוגו להדפסה על גבי קרטון חום או לבן.',
+                    'בדיקת כיוון הלוגו בכל הפאות כך שיוצג ישר ולא הפוך.'
+                ],
+                detailedGuide: '<b>הלוגו על אריזה:</b> הופך את המשלוח הפשוט למוצר מותגי יוקרתי ומחזק את חוויית הקנייה.',
+                faq: [{ q: 'מהי חווית Unboxing ואיך הלוגו קשור לזה?', a: 'זו חווית פתיחת האריזה. הלוגו בפנים הקופסה מעצים את ההתרגשות מהמוצר.' }] 
+            }
         ];
 
         let studentState = { name: "", brand: "", checklist: {} };
@@ -563,17 +764,21 @@
             switchStep(1);
         }
 
-        function toggleTopicSetup() {
-            const val = document.getElementById('hasTopicSelect').value;
-            document.getElementById('yesTopicBlock').style.display = val === 'yes' ? 'block' : 'none';
-            document.getElementById('noTopicBlock').style.display = val === 'no' ? 'block' : 'none';
+        function toggleLogoExplanation() {
+            const val = document.getElementById('knowsLogoSelect').value;
+            document.getElementById('logoExplanation').style.display = val === 'no' ? 'block' : 'none';
         }
 
-        function applySuggestedIdea() {
-            const val = document.getElementById('ideaGenerator').value;
-            if (val) {
+        function handleTopicChoice() {
+            const val = document.getElementById('topicSelect').value;
+            const customBlock = document.getElementById('customTopicBlock');
+            
+            if (val === 'custom') {
+                customBlock.style.display = 'block';
+                document.getElementById('modalBrandInput').value = '';
+            } else {
+                customBlock.style.display = 'none';
                 document.getElementById('modalBrandInput').value = val;
-                document.getElementById('yesTopicBlock').style.display = 'block';
             }
         }
 
@@ -619,7 +824,7 @@
                 <p style="color:var(--text-muted); margin-top:5px; font-style:italic;">${step.description}</p>
                 
                 <div class="checklist">
-                    <h4>משימות לביצוע בשלב זה:</h4>
+                    <h4>נקודות חקר ומשימות לביצוע:</h4>
                     ${tasksHtml}
                 </div>
 
@@ -718,10 +923,10 @@
 
             const msgBox = document.getElementById('teacherMessage');
             let txt = `<strong>הודעה מהמורה סהר:</strong> `;
-            if (percent === 0) txt += `אהלן ${studentState.name || 'תלמיד'}! רשום את השם והמותג שלך למעלה, והעזר במרכז ההכוונה מימין כדי לעצב!`;
-            else if (percent < 50) txt += `יופי של קצב! התוכנה פתוחה למטה, תעזר במדריכים מימין כדי להתקדם.`;
-            else if (percent === 100) txt += `פרויקט מדהים ומלא! גאה בך מאוד על ההשקעה! 🎉`;
-            else txt += `אתה כבר מעבר לחצי הדרך, העסק של ${studentState.brand || 'המותג'} הולך להראות מטורף!`;
+            if (percent === 0) txt += `אהלן ${studentState.name || 'תלמיד'}! בחר שימוש מתוך הרשימה למעלה ולמד איפה משתמשים בלוגו!`;
+            else if (percent < 50) txt += `כל הכבוד! תמשיך לחקור עוד שימושים בלוגו דרך הרשימה.`;
+            else if (percent === 100) txt += `מדהים! סיימת לחקור את כל השימושים של הלוגו! 🎉`;
+            else txt += `אתה מתקדם מעולה בחקר השימושים עבור ${studentState.brand || 'המותג'}!`;
             msgBox.innerHTML = txt;
         }
 
