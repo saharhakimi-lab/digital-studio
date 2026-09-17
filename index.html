@@ -448,184 +448,183 @@
 
     <script>
         const stepsData = [
-            { 
-                id: 1, 
-                title: '1. תכנון והבנת לוגו המותג', 
-                software: 'SVG-Edit', 
-                toolType: 'vector',
-                url: 'https://svgedit.netlify.app/', 
-                badge: 'guide-vector', 
-                conceptTitle: 'מהו לוגו ומה חשיבותו?',
-                conceptDesc: 'לוגו הוא עוגן הזהות של העסק. הוא חייב להיות זיכיר, מובן וגמיש כך שיעבוד בצורה מושלמת בכל פלטפורמה – החל מסמל מיניאטורי באפליקציה ועד שלט חוצות ענק.',
-                workGuide: 'בשבק זה עובדים בתוכנה **וקטורית** (SVG-Edit) כדי לבנות סמלים וקווים חדים שניתן להגדיל לכל גודל ללא איבוד איכות.',
-                svgMockup: (logo) => `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
-                        <rect x="30" y="30" width="440" height="180" rx="12" fill="#fcfbf7" stroke="#bdc3c7" stroke-width="2"/>
-                        <circle cx="100" cy="90" r="30" fill="#0052cc" opacity="0.2"/>
-                        <text x="100" y="98" font-size="24" text-anchor="middle" fill="#0052cc" font-weight="bold">1</text>
-                        <text x="150" y="85" font-size="20" font-weight="bold" fill="#2c3e50">סמל הליבה של המותג</text>
-                        <text x="150" y="110" font-size="16" fill="#7f8c8d">צורת יסוד נקייה וגמישה</text>
-                        <g transform="translate(310, 50)">
-                            <image href="${logo}" width="140" height="60" />
-                        </g>
-                        <line x1="50" y1="150" x2="450" y2="150" stroke="#e5dccb" stroke-width="2"/>
-                        <text x="250" y="185" font-size="16" font-weight="bold" fill="#d35400" text-anchor="middle">💡 עקרון ברזל: הלוגו חייב להיות פשוט, קליט ולשמור על פרופורציות!</text>
-                    </svg>
-                `,
-                tasks: [
-                    'הבנת תפקיד הלוגו: לוגו מייצג את הפיזיונומיה והזהות החזותית של העסק.',
-                    'בחינת פשטות הלוגו כדי שיפעל היטב בכל מדיה (ממסך נייד ועד שלט חוצות).',
-                    'בחירת הצבעים והצורות הבסיסיות של הלוגו הראשוני.',
-                    'הכנת הסקיצה הבסיסית לקראת עריכת קוד SVG.'
-                ]
-            },
-            { 
-                id: 2, 
-                title: '2. פלייר שיווקי', 
-                software: 'Photopea', 
-                toolType: 'raster',
-                url: 'https://www.photopea.com/', 
-                badge: 'guide-pixel', 
-                conceptTitle: 'מהו פלייר שיווקי?',
-                conceptDesc: 'פלייר (עלון) הוא אמצעי פרסום המעביר מסר שיווקי מהיר. הלוגו בפלייר מתפקד כחותמת הרשמית של המפרסם, ומופיע בראש העמוד ליצירת זיהוי מיידי.',
-                workGuide: 'עובדים בתוכנת **פיקסלים** (Photopea) המאפשרת לשלב תמונות רקע, שכבות, טקסטים ואפקטים גרפיים עשירים.',
-                svgMockup: (logo) => `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
-                        <rect x="20" y="20" width="460" height="200" rx="8" fill="#fdfefe" stroke="#d5d8dc" stroke-width="2"/>
-                        <rect x="40" y="35" width="200" height="30" rx="4" fill="#2c3e50"/>
-                        <text x="140" y="56" font-size="15" font-weight="bold" fill="white" text-anchor="middle">מבצע חורף ענק!</text>
-                        <g transform="translate(320, 30)">
-                            <rect width="130" height="45" rx="6" fill="#fff9e6" stroke="#f1c40f" stroke-width="1.5"/>
-                            <image href="${logo}" x="10" y="5" width="110" height="35" />
-                        </g>
-                        <rect x="40" y="80" width="160" height="90" rx="6" fill="#eaeded"/>
-                        <text x="120" y="130" font-size="14" fill="#7f8c8d" text-anchor="middle">תמונת אווירה / מוצר</text>
-                        <text x="220" y="105" font-size="16" font-weight="bold" fill="#2c3e50">הנחות מטורפות לחברים</text>
-                        <text x="220" y="130" font-size="14" fill="#555">הירשמו עכשיו וקבלו הטבה בלעדית</text>
-                        <rect x="40" y="180" width="420" height="30" rx="4" fill="#2c3e50"/>
-                        <text x="250" y="200" font-size="13" fill="white" text-anchor="middle">📞 לפרטים והזמנות: 1-800-000-000 | www.brand.co.il</text>
-                    </svg>
-                `,
-                tasks: [
-                    'מיקום הלוגו: בפלייר הלוגו ממוקם לרוב בחלק העליון ליצירת זיהוי מיידי.',
-                    'שמירה על ניגודיות: הלוגו חייב להיות קריא מעל תמונת הרקע של הפלייר.',
-                    'שילוב פרטי יצירת קשר לצד הלוגו בתחתית או בראש הפלייר.',
-                    'ייבוא תמונת מוצר והנחת הלוגו מעליה בשכבה נפרדת (Layers).'
-                ]
-            },
-            { 
-                id: 3, 
-                title: '3. תפריט מנות ומוצרים', 
-                software: 'Photopea', 
-                toolType: 'raster',
-                url: 'https://www.photopea.com/', 
-                badge: 'guide-pixel', 
-                conceptTitle: 'מהו תפריט עיצובי למותג?',
-                conceptDesc: 'תפריט או קטלוג מציג את היצע השירותים או המנות. הלוגו מעניק תוקף מקצועי ומופיע במרכז הכריכה או בכותרת בכל עמוד לשמירה על אחידות.',
-                workGuide: 'עובדים בתוכנת **פיקסלים** (Photopea) לסידור פריסות עמוד, טיפוגרפיה, מסגרות וקטלוגים.',
-                svgMockup: (logo) => `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
-                        <rect x="40" y="20" width="200" height="200" fill="white" stroke="#e0d6c3" stroke-width="2"/>
-                        <rect x="260" y="20" width="200" height="200" fill="white" stroke="#e0d6c3" stroke-width="2"/>
-                        <g transform="translate(85, 30)">
-                            <image href="${logo}" width="110" height="40" />
-                        </g>
-                        <text x="60" y="95" font-size="13" font-weight="bold" fill="#2c3e50">🍔 מנה עיקרית ............ ₪55</text>
-                        <text x="60" y="125" font-size="13" font-weight="bold" fill="#2c3e50">🥗 סלט שף מרענן .......... ₪42</text>
-                        <text x="60" y="155" font-size="13" font-weight="bold" fill="#2c3e50">🥤 שתייה קלה .............. ₪15</text>
-                        <text x="280" y="55" font-size="14" font-weight="bold" fill="#d35400">✨ קינוחי הבית</text>
-                        <text x="280" y="95" font-size="13" font-weight="bold" fill="#2c3e50">🍰 עוגת שוקולד .......... ₪38</text>
-                        <text x="280" y="125" font-size="13" font-weight="bold" fill="#2c3e50">🍨 גלידת בוטיק ........... ₪28</text>
-                    </svg>
-                `,
-                tasks: [
-                    'הלוגו מופיע בכריכה הראשית של התפריט כאלמנט מרכזי.',
-                    'הופעת לוגו קטן בכותרת העליונה של דפי הפנים.',
-                    'שמירה על סגנון צבעים אחיד בין הלוגו לבין הקטגוריות בתפריט.'
-                ]
-            },
-            { 
-                id: 4, 
-                title: '4. באנר פרסומי רוחבי', 
-                software: 'Photopea', 
-                toolType: 'raster',
-                url: 'https://www.photopea.com/', 
-                badge: 'guide-pixel', 
-                conceptTitle: 'מהו באנר פרסומי דיגיטלי?',
-                conceptDesc: 'באנר הוא מודעה דיגיטלית רוחבית באתרי אינטרנט וברשתות. הלוגו חייב להיות בולט בפינה כדי לספק זיהוי מותג מיידי בשבריר שנייה.',
-                workGuide: 'עובדים בתוכנת **פיקסלים** (Photopea) המותאמת ליצירת קבצים בגדלים רחבים לדיגיטל.',
-                svgMockup: (logo) => `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
-                        <rect x="20" y="40" width="460" height="160" rx="10" fill="#2c3e50"/>
-                        <g transform="translate(40, 60)">
-                            <image href="${logo}" width="120" height="50" />
-                        </g>
-                        <text x="180" y="95" font-size="18" font-weight="bold" fill="white">הצטרפו למהפכת הדיגיטל עכשיו!</text>
-                        <text x="180" y="125" font-size="14" fill="#bdc3c7">ייעוץ ראשוני חינם למצטרפים החדשים השבוע</text>
-                        <rect x="180" y="140" width="130" height="35" rx="6" fill="#e74c3c"/>
-                        <text x="245" y="163" font-size="14" font-weight="bold" fill="white" text-anchor="middle">לחץ כאן ←</text>
-                    </svg>
-                `,
-                tasks: [
-                    'בבאנר רוחבי הלוגו ממוקם לרוב בפינה הימנית או השמאלית.',
-                    'הלוגו חייב להיות קריא גם בגדלים קטנים במסכי סמארטפון.',
-                    'שילוב הנעה לפעולה (CTA) לצד הלוגו והמסר המרכזי.'
-                ]
-            },
-            { 
-                id: 5, 
-                title: '5. מוצר קדמ: חולצת עובדים', 
-                software: 'Photopea (שילוב)', 
-                toolType: 'hybrid',
-                url: 'https://www.photopea.com/', 
-                badge: 'guide-pixel', 
-                conceptTitle: 'מהי חולצת מותג (מוצר קד"מ)?',
-                conceptDesc: 'חולצת מותג משדרת מקצועיות וגאווה ארגונית. המיקומים הקלאסיים להדפסת הלוגו הם בחזה שמאל (מעל הלב) או בגדול בגב החולצה.',
-                workGuide: 'עבודה משולבת: לוקחים את הלוגו הוקטורי ומלבישים אותו מעל טקסטורת בד בתוכנת פיקסלים.',
-                svgMockup: (logo) => `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
-                        <path d="M 180 30 L 220 15 L 280 15 L 320 30 L 370 70 L 330 100 L 300 70 L 300 210 L 200 210 L 200 70 L 170 100 L 130 70 Z" fill="#2980b9" stroke="#1f618d" stroke-width="2"/>
-                        <g transform="translate(255, 80)">
-                            <rect width="60" height="28" rx="4" fill="white" opacity="0.9" stroke="#d5d8dc" stroke-width="1"/>
-                            <image href="${logo}" x="4" y="2" width="52" height="24" />
-                        </g>
-                        <text x="250" y="230" font-size="14" font-weight="bold" fill="#2c3e50" text-anchor="middle">👕 לוגו מודפס על חזה שמאל (מעל הלב)</text>
-                    </svg>
-                `,
-                tasks: [
-                    'מיקומים מקובלים: לוגו קטן על חזה שמאל (מעל הלב) או לוגו גדול בגב.',
-                    'שמירה על פרופורציה נכונה כך שהלוגו לא ייראה מתוח על הבד.',
-                    'בחירת צבע חולצה המהווה רקע מנגד לצבעי הלוגו.'
-                ]
-            },
-            { 
-                id: 6, 
-                title: '6. כרטיס ביקור', 
-                software: 'SVG-Edit', 
-                toolType: 'vector',
-                url: 'https://svgedit.netlify.app/', 
-                badge: 'guide-vector', 
-                conceptTitle: 'מהו כרטיס ביקור מקצועי?',
-                conceptDesc: 'כרטיס הביקור הוא המפגש הפיזי המרכזי עם הלקוח. בצד אחד מופיע הלוגו במרכז ובצד השני מופיעים פרטי ההתקשרות.',
-                workGuide: 'עובדים בתוכנה **וקטורית** (SVG-Edit) כדי להבטיח קווים חדים לחלוטין בהדפסה קטנה.',
-                svgMockup: (logo) => `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
-                        <rect x="75" y="40" width="350" height="160" rx="10" fill="white" stroke="#bdc3c7" stroke-width="2"/>
-                        <g transform="translate(175, 60)">
-                            <image href="${logo}" width="150" height="60" />
-                        </g>
-                        <text x="250" y="145" font-size="15" font-weight="bold" fill="#2c3e50" text-anchor="middle">ישראל ישראלי | מנכ"ל ובעלים</text>
-                        <text x="250" y="170" font-size="13" fill="#7f8c8d" text-anchor="middle">📱 050-0000000 | ✉️ office@brand.co.il</text>
-                    </svg>
-                `,
-                tasks: [
-                    'בצד הקדמי: הלוגו במרכז במלוא תפארתו כאלמנט יחיד.',
-                    'בצד האחורי: הלוגו מופיע בקטן לצד פרטי היצירת קשר.',
-                    'שמירה על מרחק בטיחות של 5 מ"מ מקצוות הכרטיס.'
-                ]
-            }
-        ];
-
+    { 
+        id: 1, 
+        title: '1. תכנון והבנת לוגו המותג', 
+        software: 'SVG-Edit', 
+        toolType: 'vector',
+        url: 'https://svgedit.netlify.app/', 
+        badge: 'guide-vector', 
+        conceptTitle: 'מהו לוגו ומה חשיבותו?',
+        conceptDesc: 'לוגו הוא עוגן הזהות של העסק. הוא חייב להיות זיכיר, מובן וגמיש כך שיעבוד בצורה מושלמת בכל פלטפורמה – החל מסמל מיניאטורי באפליקציה ועד שלט חוצות ענק.',
+        workGuide: 'בשלב זה עובדים בתוכנה **וקטורית** (SVG-Edit) כדי לבנות סמלים וקווים חדים שניתן להגדיל לכל גודל ללא איבוד איכות.',
+        svgMockup: (logo) => `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
+                <rect x="20" y="20" width="460" height="200" rx="12" fill="#fcfbf7" stroke="#bdc3c7" stroke-width="2"/>
+                <circle cx="80" cy="80" r="28" fill="#0052cc" opacity="0.2"/>
+                <text x="80" y="88" font-size="22" text-anchor="middle" fill="#0052cc" font-weight="bold">1</text>
+                <text x="240" y="75" font-size="19" font-weight="bold" fill="#2c3e50" text-anchor="middle">סמל הליבה של המותג</text>
+                <text x="240" y="100" font-size="15" fill="#7f8c8d" text-anchor="middle">צורת יסוד נקייה וגמישה</text>
+                <g transform="translate(370, 50)">
+                    <image href="${logo}" width="80" height="50" />
+                </g>
+                <line x1="40" y1="140" x2="460" y2="140" stroke="#e5dccb" stroke-width="2"/>
+                <text x="250" y="180" font-size="15" font-weight="bold" fill="#d35400" text-anchor="middle">💡 עקרון ברזל: הלוגו חייב להיות פשוט, קליט ולשמור על פרופורציות!</text>
+            </svg>
+        `,
+        tasks: [
+            'הבנת תפקיד הלוגו: לוגו מייצג את הפיזיונומיה והזהות החזותית של העסק.',
+            'בחינת פשטות הלוגו כדי שיפעל היטב בכל מדיה (ממסך נייד ועד שלט חוצות).',
+            'בחירת הצבעים והצורות הבסיסיות של הלוגו הראשוני.',
+            'הכנת הסקיצה הבסיסית לקראת עריכת קוד SVG.'
+        ]
+    },
+    { 
+        id: 2, 
+        title: '2. פלייר שיווקי', 
+        software: 'Photopea', 
+        toolType: 'raster',
+        url: 'https://www.photopea.com/', 
+        badge: 'guide-pixel', 
+        conceptTitle: 'מהו פלייר שיווקי?',
+        conceptDesc: 'פלייר (עלון) הוא אמצעי פרסום המעביר מסר שיווקי מהיר. הלוגו בפלייר מתפקד כחותמת הרשמית של המפרסם, ומופיע בראש העמוד ליצירת זיהוי מיידי.',
+        workGuide: 'עובדים בתוכנת **פיקסלים** (Photopea) המאפשרת לשלב תמונות רקע, שכבות, טקסטים ואפקטים גרפיים עשירים.',
+        svgMockup: (logo) => `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
+                <rect x="20" y="20" width="460" height="200" rx="8" fill="#fdfefe" stroke="#d5d8dc" stroke-width="2"/>
+                <rect x="35" y="30" width="180" height="30" rx="4" fill="#2c3e50"/>
+                <text x="125" y="50" font-size="14" font-weight="bold" fill="white" text-anchor="middle">מבצע חורף ענק!</text>
+                <g transform="translate(380, 25)">
+                    <rect width="85" height="40" rx="6" fill="#fff9e6" stroke="#f1c40f" stroke-width="1.5"/>
+                    <image href="${logo}" x="5" y="5" width="75" height="30" />
+                </g>
+                <rect x="330" y="80" width="130" height="80" rx="6" fill="#eaeded"/>
+                <text x="395" y="125" font-size="13" fill="#7f8c8d" text-anchor="middle">תמונת מוצר</text>
+                <text x="170" y="100" font-size="16" font-weight="bold" fill="#2c3e50" text-anchor="middle">הנחות מטורפות לחברים</text>
+                <text x="170" y="125" font-size="13" fill="#555" text-anchor="middle">הירשמו עכשיו וקבלו הטבה בלעדית</text>
+                <rect x="35" y="180" width="430" height="30" rx="4" fill="#2c3e50"/>
+                <text x="250" y="200" font-size="13" fill="white" text-anchor="middle">📞 לפרטים והזמנות: 1-800-000-000 | www.brand.co.il</text>
+            </svg>
+        `,
+        tasks: [
+            'מיקום הלוגו: בפלייר הלוגו ממוקם לרוב בחלק העליון ליצירת זיהוי מיידי.',
+            'שמירה על ניגודיות: הלוגו חייב להיות קריא מעל תמונת הרקע של הפלייר.',
+            'שילוב פרטי יצירת קשר לצד הלוגו בתחתית או בראש הפלייר.',
+            'ייבוא תמונת מוצר והנחת הלוגו מעליה בשכבה נפרדת (Layers).'
+        ]
+    },
+    { 
+        id: 3, 
+        title: '3. תפריט מנות ומוצרים', 
+        software: 'Photopea', 
+        toolType: 'raster',
+        url: 'https://www.photopea.com/', 
+        badge: 'guide-pixel', 
+        conceptTitle: 'מהו תפריט עיצובי למותג?',
+        conceptDesc: 'תפריט או קטלוג מציג את היצע השירותים או המנות. הלוגו מעניק תוקף מקצועי ומופיע במרכז הכריכה או בכותרת בכל עמוד לשמירה על אחידות.',
+        workGuide: 'עובדים בתוכנת **פיקסלים** (Photopea) לסידור פריסות עמוד, טיפוגרפיה, מסגרות וקטלוגים.',
+        svgMockup: (logo) => `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
+                <rect x="40" y="20" width="200" height="200" fill="white" stroke="#e0d6c3" stroke-width="2"/>
+                <rect x="260" y="20" width="200" height="200" fill="white" stroke="#e0d6c3" stroke-width="2"/>
+                <g transform="translate(105" 25)">
+                    <image href="${logo}" width="70" height="35" />
+                </g>
+                <text x="140" y="90" font-size="12" font-weight="bold" fill="#2c3e50" text-anchor="middle">🍔 מנה עיקרית ..... ₪55</text>
+                <text x="140" y="120" font-size="12" font-weight="bold" fill="#2c3e50" text-anchor="middle">🥗 סלט שף ......... ₪42</text>
+                <text x="140" y="150" font-size="12" font-weight="bold" fill="#2c3e50" text-anchor="middle">🥤 שתייה קלה ...... ₪15</text>
+                <text x="360" y="55" font-size="14" font-weight="bold" fill="#d35400" text-anchor="middle">✨ קינוחי הבית</text>
+                <text x="360" y="95" font-size="12" font-weight="bold" fill="#2c3e50" text-anchor="middle">🍰 עוגת שוקולד ... ₪38</text>
+                <text x="360" y="125" font-size="12" font-weight="bold" fill="#2c3e50" text-anchor="middle">🍨 גלידת בוטיק .... ₪28</text>
+            </svg>
+        `,
+        tasks: [
+            'הלוגו מופיע בכריכה הראשית של התפריט כאלמנט מרכזי.',
+            'הופעת לוגו קטן בכותרת העליונה של דפי הפנים.',
+            'שמירה על סגנון צבעים אחיד בין הלוגו לבין הקטגוריות בתפריט.'
+        ]
+    },
+    { 
+        id: 4, 
+        title: '4. באנר פרסומי רוחבי', 
+        software: 'Photopea', 
+        toolType: 'raster',
+        url: 'https://www.photopea.com/', 
+        badge: 'guide-pixel', 
+        conceptTitle: 'מהו באנר פרסומי דיגיטלי?',
+        conceptDesc: 'באנר הוא מודעה דיגיטלית רוחבית באתרי אינטרנט וברשתות. הלוגו חייב להיות בולט בפינה כדי לספק זיהוי מותג מיידי בשבריר שנייה.',
+        workGuide: 'עובדים בתוכנת **פיקסלים** (Photopea) המותאמת ליצירת קבצים בגדלים רחבים לדיגיטל.',
+        svgMockup: (logo) => `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
+                <rect x="20" y="30" width="460" height="180" rx="10" fill="#2c3e50"/>
+                <g transform="translate(380, 45)">
+                    <image href="${logo}" width="80" height="45" />
+                </g>
+                <text x="210" y="80" font-size="17" font-weight="bold" fill="white" text-anchor="middle">הצטרפו למהפכת הדיגיטל!</text>
+                <text x="210" y="110" font-size="13" fill="#bdc3c7" text-anchor="middle">ייעוץ ראשוני חינם למצטרפים השבוע</text>
+                <rect x="145" y="135" width="130" height="35" rx="6" fill="#e74c3c"/>
+                <text x="210" y="158" font-size="14" font-weight="bold" fill="white" text-anchor="middle">לחץ כאן ←</text>
+            </svg>
+        `,
+        tasks: [
+            'בבאנר רוחבי הלוגו ממוקם לרוב בפינה הימנית או השמאלית.',
+            'הלוגו חייב להיות קריא גם בגדלים קטנים במסכי סמארטפון.',
+            'שילוב הנעה לפעולה (CTA) לצד הלוגו והמסר המרכזי.'
+        ]
+    },
+    { 
+        id: 5, 
+        title: '5. מוצר קדמ: חולצת עובדים', 
+        software: 'Photopea (שילוב)', 
+        toolType: 'hybrid',
+        url: 'https://www.photopea.com/', 
+        badge: 'guide-pixel', 
+        conceptTitle: 'מהי חולצת מותג (מוצר קד"מ)?',
+        conceptDesc: 'חולצת מותג משדרת מקצועיות וגאווה ארגונית. המיקומים הקלאסיים להדפסת הלוגו הם בחזה שמאל (מעל הלב) או בגדול בגב החולצה.',
+        workGuide: 'עבודה משולבת: לוקחים את הלוגו הוקטורי ומלבישים אותו מעל טקסטורת בד בתוכנת פיקסלים.',
+        svgMockup: (logo) => `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
+                <path d="M 180 30 L 220 15 L 280 15 L 320 30 L 370 70 L 330 100 L 300 70 L 300 210 L 200 210 L 200 70 L 170 100 L 130 70 Z" fill="#2980b9" stroke="#1f618d" stroke-width="2"/>
+                <g transform="translate(260, 80)">
+                    <rect width="45" height="24" rx="3" fill="white" opacity="0.9" stroke="#d5d8dc" stroke-width="1"/>
+                    <image href="${logo}" x="3" y="2" width="39" height="20" />
+                </g>
+                <text x="250" y="230" font-size="14" font-weight="bold" fill="#2c3e50" text-anchor="middle">👕 לוגו מודפס על חזה שמאל (מעל הלב)</text>
+            </svg>
+        `,
+        tasks: [
+            'מיקומים מקובלים: לוגו קטן על חזה שמאל (מעל הלב) או לוגו גדול בגב.',
+            'שמירה על פרופורציה נכונה כך שהלוגו לא ייראה מתוח על הבד.',
+            'בחירת צבע חולצה המהווה רקע מנגד לצבעי הלוגו.'
+        ]
+    },
+    { 
+        id: 6, 
+        title: '6. כרטיס ביקור', 
+        software: 'SVG-Edit', 
+        toolType: 'vector',
+        url: 'https://svgedit.netlify.app/', 
+        badge: 'guide-vector', 
+        conceptTitle: 'מהו כרטיס ביקור מקצועי?',
+        conceptDesc: 'כרטיס הביקור הוא המפגש הפיזי המרכזי עם הלקוח. בצד אחד מופיע הלוגו במרכז ובצד השני מופיעים פרטי ההתקשרות.',
+        workGuide: 'עובדים בתוכנה **וקטורית** (SVG-Edit) כדי להבטיח קווים חדים לחלוטין בהדפסה קטנה.',
+        svgMockup: (logo) => `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" style="width:100%; border-radius:10px; background:#ffffff; border: 2px solid #e5dccb;">
+                <rect x="85" y="30" width="330" height="170" rx="10" fill="white" stroke="#bdc3c7" stroke-width="2"/>
+                <g transform="translate(205, 50)">
+                    <image href="${logo}" width="90" height="45" />
+                </g>
+                <text x="250" y="130" font-size="15" font-weight="bold" fill="#2c3e50" text-anchor="middle">ישראל ישראלי | מנכ"ל ובעלים</text>
+                <text x="250" y="160" font-size="12" fill="#7f8c8d" text-anchor="middle">📱 050-0000000 | ✉️ office@brand.co.il</text>
+            </svg>
+        `,
+        tasks: [
+            'בצד הקדמי: הלוגו במרכז במלוא תפארתו כאלמנט יחיד.',
+            'בצד האחורי: הלוגו מופיע בקטן לצד פרטי היצירת קשר.',
+            'שמירה על מרחק בטיחות של 5 מ"מ מקצוות הכרטיס.'
+        ]
+    }
+];
         let studentState = { name: "", brand: "", checklist: {}, logoUrl: "" };
         let currentStepId = 1;
 
